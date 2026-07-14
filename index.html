@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>命理体质自测 | 照德堂</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background:#F5F0E8;min-height:100vh;padding:20px;
+}
+.container{max-width:520px;margin:0 auto}
+
+/* 封面区 */
+.hero{
+  background:linear-gradient(135deg,#2C1810 0%,#4A2C1A 100%);
+  border-radius:16px;padding:40px 24px 32px;text-align:center;
+  color:#FDF8F0;margin-bottom:20px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,169,110,.15) 0%,transparent 70%);
+}
+.hero-icon{font-size:48px;margin-bottom:12px}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:2px;margin-bottom:8px}
+.hero p{font-size:14px;color:#C8A96E;line-height:1.6}
+.hero .sub{font-size:13px;color:#A08060;margin-top:8px}
+
+/* 进度条 */
+.progress-wrap{
+  background:#E8E0D0;border-radius:20px;height:6px;margin:0 0 20px;overflow:hidden;
+}
+.progress-bar{
+  height:100%;background:linear-gradient(90deg,#B22222,#C8A96E);
+  border-radius:20px;transition:width .4s ease;
+}
+.progress-text{text-align:center;font-size:13px;color:#8B7355;margin-bottom:4px}
+
+/* 卡片 */
+.card{
+  background:#FDF8F0;border-radius:16px;padding:24px;
+  box-shadow:0 2px 12px rgba(44,24,16,.06);margin-bottom:16px;
+  display:none;animation:fadeIn .35s ease;
+}
+.card.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.step-num{
+  font-size:12px;color:#B22222;font-weight:600;letter-spacing:1px;
+  margin-bottom:4px;
+}
+.card h2{font-size:20px;color:#2C1810;margin-bottom:6px}
+.card .desc{font-size:14px;color:#8B7355;margin-bottom:20px;line-height:1.6}
+
+/* 选项 */
+.options{display:flex;flex-direction:column;gap:10px}
+.option{
+  background:#F5F0E8;border:2px solid #E8E0D0;border-radius:12px;
+  padding:14px 16px;cursor:pointer;transition:all .2s;
+  font-size:15px;color:#2C1810;line-height:1.5;
+  display:flex;align-items:center;gap:12px;
+}
+.option:hover{border-color:#C8A96E;background:#F0E8D8}
+.option.selected{border-color:#B22222;background:#FFF0E8}
+.option .emoji{font-size:22px;flex-shrink:0}
+.option .label{flex:1}
+.option .badge{
+  font-size:11px;color:#8B7355;background:#E8E0D0;
+  padding:2px 10px;border-radius:10px;flex-shrink:0;
+}
+
+/* 按钮 */
+.btn-row{display:flex;gap:12px;margin-top:20px}
+.btn{
+  flex:1;padding:14px;border:none;border-radius:12px;
+  font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-primary{
+  background:#B22222;color:#fff;
+}
+.btn-primary:hover{background:#8B1A1A}
+.btn-primary:disabled{background:#D4C5A9;cursor:not-allowed}
+.btn-secondary{
+  background:#E8E0D0;color:#4A4A4A;
+}
+.btn-secondary:hover{background:#D4C5A9}
+
+/* 结果页 */
+.result-card{display:none}
+.result-card.active{display:block}
+.result-header{
+  text-align:center;padding:30px 20px;
+  background:linear-gradient(135deg,#2C1810,#4A2C1A);
+  border-radius:16px;color:#FDF8F0;margin-bottom:20px;
+}
+.result-header .big-icon{font-size:64px;margin-bottom:12px}
+.result-header h2{font-size:24px;margin-bottom:4px}
+.result-header .tag{
+  display:inline-block;background:#C8A96E;color:#2C1810;
+  padding:4px 16px;border-radius:20px;font-size:13px;font-weight:600;margin-top:8px;
+}
+.result-section{
+  background:#FDF8F0;border-radius:12px;padding:20px;margin-bottom:12px;
+  box-shadow:0 1px 6px rgba(44,24,16,.04);
+}
+.result-section h3{
+  font-size:16px;color:#B22222;margin-bottom:10px;padding-bottom:8px;
+  border-bottom:1px solid #F0E8D8;
+}
+.result-section p,.result-section li{
+  font-size:14px;color:#4A4A4A;line-height:1.8;
+}
+.result-section ul{padding-left:20px}
+.result-section .highlight{
+  background:linear-gradient(135deg,#FFF0E8,#FDF8F0);
+  border-left:3px solid #B22222;padding:12px 16px;border-radius:0 8px 8px 0;
+  margin:10px 0;font-size:14px;line-height:1.7;
+}
+
+/* 品牌露出 */
+.brand-box{
+  background:#F5F0E8;border:1px solid #E8E0D0;border-radius:12px;
+  padding:16px 20px;text-align:center;margin-top:16px;
+}
+.brand-box p{font-size:13px;color:#8B7355;line-height:1.6}
+.brand-box .brand-name{font-size:15px;color:#B22222;font-weight:600}
+
+.share-btn{
+  display:block;width:100%;padding:14px;
+  background:#C8A96E;color:#2C1810;border:none;border-radius:12px;
+  font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;
+  margin-top:12px;
+}
+.share-btn:hover{background:#B89950}
+
+/* 成功页面 */
+.success-box{
+  text-align:center;padding:40px 20px;
+}
+.success-box .icon{font-size:72px;margin-bottom:16px}
+.success-box h2{font-size:22px;color:#2C1810;margin-bottom:8px}
+.success-box p{font-size:14px;color:#8B7355;line-height:1.8;margin-bottom:20px}
+.success-box .cta-btn{
+  display:inline-block;padding:14px 40px;
+  background:#B22222;color:#fff;border:none;border-radius:12px;
+  font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;
+}
+
+/* footer */
+.footer{
+  text-align:center;padding:20px;font-size:12px;color:#A08060;
+}
+
+@media(max-width:400px){
+  .hero{padding:28px 16px 24px}
+  .hero h1{font-size:22px}
+  .card{padding:18px}
+  .option{padding:12px 14px;font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+  <!-- 封面 -->
+  <div class="hero" id="heroPage">
+    <div class="hero-icon">🔮</div>
+    <h1>你的命里「缺」什么？</h1>
+    <p>十二种命理体质 · 一份中式玄学 × 中医养生自测</p>
+    <div class="sub">结合八字五行·生肖·星座·传统命理智慧</div>
+    <button class="btn btn-primary" style="margin-top:24px;background:#C8A96E;color:#2C1810" onclick="startQuiz()">开始测算 →</button>
+  </div>
+
+  <!-- 进度 -->
+  <div id="quizArea" style="display:none">
+    <div class="progress-text" id="progressText">1 / 8</div>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar" style="width:12.5%"></div>
+    </div>
+  </div>
+
+  <!-- 题目区 -->
+  <div id="quizCards"></div>
+
+  <!-- 结果区 -->
+  <div id="resultArea"></div>
+
+  <!-- Footer -->
+  <div class="footer">照德堂 · 以传统智慧照见生活</div>
+</div>
+
+<script>
+const Q = [
+  {
+    q:'你的出生年份属于哪个生肖？',
+    desc:'十二生肖决定你的先天根基气场',
+    key:'zodiac',
+    options:[
+      {v:'rat',l:'鼠 🐭','子鼠', badge:'机智灵动'},
+      {v:'ox',l:'牛 🐮','丑牛', badge:'稳重踏实'},
+      {v:'tiger',l:'虎 🐯','寅虎', badge:'自信果敢'},
+      {v:'rabbit',l:'兔 🐰','卯兔', badge:'温和细腻'},
+      {v:'dragon',l:'龙 🐲','辰龙', badge:'大气不凡'},
+      {v:'snake',l:'蛇 🐍','巳蛇', badge:'智慧深沉'},
+      {v:'horse',l:'马 🐴','午马', badge:'洒脱奔放'},
+      {v:'goat',l:'羊 🐑','未羊', badge:'温厚包容'},
+      {v:'monkey',l:'猴 🐵','申猴', badge:'机敏灵活'},
+      {v:'rooster',l:'鸡 🐔','酉鸡', badge:'精细干练'},
+      {v:'dog',l:'狗 🐶','戌狗', badge:'忠诚可靠'},
+      {v:'pig',l:'猪 🐷','亥猪', badge:'豁达通透'},
+    ]
+  },
+  {
+    q:'你的出生月份在哪个范围？',
+    desc:'结合星座能量，决定你的五行气质偏向',
+    key:'month_season',
+    options:[
+      {v:'spring',l:'🌸 春季','3月-5月', badge:'木气生发'},
+      {v:'summer',l:'☀️ 夏季','6月-8月', badge:'火气旺盛'},
+      {v:'autumn',l:'🍂 秋季','9月-11月', badge:'金气收敛'},
+      {v:'winter',l:'❄️ 冬季','12月-2月', badge:'水气收藏'},
+    ]
+  },
+  {
+    q:'你觉得自己最像哪种性格？',
+    desc:'五行人格 — 金木水火土，看看你的主导能量',
+    key:'element_personality',
+    options:[
+      {v:'wood',l:'🌿 木型','向上生长、爱折腾、有主见', badge:'木'},
+      {v:'fire',l:'🔥 火型','热情外向、行动力强、爱社交', badge:'火'},
+      {v:'earth',l:'🏔️ 土型','稳重包容、踏实可靠、顾家', badge:'土'},
+      {v:'metal',l:'⚔️ 金型','果断干练、追求完美、讲原则', badge:'金'},
+      {v:'water',l:'🌊 水型','聪明随和、善变通、重感受', badge:'水'},
+    ]
+  },
+  {
+    q:'你的皮肤状态更接近？',
+    desc:'与五行体质密切相关，照德堂从上千名客户中总结的规律',
+    key:'skin_type',
+    options:[
+      {v:'dry',l:'🧴 干性','易起皮、细纹多、换季敏感', badge:'缺水'},
+      {v:'oily',l:'💧 油性','T区出油、毛孔粗、易长痘', badge:'火旺'},
+      {v:'mix',l:'🌀 混合','T油颊干、局部暗沉', badge:'失衡'},
+      {v:'sensitive',l:'🌸 敏感','泛红刺痛、薄皮红血丝', badge:'卫弱'},
+      {v:'normal',l:'✨ 中性','水油平衡、状态稳定', badge:'平和'},
+    ]
+  },
+  {
+    q:'你平时的生活习惯更偏向？',
+    desc:'生活习惯暴露你的能量消耗方向',
+    key:'lifestyle',
+    options:[
+      {v:'night',l:'🌙 夜猫子','熬夜冠军、越夜越精神', badge:'耗阴'},
+      {v:'busy',l:'🏃 忙碌族','节奏快、压力大、久坐', badge:'气郁'},
+      {v:'foodie',l:'🍜 吃货','爱美食、零食不离手', badge:'湿重'},
+      {v:'fitness',l:'💪 健身党','规律运动、自律养生', badge:'平衡'},
+      {v:'home',l:'🏠 宅家型','喜静、社恐、空调续命', badge:'寒凝'},
+    ]
+  },
+  {
+    q:'最近你最困扰的问题是？',
+    desc:'当下的焦虑往往指向命理的「补益方向」',
+    key:'current_worry',
+    options:[
+      {v:'money',l:'💰 财运不好','赚钱累、存不住、投资亏损', badge:'求财'},
+      {v:'career',l:'💼 事业迷茫','晋升难、方向模糊、内卷心累', badge:'求官'},
+      {v:'love',l:'💕 感情不顺','单身焦虑、关系疲惫、找不到对的人', badge:'求缘'},
+      {v:'health',l:'🏥 身体亚健康','失眠疲乏、易病、精力差', badge:'求康'},
+      {v:'mood',l:'😮‍💨 情绪内耗','焦虑烦躁、emo、没动力', badge:'求静'},
+    ]
+  },
+  {
+    q:'你最喜欢的季节？',
+    desc:'偏爱往往是你身体「本能需要的补益」',
+    key:'fav_season',
+    options:[
+      {v:'spring',l:'🌱 春天','万物复苏、生机勃勃', badge:'生发'},
+      {v:'summer',l:'🏖️ 夏天','阳光灿烂、热烈奔放', badge:'释放'},
+      {v:'autumn',l:'🍁 秋天','天高气爽、丰收静谧', badge:'收敛'},
+      {v:'winter',l:'⛄ 冬天','白雪皑皑、沉静内敛', badge:'收藏'},
+    ]
+  },
+  {
+    q:'你觉得自己的「人生短板」是什么？',
+    desc:'自知的空缺，正是命理给你留的「补益空间」',
+    key:'weakness',
+    options:[
+      {v:'courage',l:'🦁 勇气不足','想做不敢做、容易退缩', badge:'缺火'},
+      {v:'patience',l:'🧘 耐心不够','三分钟热度、急功近利', badge:'缺土'},
+      {v:'boundary',l:'🛡️ 不懂拒绝','总被消耗、不会设限', badge:'缺水'},
+      {v:'focus',l:'🎯 专注力差','杂念多、什么都想要', badge:'缺金'},
+      {v:'flexibility',l:'🌿 太固执','认死理、不转弯、内耗', badge:'缺木'},
+    ]
+  }
+];
+
+const RESULTS = {
+  'rat-fire-wood':{
+    title:'灵火生木 · 生发型',
+    icon:'🔥',
+    tag:'鼠·火·木 | 开拓者',
+    summary:'你天生自带火一般的热情和木一般的生长力，是那种"不折腾不舒服"的类型。脑子转得快，动手能力也强，唯一的问题——三分热度，容易虎头蛇尾。',
+    destiny:'先天能量集中在上半年爆发，秋冬容易乏力。你命里「缺土」——需要稳住根基，不能一直冲。',
+    advice:[
+      '「缺土」对应脾胃，少吃生冷，多吃根茎类食物（山药、红薯、土豆）',
+      '做事前三问：值得做吗？能做到吗？做完然后呢？减少冲动开始',
+      '适合静坐/冥想/泡脚来「接地气」，平衡你过于发散的能量',
+    ],
+    product:'✨ 推荐关注：照德堂草本面膜系列（土性滋养配方，帮你"固本"）',
+    score:{wood:9,fire:8,earth:2,metal:4,water:5}
+  },
+  'ox-water-metal':{
+    title:'润金藏水 · 蓄势型',
+    icon:'💎',
+    tag:'牛·冬·水 | 厚积薄发型',
+    summary:'你像一块被河水冲刷了千万年的玉石——外表低调，内里珍贵。踏实稳重的背后藏着极深的情感和直觉，只是不轻易示人。',
+    destiny:'先天能量偏收敛，容易想太多做太少。你命里「缺火」——需要点燃行动力，把想法落地。',
+    advice:[
+      '「缺火」对应心和小肠，上午适当晒太阳、运动微出汗来升阳',
+      '每周给自己定一个「必须完成」的小目标，培养执行闭环',
+      '减少过度思考，用"先做5分钟"的方式打破拖延',
+    ],
+    product:'✨ 推荐关注：照德堂手工姜枣膏（温阳升火，帮你点燃内在能量）',
+    score:{wood:4,fire:2,earth:8,metal:7,water:8}
+  },
+  'tiger-wood-earth':{
+    title:'木秀于林 · 领袖型',
+    icon:'🌲',
+    tag:'虎·春·木 | 开拓领袖',
+    summary:'天生有王者气质，自信果断、不畏挑战。但你越是强势的外表下，越藏着需要被理解的心。你承担了太多本该分担的责任。',
+    destiny:'先天木气过旺，肝火容易偏盛。你命里「缺金」——需要自律和边界感来"修剪"过旺的生长势头。',
+    advice:[
+      '「缺金」对应肺和大肠，多吃白色食物（梨、百合、银耳、白萝卜）',
+      '学会说"不"，不要什么事都自己扛',
+      '定期练习深呼吸/腹式呼吸，帮助肺气收敛，平复肝火',
+    ],
+    product:'✨ 推荐关注：照德堂草本喷雾系列（金性收敛配方，帮你"收一收"）',
+    score:{wood:10,fire:6,earth:5,metal:2,water:3}
+  },
+  'rabbit-water-wood':{
+    title:'柔水生木 · 灵秀型',
+    icon:'🌙',
+    tag:'兔·冬·水 | 细腻灵秀',
+    summary:'温婉细腻，善解人意，是朋友圈里的"知心姐姐/哥哥"。你对美和品质有天生的感知力，但太在意别人的眼光，容易委屈自己。',
+    destiny:'先天水木相生，灵气充沛。但你命里「缺火」——需要更多的自我表达和主动性，别总做配角。',
+    advice:[
+      '「缺火」对应心，多吃红色食物（红枣、枸杞、红豆、番茄）',
+      '每天留30分钟「只做自己想做的事」，不迎合任何人',
+      '练习表达自己的真实感受，哪怕会让人不舒服——你的感受也很重要',
+    ],
+    product:'✨ 推荐关注：照德堂红枣枸杞茶（暖心养颜，帮你"暖起来"）',
+    score:{wood:7,fire:3,earth:5,metal:4,water:8}
+  },
+  'dragon-earth-fire':{
+    title:'龙腾火生 · 辉煌型',
+    icon:'🐉',
+    tag:'龙·夏·火 | 天选之人',
+    summary:'大气磅礴，天生焦点。你有种"舍我其谁"的气场，做事有格局、有魄力。但高处不胜寒，你内心的孤独只有自己知道。',
+    destiny:'先天火土旺盛，气势如虹。但火过旺则易焦躁，你命里「缺水」——需要柔性的力量来调和刚猛。',
+    advice:[
+      '「缺水」对应肾，多吃黑色食物（黑芝麻、黑豆、黑米、桑葚）',
+      '学会示弱和求助，真正的强者懂得借力',
+      '保持充足的睡眠——你太容易为"大事"熬夜了，睡眠是最好的补肾方式',
+    ],
+    product:'✨ 推荐关注：照德堂黑芝麻丸（补肾固本，帮你"柔下来"）',
+    score:{wood:3,fire:9,earth:8,metal:5,water:2}
+  },
+  'snake-fire-metal':{
+    title:'火炼真金 · 智慧型',
+    icon:'🧠',
+    tag:'蛇·夏·火 | 智谋深沉',
+    summary:'你天生有一种"看穿一切"的洞察力，别人还在迷茫，你已经看到了三步以后。但你太聪明了，有时候反而因为想太多而裹足不前。',
+    destiny:'火金相克又相成，你的内心常常在「热情」和「理性」之间打架。命里「缺木」——需要增加柔韧和弹性，别把世界看得太透。',
+    advice:[
+      '「缺木」对应肝胆，多吃绿色蔬菜（菠菜、芹菜、西兰花、茼蒿）',
+      '允许自己"做点傻事"——不是所有决定都要最优解',
+      '多一些户外活动，接触自然绿色，疏解过度思虑',
+    ],
+    product:'✨ 推荐关注：照德堂草本洗面奶（植物清透配方，帮你"疏导"多余思虑）',
+    score:{wood:2,fire:8,earth:3,metal:9,water:4}
+  },
+  'horse-fire-earth':{
+    title:'火舞大地 · 热情型',
+    icon:'❤️',
+    tag:'马·夏·火 | 追风少年',
+    summary:'你像一阵自由的风，永远在路上、永远有下一个目标。你的热情感染力极强，但稳定性和耐心是永远的课题。',
+    destiny:'先天火旺，动能十足，但持续力不够。你命里「缺金水」——需要规则和韧性来收束你的奔放。',
+    advice:[
+      '「缺金」对应肺和大肠，多吃白色润肺食物',
+      '建立规律作息——你太容易被"临时起意"打乱节奏',
+      '练习"一件事做透"：一个月只专注一个目标，做完再做下一个',
+    ],
+    product:'✨ 推荐关注：照德堂润肺雪梨膏（金性润养，帮你"稳下来"）',
+    score:{wood:5,fire:9,earth:6,metal:2,water:3}
+  },
+  'goat-earth-water':{
+    title:'厚土蓄水 · 温厚型',
+    icon:'☁️',
+    tag:'羊·冬·土 | 大地之母',
+    summary:'你是团队里最可靠的后盾，朋友眼中最温暖的港湾。不争不抢、默默付出，但你太擅长照顾别人，反而忘了照顾自己。',
+    destiny:'先天土旺水藏，厚德载物。但你命里「缺木」——需要更多向上的生长力和"为自己而活"的勇气。',
+    advice:[
+      '「缺木」对应肝胆，多吃芽苗类食物（豆芽、香椿、韭菜）',
+      '每周做一件「纯粹为自己开心」的事，不要有负罪感',
+      '学一个新东西（乐器、语言、手工艺）——你太需要"向上生长"的突破了',
+    ],
+    product:'✨ 推荐关注：照德堂手工皂系列（植物精华萃取，帮你"破土新生"）',
+    score:{wood:2,fire:3,earth:9,metal:5,water:7}
+  },
+  'monkey-metal-water':{
+    title:'金生丽水 · 巧思型',
+    icon:'🎭',
+    tag:'猴·秋·金 | 百变智多星',
+    summary:'你聪明灵活，点子多、人缘好，是那种"什么都能聊两句"的万事通。但你最大的敌人是——三分钟热度，兴趣太广泛反而没有深耕。',
+    destiny:'金水相生，聪明外显。但你命里「缺火土」——需要热情来驱动、需要土壤来扎根。',
+    advice:[
+      '「缺火」多吃红枣枸杞，「缺土」多吃小米南瓜——先补这两样',
+      '选一个你最擅长的领域，深耕半年，不要碰其他新东西',
+      '建立"输出倒逼输入"的习惯——写日记、做笔记、发内容',
+    ],
+    product:'✨ 推荐关注：照德堂草本茶饮系列（调和五行，帮你"定下来"）',
+    score:{wood:4,fire:3,earth:3,metal:8,water:7}
+  },
+  'rooster-metal-earth':{
+    title:'金玉其质 · 精致型',
+    icon:'👑',
+    tag:'鸡·秋·金 | 完美主义者',
+    summary:'精致、干练、追求极致——你是那种连喝水的杯子都要讲究的人。高标准是优点也是枷锁，你对自己太苛刻了。',
+    destiny:'金气过盛，刚硬有余而柔韧不足。你命里「缺火水」——需要热情来软化刚硬，需要智慧来放下执念。',
+    advice:[
+      '「缺火」多吃红色食物，「缺水」多吃黑色食物',
+      '学会"及格就好"——不是所有事情都要100分',
+      '泡澡/泡脚+听音乐=水火既济的养生之道',
+    ],
+    product:'✨ 推荐关注：照德堂草本面膜（自然柔和配方，帮你"松一松"）',
+    score:{wood:3,fire:3,earth:6,metal:9,water:3}
+  },
+  'dog-earth-fire':{
+    title:'厚德载火 · 忠义型',
+    icon:'🛡️',
+    tag:'狗·夏·土 | 忠义之士',
+    summary:'你有一种让人安心的力量。言出必行、有情有义，朋友有难第一个到。但你把太多责任扛在肩上，忘了自己也需要被照顾。',
+    destiny:'火土相生，性情刚正。但你命里「缺金水」——需要灵活和适度的"冷漠"来保护自己。',
+    advice:[
+      '「缺金」多吃白色食物，「缺水」多吃黑色食物',
+      '练习"三不原则"：不解释、不抱怨、不证明',
+      '给自己设置"关机时间"——每天1小时，谁也别来找你',
+    ],
+    product:'✨ 推荐关注：照德堂手工润唇膏（温润滋养，在你照顾别人之前先照顾自己）',
+    score:{wood:3,fire:7,earth:8,metal:2,water:4}
+  },
+  'pig-water-earth':{
+    title:'水润厚土 · 福气型',
+    icon:'🍀',
+    tag:'猪·冬·水 | 天生有福',
+    summary:'你是那种"运气特别好"的人——不是靠拼，而是靠一种天生的松弛感和好人缘。但别人只看到你的福气，没看到你内心的敏感和柔软。',
+    destiny:'水土相安，根基深厚。但你命里「缺火」——需要更多的主动性和热情来发挥你的天赋。',
+    advice:[
+      '「缺火」对应心，多吃红色温性食物，减少生冷寒凉',
+      '不要总待在舒适区——你需要一点"热度"来激活潜能',
+      '培养一个能让你"燃起来"的爱好，不是为了有用，就是为了快乐',
+    ],
+    product:'✨ 推荐关注：照德堂草本足浴包（温阳暖身，帮你"活起来"）',
+    score:{wood:4,fire:2,earth:7,metal:4,water:8}
+  }
+};
+
+const ZODIAC_ELEMENT = {
+  rat:{element:'water',season:'winter'},
+  ox:{element:'earth',season:'winter'},
+  tiger:{element:'wood',season:'spring'},
+  rabbit:{element:'wood',season:'spring'},
+  dragon:{element:'earth',season:'spring'},
+  snake:{element:'fire',season:'summer'},
+  horse:{element:'fire',season:'summer'},
+  goat:{element:'earth',season:'summer'},
+  monkey:{element:'metal',season:'autumn'},
+  rooster:{element:'metal',season:'autumn'},
+  dog:{element:'earth',season:'autumn'},
+  pig:{element:'water',season:'winter'}
+};
+
+const answers = {};
+let currentStep = 0;
+let totalSteps = Q.length;
+
+function startQuiz(){
+  document.getElementById('heroPage').style.display='none';
+  document.getElementById('quizArea').style.display='block';
+  renderQuestion(0);
+}
+
+function renderQuestion(idx){
+  if(idx >= totalSteps){showResult();return}
+  currentStep=idx;
+  const q=Q[idx];
+  const pct=Math.round(((idx+1)/totalSteps)*100);
+  document.getElementById('progressText').textContent=`${idx+1} / ${totalSteps}`;
+  document.getElementById('progressBar').style.width=pct+'%';
+
+  const container=document.getElementById('quizCards');
+  let html=`
+    <div class="card active">
+      <div class="step-num">第 ${idx+1} 题</div>
+      <h2>${q.q}</h2>
+      <div class="desc">${q.desc}</div>
+      <div class="options">
+  `;
+  q.options.forEach(o=>{
+    const sel=answers[q.key]===o.v?'selected':'';
+    html+=`
+      <div class="option ${sel}" onclick="selectAnswer(${idx},'${q.key}','${o.v}',this)">
+        <span class="emoji">${o.emoji||''}</span>
+        <span class="label">${o.l}</span>
+        <span class="badge">${o.badge}</span>
+      </div>
+    `;
+  });
+  html+=`</div><div class="btn-row">`;
+  if(idx>0)html+=`<button class="btn btn-secondary" onclick="prevQuestion()">← 上一题</button>`;
+  html+=`<button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>${idx===totalSteps-1?'查看结果 →':'下一题 →'}</button>`;
+  html+=`</div></div>`;
+  container.innerHTML=html;
+  if(answers[q.key])document.getElementById('nextBtn').disabled=false;
+}
+
+function selectAnswer(idx,key,val,el){
+  answers[key]=val;
+  document.querySelectorAll(`#quizCards .option`).forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('nextBtn').disabled=false;
+}
+
+function nextQuestion(){
+  if(currentStep<totalSteps-1){
+    renderQuestion(currentStep+1);
+  }else{
+    showResult();
+  }
+}
+
+function prevQuestion(){
+  if(currentStep>0)renderQuestion(currentStep-1);
+}
+
+function showResult(){
+  document.getElementById('quizArea').style.display='none';
+  document.getElementById('quizCards').innerHTML='';
+
+  const z=answers.zodiac||'rabbit';
+  const s=ZODIAC_ELEMENT[z]||{element:'water',season:'winter'};
+  const p=answers.element_personality||'earth';
+
+  const key=`${z}-${s.element}-${p}`;
+  const result=RESULTS[key]||RESULTS['rabbit-water-wood'];
+
+  const area=document.getElementById('resultArea');
+  area.innerHTML=`
+    <div class="result-card active">
+      <div class="result-header">
+        <div class="big-icon">${result.icon}</div>
+        <h2>${result.title}</h2>
+        <div class="tag">${result.tag}</div>
+      </div>
+
+      <div class="result-section">
+        <h3>📋 你的命理画像</h3>
+        <p>${result.summary}</p>
+      </div>
+
+      <div class="result-section">
+        <h3>🎯 命里「缺」什么</h3>
+        <div class="highlight">${result.destiny}</div>
+      </div>
+
+      <div class="result-section">
+        <h3>🌿 日常补益建议</h3>
+        <ul>${result.advice.map(a=>`<li>${a}</li>`).join('')}</ul>
+      </div>
+
+      <div class="result-section">
+        <h3>🏪 照德堂 · 给你的专属建议</h3>
+        <p>${result.product}</p>
+      </div>
+
+      <div class="brand-box">
+        <p>以上测算仅供趣味参考 · 真正的「命」在自己手中</p>
+        <p style="margin-top:4px">🌿 <span class="brand-name">照德堂</span> · 以传统智慧照见生活</p>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 分享给朋友看看</button>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="restartQuiz()">🔄 再测一次</button>
+    </div>
+  `;
+  area.style.display='block';
+}
+
+function shareResult(){
+  if(navigator.share){
+    navigator.share({title:'我的命理体质',text:'测测你的命里缺什么？'});
+  }else{
+    const resultText='我刚测了命理体质，挺准的！你也来试试 → ';
+    navigator.clipboard.writeText(resultText+' 照德堂·命理体质自测').then(()=>{
+      alert('✅ 已复制分享文案，快去发给朋友吧！');
+    });
+  }
+}
+
+function restartQuiz(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  currentStep=0;
+  document.getElementById('resultArea').innerHTML='';
+  document.getElementById('resultArea').style.display='none';
+  document.getElementById('quizArea').style.display='block';
+  renderQuestion(0);
+}
+</script>
+</body>
+</html>
