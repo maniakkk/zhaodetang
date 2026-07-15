@@ -21,73 +21,73 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 .screen{display:none}
 .screen.active{display:block;animation:fadeIn .5s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.cover{text-align:center;padding-top:40px}
-.cover-badge{display:inline-block;background:linear-gradient(135deg,#c8a96e,#b8860b);color:#1a0a2e;font-size:11px;padding:4px 14px;border-radius:20px;font-weight:600;letter-spacing:2px;margin-bottom:24px}
-.cover-icon{font-size:64px;margin-bottom:12px;display:block}
-.cover h1{font-size:26px;font-weight:800;color:#f0e6c5;line-height:1.3;letter-spacing:3px;margin-bottom:12px;text-shadow:0 0 40px rgba(200,169,110,.3)}
+.cover{text-align:center;padding-top:36px}
+.cover-badge{display:inline-block;background:linear-gradient(135deg,#c8a96e,#b8860b);color:#1a0a2e;font-size:11px;padding:4px 14px;border-radius:20px;font-weight:600;letter-spacing:2px;margin-bottom:22px}
+.cover-icon{font-size:60px;margin-bottom:10px;display:block}
+.cover h1{font-size:24px;font-weight:800;color:#f0e6c5;line-height:1.3;letter-spacing:3px;margin-bottom:12px;text-shadow:0 0 40px rgba(200,169,110,.3)}
 .cover h1 span{color:#b22222}
-.cover .sub{font-size:13px;color:#a08870;line-height:1.8;margin-bottom:24px;padding:0 10px}
-.cover .tags{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:30px}
-.cover .tags span{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid rgba(200,169,110,.3);color:#c8a96e}
-.cover .disclaimer{font-size:11px;color:#555;margin-top:16px}
-.btn-start{background:linear-gradient(135deg,#c8a96e,#b8860b);border:none;color:#1a0a2e;font-size:17px;font-weight:700;padding:14px 48px;border-radius:50px;cursor:pointer;letter-spacing:4px;transition:all .3s;box-shadow:0 8px 32px rgba(200,169,110,.3)}
+.cover .sub{font-size:13px;color:#a08870;line-height:1.7;margin-bottom:20px;padding:0 10px}
+.cover .tags{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:26px}
+.cover .tags span{font-size:10px;padding:4px 10px;border-radius:16px;border:1px solid rgba(200,169,110,.3);color:#c8a96e}
+.cover .disclaimer{font-size:10px;color:#555;margin-top:14px}
+.btn-start{background:linear-gradient(135deg,#c8a96e,#b8860b);border:none;color:#1a0a2e;font-size:16px;font-weight:700;padding:13px 44px;border-radius:50px;cursor:pointer;letter-spacing:3px;transition:all .3s;box-shadow:0 8px 32px rgba(200,169,110,.3)}
 .btn-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,169,110,.5)}
-.progress-wrap{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding-top:8px}
+.progress-wrap{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-top:6px}
 .progress-bar-wrap{flex:1;height:4px;background:rgba(200,169,110,.15);border-radius:2px;overflow:hidden}
 .progress-bar{height:100%;width:0;background:linear-gradient(90deg,#c8a96e,#b22222);border-radius:2px;transition:width .4s ease}
-.progress-text{color:#a08870;font-size:12px;white-space:nowrap;font-weight:500}
-.quiz-card{background:rgba(255,255,255,.04);border:1px solid rgba(200,169,110,.15);border-radius:20px;padding:24px 18px 20px;backdrop-filter:blur(10px)}
-.quiz-qnum{font-size:11px;color:#c8a96e;font-weight:600;letter-spacing:2px;margin-bottom:5px}
-.quiz-q{font-size:17px;font-weight:700;color:#f0e6c5;margin-bottom:4px;line-height:1.4}
-.quiz-desc{font-size:12px;color:#7a6a55;margin-bottom:18px;line-height:1.5}
-.quiz-options{display:flex;flex-direction:column;gap:8px}
-.quiz-opt{display:flex;align-items:center;gap:8px;padding:11px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.12);border-radius:12px;cursor:pointer;transition:all .2s;color:#d0c4ae;font-size:13px;line-height:1.3}
+.progress-text{color:#a08870;font-size:11px;white-space:nowrap;font-weight:500}
+.quiz-card{background:rgba(255,255,255,.04);border:1px solid rgba(200,169,110,.15);border-radius:18px;padding:22px 16px 18px;backdrop-filter:blur(10px)}
+.quiz-qnum{font-size:11px;color:#c8a96e;font-weight:600;letter-spacing:2px;margin-bottom:4px}
+.quiz-q{font-size:16px;font-weight:700;color:#f0e6c5;margin-bottom:3px;line-height:1.4}
+.quiz-desc{font-size:12px;color:#7a6a55;margin-bottom:16px;line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:7px}
+.quiz-opt{display:flex;align-items:center;gap:7px;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.12);border-radius:11px;cursor:pointer;transition:all .2s;color:#d0c4ae;font-size:12px;line-height:1.3}
 .quiz-opt:hover{border-color:rgba(200,169,110,.4);background:rgba(200,169,110,.06)}
 .quiz-opt.selected{border-color:#c8a96e;background:rgba(200,169,110,.12);color:#f0e6c5}
-.quiz-opt .badge{font-size:10px;padding:2px 7px;border-radius:8px;background:rgba(200,169,110,.12);color:#c8a96e;white-space:nowrap;margin-left:auto;flex-shrink:0}
+.quiz-opt .badge{font-size:9px;padding:2px 6px;border-radius:7px;background:rgba(200,169,110,.12);color:#c8a96e;white-space:nowrap;margin-left:auto;flex-shrink:0}
 .quiz-opt.selected .badge{background:rgba(200,169,110,.3)}
-.btn-row{display:flex;gap:10px;margin-top:16px}
-.btn-prev,.btn-next{flex:1;padding:11px 0;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
+.btn-row{display:flex;gap:8px;margin-top:14px}
+.btn-prev,.btn-next{flex:1;padding:10px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
 .btn-prev{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.2);color:#a08870}
 .btn-prev:hover{background:rgba(255,255,255,.08)}
 .btn-next{background:linear-gradient(135deg,#c8a96e,#b8860b);border:none;color:#1a0a2e;opacity:.4;pointer-events:none}
 .btn-next.active{opacity:1;pointer-events:auto}
 .btn-next.active:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(200,169,110,.3)}
-.result-wrap{padding-top:8px}
-.result-header{text-align:center;margin-bottom:20px}
-.result-icon{font-size:56px;display:block;margin-bottom:8px}
-.result-title{font-size:24px;font-weight:800;color:#f0e6c5;letter-spacing:2px;margin-bottom:4px}
-.result-subtitle{color:#c8a96e;font-size:12px;letter-spacing:2px;margin-bottom:8px}
-.result-tags{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
-.result-tags span{font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.2);color:#c8a96e}
-.r-section{background:rgba(255,255,255,.04);border:1px solid rgba(200,169,110,.1);border-radius:14px;padding:15px 16px 16px;margin-bottom:12px}
-.r-section .r-label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#c8a96e;margin-bottom:6px;letter-spacing:1px}
-.r-section .r-label .emoji{font-size:16px}
-.r-section p{font-size:13px;color:#c8bca0;line-height:1.7}
-.r-section ul{margin-top:4px;padding-left:4px;list-style:none}
-.r-section ul li{position:relative;padding:3px 0 3px 16px;font-size:13px;color:#b8a88a;line-height:1.5}
-.r-section ul li::before{content:'✦';position:absolute;left:0;color:#c8a96e;font-size:9px}
-.result-footer{text-align:center;margin-top:20px;padding:16px;border-top:1px solid rgba(200,169,110,.1)}
+.result-wrap{padding-top:6px}
+.result-header{text-align:center;margin-bottom:18px}
+.result-icon{font-size:52px;display:block;margin-bottom:6px}
+.result-title{font-size:22px;font-weight:800;color:#f0e6c5;letter-spacing:2px;margin-bottom:4px}
+.result-subtitle{color:#c8a96e;font-size:12px;letter-spacing:1px;margin-bottom:6px}
+.result-tags{display:flex;justify-content:center;gap:4px;flex-wrap:wrap}
+.result-tags span{font-size:10px;padding:3px 8px;border-radius:8px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.2);color:#c8a96e}
+.r-section{background:rgba(255,255,255,.04);border:1px solid rgba(200,169,110,.1);border-radius:13px;padding:13px 14px 14px;margin-bottom:10px}
+.r-section .r-label{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:#c8a96e;margin-bottom:5px;letter-spacing:1px}
+.r-section .r-label .emoji{font-size:15px}
+.r-section p{font-size:13px;color:#c8bca0;line-height:1.6}
+.r-section ul{margin-top:3px;padding-left:3px;list-style:none}
+.r-section ul li{position:relative;padding:3px 0 3px 14px;font-size:12px;color:#b8a88a;line-height:1.5}
+.r-section ul li::before{content:'✦';position:absolute;left:0;color:#c8a96e;font-size:8px}
+.result-footer{text-align:center;margin-top:18px;padding:14px;border-top:1px solid rgba(200,169,110,.1)}
 .result-footer .brand{font-size:13px;color:#c8a96e;font-weight:600;letter-spacing:1px;margin-bottom:3px}
-.result-footer .slogan{font-size:11px;color:#7a6a55;margin-bottom:10px}
-.result-footer .disclaimer{font-size:10px;color:#444;margin-top:8px}
-.share-row{display:flex;gap:8px;margin-bottom:14px}
-.btn-share{flex:1;padding:10px 0;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:none;text-align:center;transition:all .2s}
+.result-footer .slogan{font-size:11px;color:#7a6a55;margin-bottom:8px}
+.result-footer .disclaimer{font-size:9px;color:#444;margin-top:6px}
+.share-row{display:flex;gap:8px;margin-bottom:12px}
+.btn-share{flex:1;padding:9px 0;border-radius:11px;font-size:12px;font-weight:600;cursor:pointer;border:none;text-align:center;transition:all .2s}
 .btn-share-link{background:rgba(200,169,110,.12);color:#c8a96e;border:1px solid rgba(200,169,110,.25)}
 .btn-share-link:hover{background:rgba(200,169,110,.2)}
 .btn-share-img{background:linear-gradient(135deg,#c8a96e,#b8860b);color:#1a0a2e}
 .btn-share-img:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(200,169,110,.3)}
-.btn-restart{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.15);color:#a08870;padding:10px 0;width:100%;border-radius:12px;font-size:13px;cursor:pointer;transition:all .2s;margin-top:6px}
+.btn-restart{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.15);color:#a08870;padding:9px 0;width:100%;border-radius:11px;font-size:12px;cursor:pointer;transition:all .2s;margin-top:5px}
 .btn-restart:hover{background:rgba(255,255,255,.08)}
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#2c1810;color:#f0e6c5;padding:10px 20px;border-radius:10px;font-size:12px;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;border:1px solid rgba(200,169,110,.2)}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#2c1810;color:#f0e6c5;padding:9px 18px;border-radius:10px;font-size:12px;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;border:1px solid rgba(200,169,110,.2)}
 .toast.show{opacity:1;pointer-events:auto}
 #shareCanvas{display:none}
-.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,0,21,.85);display:none;justify-content:center;align-items:center;z-index:100;flex-direction:column;gap:14px}
+.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,0,21,.85);display:none;justify-content:center;align-items:center;z-index:100;flex-direction:column;gap:12px}
 .loading-overlay.show{display:flex}
-.loading-spinner{width:36px;height:36px;border:3px solid rgba(200,169,110,.15);border-top-color:#c8a96e;border-radius:50%;animation:spin .8s linear infinite}
+.loading-spinner{width:32px;height:32px;border:3px solid rgba(200,169,110,.15);border-top-color:#c8a96e;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{color:#c8a96e;font-size:13px;letter-spacing:2px}
-@media(max-width:380px){.cover h1{font-size:22px}.quiz-q{font-size:15px}.quiz-opt{font-size:12px;padding:10px 12px}}
+.loading-text{color:#c8a96e;font-size:12px;letter-spacing:2px}
+@media(max-width:380px){.cover h1{font-size:20px}.quiz-q{font-size:14px}.quiz-opt{font-size:11px;padding:9px 11px}}
 </style>
 </head>
 <body>
@@ -101,14 +101,15 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 <div class="cover">
 <span class="cover-badge">✦ 照德堂 · 八字精算 ✦</span>
 <span class="cover-icon">🔮</span>
-<h1>生辰八字<br><span>· 财运婚姻寿命 · 综合精算</span></h1>
+<h1>生辰八字<br><span>· 财运婚姻寿命 · 十八道精算</span></h1>
 <div class="sub">
-12道精算题 · 覆盖年柱·月令·时辰·五行·星座<br>
-全方位解析你的财运走势、婚姻缘分、寿命养生、社交人缘
+18道精算题 · 全面覆盖年柱·月令·时辰·五行·星座·风水·色彩<br>
+深度解析财运走势、婚姻缘分、寿命养生、社交人缘、事业方向
 </div>
 <div class="tags">
 <span>💰 财运</span><span>💕 姻缘</span><span>🌿 寿元</span>
-<span>⭐ 星座</span><span>🤝 人缘</span><span>🔮 流年</span>
+<span>⭐ 星座</span><span>🤝 人缘</span><span>🏠 风水</span>
+<span>🎨 色彩</span><span>💼 事业</span><span>🔮 流年</span>
 </div>
 <button class="btn-start" onclick="startQuiz()">开 始 精 算</button>
 <div class="disclaimer">📌 仅供趣味参考 · 命运在自己手中</div>
@@ -117,7 +118,7 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 
 <div class="screen" id="screenQuiz">
 <div class="progress-wrap">
-<span class="progress-text" id="progressText">1 / 12</span>
+<span class="progress-text" id="progressText">1 / 18</span>
 <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 </div>
 <div class="quiz-card" id="quizCard"></div>
@@ -131,7 +132,7 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 
 <script>
 // ============================================================
-// 12道精算题
+// 18道精算题
 // ============================================================
 const Q = [
   {
@@ -211,19 +212,19 @@ const Q = [
   },
   {
     q:'你的消费习惯更偏向？',
-    desc:'花钱方式暴露命中的财星状态',
+    desc:'花钱方式暴露命中财星状态和理财天赋',
     key:'spending',
     options:[
-      {v:'frugal',l:'🪙 精打细算 · 每一分都花在刀刃上',badge:'财库型'},
+      {v:'frugal',l:'🪙 精打细算 · 每一分都要花在刀刃上',badge:'财库型'},
       {v:'enjoy',l:'🛍️ 活在当下 · 该花就花不委屈自己',badge:'财通型'},
       {v:'invest',l:'📈 投资未来 · 钱要花在能生钱的地方',badge:'财生型'},
       {v:'casual',l:'🌊 随性自然 · 不记账不看价喜欢就买',badge:'财散型'},
-      {v:'save',l:'🏦 强迫储蓄 · 工资到手先存一半',badge:'财守型'},
+      {v:'save',l:'🏦 强制储蓄 · 工资到手先存一半再说',badge:'财守型'},
     ]
   },
   {
     q:'你的饮食口味偏向？',
-    desc:'饮食偏好暴露五行的「本命需求」和「身体短板」',
+    desc:'饮食偏好暴露五行的「本命需求」和身体短板信号',
     key:'diet',
     options:[
       {v:'meat',l:'🥩 无肉不欢 · 红肉海鲜来者不拒',badge:'金·辛'},
@@ -231,18 +232,20 @@ const Q = [
       {v:'seafood',l:'🦐 水产海鲜 · 鱼虾蟹贝最爱',badge:'水·咸'},
       {v:'spicy',l:'🌶️ 无辣不欢 · 烧烤火锅串串控',badge:'火·苦'},
       {v:'grain',l:'🌾 五谷杂粮 · 粗粮米面最养胃',badge:'土·甘'},
+      {v:'sweet',l:'🍰 甜品甜食 · 奶茶蛋糕不能少',badge:'土·甘'},
     ]
   },
   {
     q:'你目前的感情/婚姻状态？',
-    desc:'姻缘线的实时状态——命盘中的夫妻宫能量投射',
+    desc:'姻缘线的实时状态——命盘夫妻宫的能量投射',
     key:'relationship',
     options:[
-      {v:'single_wait',l:'💔 单身 · 一直在等那个对的人',badge:'待缘'},
+      {v:'single_wait',l:'💔 单身一直在等 · 等那个对的人出现',badge:'待缘'},
       {v:'single_happy',l:'✨ 享受单身 · 一个人也很精彩',badge:'自足'},
-      {v:'dating',l:'💑 恋爱中 · 有稳定伴侣',badge:'有情'},
+      {v:'dating',l:'💑 恋爱中 · 有稳定伴侣相处中',badge:'有情'},
       {v:'married',l:'💍 已婚 · 已有婚姻家庭',badge:'成家'},
       {v:'complex',l:'🌪️ 感情波动 · 正在经历变化期',badge:'变动'},
+      {v:'separated',l:'💔 离异/分居 · 经历过感情的转折',badge:'重启'},
     ]
   },
   {
@@ -250,42 +253,115 @@ const Q = [
     desc:'人际交往方式反映命盘中的比劫与贵人关系',
     key:'social',
     options:[
-      {v:'social_butterfly',l:'🦋 社牛 · 走到哪都能交到朋友',badge:'比劫旺'},
-      {v:'close_few',l:'🤝 三五知己 · 圈子不大但很深',badge:'贵人宜'},
-      {v:'solo',l:'🧘 独处充电 · 社交消耗能量',badge:'印星重'},
+      {v:'social_butterfly',l:'🦋 社牛达人 · 走到哪都能交到朋友',badge:'比劫旺'},
+      {v:'close_few',l:'🤝 三五知己 · 圈子不大但交心很深',badge:'贵人宜'},
+      {v:'solo',l:'🧘 独处充电 · 社交消耗能量需要恢复',badge:'印星重'},
       {v:'switch',l:'🎭 场合切换 · 该合群合群该独处独处',badge:'平衡型'},
     ]
   },
   {
-    q:'你当前最关心哪方面运势？',
-    desc:'关注焦点的投射——命理能量的「当下聚敛方向」',
-    key:'focus',
+    q:'你最喜欢的颜色偏向？',
+    desc:'色彩偏好泄露你五行之中的「能量渴求」',
+    key:'color',
     options:[
-      {v:'wealth',l:'💰 财运 · 赚钱存钱投资理财',badge:'正财旺'},
-      {v:'marriage',l:'💕 婚姻 · 感情缘分家庭稳定',badge:'夫妻宫'},
-      {v:'health',l:'🌿 健康 · 养生延寿精力管理',badge:'寿元宫'},
-      {v:'career',l:'💼 事业 · 晋升跳槽发展竞争',badge:'官禄宫'},
-      {v:'social',l:'🤝 人际 · 贵人小人社交圈子',badge:'交友宫'},
+      {v:'red',l:'🔴 红/橙/紫 · 热烈鲜明充满活力',badge:'火'},
+      {v:'yellow',l:'🟡 黄/金/棕 · 温暖踏实稳重可靠',badge:'土'},
+      {v:'white',l:'⚪ 白/银/灰 · 简洁纯净清爽利落',badge:'金'},
+      {v:'blue',l:'🔵 蓝/黑 · 深邃冷静沉静内敛',badge:'水'},
+      {v:'green',l:'🟢 绿/青 · 自然清新平和舒展',badge:'木'},
     ]
   },
   {
-    q:'你的人生信条更偏向？',
-    desc:'心性选择决定大运走向——你的决策模式主导运势',
-    key:'philosophy',
+    q:'你理想的居住环境？',
+    desc:'居住偏好暗藏风水气场的「五行取向」',
+    key:'home',
     options:[
-      {v:'steady',l:'🛡️ 稳中求进 · 不做没把握的事',badge:'保守知命'},
-      {v:'daring',l:'🚀 敢想敢拼 · 富贵险中求',badge:'冒险造命'},
-      {v:'go_with',l:'🌊 随遇而安 · 命里有时终须有',badge:'随缘认命'},
-      {v:'strive',l:'💪 人定胜天 · 命运靠自己打拼',badge:'拼搏改命'},
+      {v:'water_mountain',l:'🏞️ 依山傍水 · 自然环境优美',badge:'风水佳'},
+      {v:'city_center',l:'🏙️ 繁华闹市 · 交通便利配套齐全',badge:'火旺'},
+      {v:'quiet',l:'🏘️ 安静小区 · 生活便利邻里和睦',badge:'土稳'},
+      {v:'highrise',l:'🏢 高层远眺 · 视野开阔居高临下',badge:'金高'},
+      {v:'garden',l:'🌺 花园庭院 · 有院有花有草有阳光',badge:'木盛'},
     ]
   },
   {
-    q:'你觉得自己当前的整体运势如何？',
+    q:'你通常几点入睡？',
+    desc:'作息习惯暴露身体节律和五行平衡状态',
+    key:'sleep',
+    options:[
+      {v:'early',l:'🌙 10点前 · 早睡早起养生达人',badge:'金·收藏'},
+      {v:'normal',l:'🌛 11点左右 · 标准作息中规中矩',badge:'水·平衡'},
+      {v:'late',l:'🌝 12点-1点 · 夜猫子越夜越精神',badge:'火·耗阴'},
+      {v:'very_late',l:'🦉 1点以后 · 熬夜冠军修仙党',badge:'木·过耗'},
+      {v:'irregular',l:'🌀 不规律 · 困了就睡醒了就起',badge:'土·随性'},
+    ]
+  },
+  {
+    q:'你的工作状态更接近？',
+    desc:'事业选择反映官禄宫的格局高低',
+    key:'career',
+    options:[
+      {v:'expert',l:'🔬 深耕一个领域 · 做行业专家',badge:'专精格'},
+      {v:'explorer',l:'🚀 不断跳槽换赛道 · 寻找最适合的',badge:'探险格'},
+      {v:'entrepreneur',l:'💡 自由职业/创业 · 自己说了算',badge:'自主格'},
+      {v:'stable',l:'🏢 稳定朝九晚五 · 求稳不求变',badge:'安稳格'},
+      {v:'slasher',l:'🎭 多重身份斜杠 · 什么都想试试',badge:'跨界格'},
+    ]
+  },
+  {
+    q:'你最喜欢的休闲方式？',
+    desc:'休闲偏好补充的是五行之中的「能量缺口」',
+    key:'leisure',
+    options:[
+      {v:'sports',l:'🏃 运动健身 · 流汗释放压力',badge:'火·动'},
+      {v:'reading',l:'📚 读书学习 · 安静中汲取养分',badge:'木·长'},
+      {v:'music',l:'🎵 音乐艺术 · 沉浸内心世界',badge:'水·润'},
+      {v:'nature',l:'🌲 户外自然 · 山林海边公园',badge:'土·养'},
+      {v:'craft',l:'🧵 手工烹饪 · 创造美好事物',badge:'金·成'},
+    ]
+  },
+  {
+    q:'如果突然得到一笔意外之财，你会？',
+    desc:'面对横财的态度揭示命中偏财星的深浅',
+    key:'windfall',
+    options:[
+      {v:'save_all',l:'🏦 全部存起来 · 留作未来保障',badge:'财库深'},
+      {v:'invest',l:'📊 投资理财 · 让钱生钱',badge:'财生财'},
+      {v:'enjoy',l:'🎉 消费享受 · 奖励自己和家人',badge:'财来财去'},
+      {v:'share',l:'👨‍👩‍👧‍👦 分给家人朋友 · 一起开心',badge:'财散人聚'},
+      {v:'learn',l:'🎓 学习充电 · 投资自己的成长',badge:'财转才'},
+    ]
+  },
+  {
+    q:'你的童年成长环境更接近？',
+    desc:'早年环境决定命盘中的「根基能量」——印星与财星的最初形态',
+    key:'childhood',
+    options:[
+      {v:'city',l:'🏙️ 城市长大 · 资源丰富节奏快',badge:'官杀旺'},
+      {v:'rural',l:'🌾 乡村长大 · 自然亲近节奏慢',badge:'印星重'},
+      {v:'big_family',l:'👨‍👩‍👧‍👦 大家庭 · 兄弟姐妹多热闘',badge:'比劫多'},
+      {v:'only_child',l:'🌟 独生子女 · 独自长大空间大',badge:'食伤旺'},
+      {v:'moved',l:'🛫 多次搬家转学 · 环境总在变化',badge:'驿马动'},
+    ]
+  },
+  {
+    q:'你面对困境时通常怎么做？',
+    desc:'应对危机的方式体现命盘中的「用神取用」智慧',
+    key:'crisis',
+    options:[
+      {v:'think',l:'🧠 冷静分析 · 想清楚再行动',badge:'印星智'},
+      {v:'act',l:'⚡ 立即行动 · 先做再想不拖延',badge:'比劫勇'},
+      {v:'seek_help',l:'🤲 找人帮忙 · 借力使力不硬扛',badge:'贵人缘'},
+      {v:'avoid',l:'🙈 先放一放 · 时间会解决问题',badge:'食伤泄'},
+      {v:'fight',l:'🔥 硬刚到底 · 不信自己搞不定',badge:'官杀克'},
+    ]
+  },
+  {
+    q:'你对自己当前的整体运势感受如何？',
     desc:'自我感知是命理验证的重要信号——行运周期的晴雨表',
     key:'current_fortune',
     options:[
       {v:'peak',l:'🌟 顺风顺水 · 各方面都很顺利',badge:'行运中'},
-      {v:'flat',l:'⚖️ 不温不火 · 无大喜大悲稳定',badge:'平运中'},
+      {v:'flat',l:'⚖️ 不温不火 · 稳定无大喜大悲',badge:'平运中'},
       {v:'turning',l:'🔄 处于转折 · 好坏参半在变化',badge:'转机中'},
       {v:'low_rising',l:'🌱 触底反弹 · 最难的已经过去了',badge:'回升中'},
       {v:'low',l:'🌧️ 不太顺 · 感觉处处碰壁压力大',badge:'低谷中'},
@@ -294,7 +370,7 @@ const Q = [
 ];
 
 // ============================================================
-// 13种命格结果
+// 13种命格
 // ============================================================
 const R = {
   golden_dragon:{
@@ -306,15 +382,15 @@ const R = {
     marriage:'你的感情运势与财运呈正相关——财运佳时桃花自然旺盛。婚姻中的核心课题是「主导欲较强」，你习惯掌控一切，但感情需要柔软。你理想的伴侣是温润包容型，水火五行属性与你形成互补。已婚者注意：将工作中的强势带回家是婚姻的大忌。',
     health:'金气过旺需重点防范肺与呼吸系统。**养生重点**：润肺降燥。**推荐食材**：银耳、百合、梨子、白萝卜。**运动建议**：深呼吸练习、慢跑、太极拳。45岁后需密切关注肺部健康年检。',
     zodiac:'♌ 狮子座、♑ 摩羯座与你的八字气场最契合。火象星座能激发你的行动力和领导天赋，土象星座能成全你的稳定性和耐力。与♈ 白羊、♉ 金牛同样相合度较高。',
-    advice:'今年是你的「积累之年」，低调深耕比高调扩张更有利。下半年偏财运有惊喜，但要警惕熟人推荐的冲动投资。感情上学会用「示弱」代替「强势」——偶尔的柔软反而能赢得更多。'
+    advice:'今年是「积累之年」，低调深耕比高调扩张更有利。下半年偏财运有惊喜，但要警惕熟人推荐的冲动投资。感情上学会「示弱」代替「强势」——偶尔的柔软反而让你赢得更多。'
   },
   jade_rabbit:{
     icon:'🐇',title:'玉兔衔芝 · 福禄命',
     subtitle:'木德含春 · 福寿双全·贵人环绕之命',
     tags:['👨‍👩‍👧‍👦家庭美满','🌿长寿安康','🏡福气深厚','🤝贵人运佳'],
     portrait:'你的八字带着祥瑞之气，如月宫玉兔般温润灵秀。木主仁、主寿，你天生福泽深厚、一生贵人环绕。看似不争不抢，实则福气自来。你的命运独特之处在于「正缘正财」——来得不一定快，但来了就非常稳固。温和不是软弱，而是你最高的智慧。',
-    wealth:'财星藏在印星之中，意味着你的财富不靠投机，而是靠「专业能力+口碑积累」。适合教育、医疗、文化创意、人力资源等行业。45岁后子女星旺，财运反而超过前半生。**财神方位**：东方。**吉数**：3、8。不是赚最快的人，但一定是最稳的人。',
-    marriage:'典型的「晚婚但幸福感高」类型。婚姻质量很高，伴侣忠诚顾家。你是关系中的天然调和者，擅长用温柔化解矛盾。注意不要过度付出到失去自我——留三分精力爱自己，反而会让关系更平衡。',
+    wealth:'财星藏在印星之中，你的财富靠「专业能力+口碑积累」而不是投机。适合教育、医疗、文化创意、人力资源等行业。45岁后子女星旺，财运反而超过前半生。**财神方位**：东方。**吉数**：3、8。不是赚最快的人，但一定是最稳的人。',
+    marriage:'典型的「晚婚但幸福感高」类型。婚姻质量很高，伴侣忠诚顾家。你是关系中的天然调和者，擅长用温柔化解矛盾。注意不要过度付出到失去自我——留三分精力爱自己，反而让关系更平衡。',
     health:'木气充足，肝肾功能天生强健。天生长寿体质，但需防过度思虑伤脾。**养生核心**：少纠结、多运动。**推荐**：八段锦、快走散步、瑜伽。**食疗**：红枣、枸杞、山药温和补气。',
     zodiac:'♋ 巨蟹座、♓ 双鱼座与你的温润气质最为接近。水象星座能理解你的细腻敏感，土象星座能给你适度的安全感。与♉ 金牛、♎ 天秤也较为和睦。',
     advice:'今年桃花运在秋冬季节悄然转旺——你会遇到欣赏你「温和但不软弱」特质的人。财运稳中有升，适合系统学习一门新技能。健康上注意夏秋之交的肠胃调理。'
@@ -367,7 +443,7 @@ const R = {
     icon:'🌿',title:'瑞鹿鸣春 · 才艺命',
     subtitle:'木火通明 · 才华满溢·青年得志之命',
     tags:['🎨才华超群','🌸人缘极佳','🌟年轻有为','💡创意爆棚'],
-    portrait:'木火通明的珍贵格局，让你如春鹿在林间欢鸣——生命力和创造力兼具。你学什么都比别人快半拍，做什么都带着天生的灵气。木主生发、火主表现，结合起来就是在「一个有才华并且敢于展示的人」。青年时期就能崭露头角，是典型的「年少成名」命格。',
+    portrait:'木火通明的珍贵格局，让你如春鹿在林间欢鸣——生命力和创造力兼具。你学什么都比别人快半拍，做什么都带着天生的灵气。木主生发、火主表现，结合起来就是「一个有才华并且敢于展示的人」。青年时期就能崭露头角，是典型的「年少成名」命格。',
     wealth:'你的财运和「名气」紧密相关——越有名气、越有影响力，钱来得就越快。最适合新媒体、广告创意、设计、演艺、教育培训等需要个人品牌和影响力的行业。**重要提醒**：才华可以变现≠你擅长理财。建议找专业的人帮你规划财务。**财神方位**：东方。**吉数**：3、8。',
     marriage:'你是让人如沐春风的情侣。和你在一起永远充满新鲜感，从不无聊。但在长期关系中容易因「新鲜感降温」而产生倦怠——需要找一个同样爱成长、爱探索的伴侣。最配水属性（与你木火相生相济）或土属性（为你提供稳定感）的人。',
     health:'木火偏旺需防范肝胆和眼睛问题。**养生重点**：少熬夜、多绿色蔬菜。**推荐茶饮**：菊花枸杞茶常备。**最佳养生方式**：多去户外、接触大自然——春日的山林对你最有疗愈效果。',
@@ -383,7 +459,7 @@ const R = {
     marriage:'缘分来得比较晚，但一旦来了就是一辈子的相伴。你是典型的「结了就不想离」的类型。中年后的婚姻非常稳固——因为你们经过了时间的考验。忠告：年轻时不需焦虑，对的人会在你最成熟、最从容的时候出现。',
     health:'水土平衡，天生身体素质不错。但需防范湿气重导致的关节酸痛和消化偏慢。**养生重点**：祛湿健脾——薏米红豆汤是最好的日常饮品。适量温和运动即可，不需要高强度训练。',
     zodiac:'♑ 摩羯座、♉ 金牛座与你最契合——你们最大的共同点就是都能等、都能忍。♍ 处女座能理解你的完美主义，♋ 巨蟹座能给你渴望的情感港湾。',
-    advice:'今年是一份「中长期规划」的最佳时机。考个含金量高的证、系统学习一门硬技能都比赚快钱更有价值。感情上不要放弃希望——缘分可能在你最想不到的地方（如工作场合、学习班）等着你。'
+    advice:'今年是一份「中长期规划」的最佳时机。考个含金量高的证、系统学习一门硬技能都比赚快钱更有价值。感情上不要放弃希望——缘分可能在你最想不到的地方等着你。'
   },
   golden_toad:{
     icon:'💰',title:'金蟾吐宝 · 聚财命',
@@ -434,14 +510,13 @@ const R = {
     subtitle:'水木相生 · 灵活应变·跨界奇才之命',
     tags:['🌀灵活变通','🌊适应力王','🌈处处逢源','🎭多面手'],
     portrait:'水木相生的格局，让你如银鲤在激浪中自由穿梭——你天生拥有最强大的适应能力。水主变通、木主生长，结合起来就是「在变化中疯狂成长」。你的人生核心特质就是「不设限」：任何环境你都能快速找到自己的节奏。你是一个天生的跨界者。',
-    wealth:'你的赚钱方式非常多元，经常在不同领域之间「跨界的赚钱」。死板固定的工作会让你窒息。最适合互联网、国际贸易、咨询顾问、自由职业、新媒体等需要灵活应变的行业。**重要提示**：灵活是你的超能力，但也要有意识地培养深耕一个领域的专注力。**财神方位**：东南。**吉数**：3、8。',
+    wealth:'你的赚钱方式非常多元，经常在不同领域之间跨界赚钱。死板固定的工作会让你窒息。最适合互联网、国际贸易、咨询顾问、自由职业、新媒体等需要灵活应变的行业。**重要提示**：灵活是你的超能力，但也要有意识地培养深耕一个领域的专注力。**财神方位**：东南。**吉数**：3、8。',
     marriage:'在感情中，你需要足够的空间和自由。一个太粘人或控制欲强的伴侣会把你逼走。最适合你的是独立自信的「战友型」伴侣——平时各自精彩，在一起时有说不完的话、做不完的事。',
     health:'整体健康状况不错，但需防范季节性过敏和免疫力的周期性波动。**养生核心**：规律作息就是你最好的保养品。**推荐运动**：游泳和瑜伽，非常匹配你的水性体质。',
     zodiac:'♊ 双子座、♐ 射手座、♒ 水瓶座与你的灵魂最合拍——你们都是不愿被任何框架束缚的自由灵魂。♈ 白羊座能给你带来冒险的冲动。',
     advice:'今年是「动中求财、变中求胜」之年——出差、跳槽、换城市、跨行业发展都可能带来意想不到的好机会。感情上，单身的你很可能在旅途中或学习交流中遇见有缘人。健康上注意春夏季的过敏防护。'
   }
 };
-
 const FALLBACK = {
   icon:'🔮',title:'玄机待解 · 独特命',
   subtitle:'天赋异禀 · 无法被简单定义之命',
@@ -457,95 +532,97 @@ const FALLBACK = {
 // ============================================================
 // 映射表
 // ============================================================
-const ZE = {rat:{e:'water',s:'冬'},ox:{e:'earth',s:'冬'},tiger:{e:'wood',s:'春'},rabbit:{e:'wood',s:'春'},dragon:{e:'earth',s:'春'},snake:{e:'fire',s:'夏'},horse:{e:'fire',s:'夏'},goat:{e:'earth',s:'夏'},monkey:{e:'metal',s:'秋'},rooster:{e:'metal',s:'秋'},dog:{e:'earth',s:'秋'},pig:{e:'water',s:'冬'}};
-const SE = {aries:'fire',taurus:'earth',gemini:'air',cancer:'water',leo:'fire',virgo:'earth',libra:'air',scorpio:'water',sagittarius:'fire',capricorn:'earth',aquarius:'air',pisces:'water'};
-const TE = {dawn:'wood',morning:'fire',afternoon:'earth',evening:'metal',night:'water',late:'earth'};
-const SEASON_E = {spring:'wood',summer:'fire',mid:'earth',autumn:'metal',winter:'water'};
-const DIET_E = {meat:'metal',veg:'wood',seafood:'water',spicy:'fire',grain:'earth'};
-const SPENDING_M = {frugal:'kr',enjoy:'kd',invest:'kz',casual:'ks',save:'kg'};
-const SOCIAL_M = {social_butterfly:'bj',close_few:'gr',solo:'yx',switch:'ph'};
-const PHIL_M = {steady:'bx',daring:'mz',go_with:'sy',strive:'pg'};
+const ZE={rat:{e:'water'},ox:{e:'earth'},tiger:{e:'wood'},rabbit:{e:'wood'},dragon:{e:'earth'},snake:{e:'fire'},horse:{e:'fire'},goat:{e:'earth'},monkey:{e:'metal'},rooster:{e:'metal'},dog:{e:'earth'},pig:{e:'water'}};
+const SE={spring:'wood',summer:'fire',mid:'earth',autumn:'metal',winter:'water'};
+const TE={dawn:'wood',morning:'fire',afternoon:'earth',evening:'metal',night:'water',late:'earth'};
+const PE={metal:'metal',wood:'wood',water:'water',fire:'fire',earth:'earth'};
+const SIE={aries:'fire',taurus:'earth',gemini:'air',cancer:'water',leo:'fire',virgo:'earth',libra:'air',scorpio:'water',sagittarius:'fire',capricorn:'earth',aquarius:'air',pisces:'water'};
+const DIE={meat:'metal',veg:'wood',seafood:'water',spicy:'fire',grain:'earth',sweet:'earth'};
+const COLE={red:'fire',yellow:'earth',white:'metal',blue:'water',green:'wood'};
+const HOMELE={water_mountain:'water',city_center:'fire',quiet:'earth',highrise:'metal',garden:'wood'};
+const LEIE={sports:'fire',reading:'wood',music:'water',nature:'earth',craft:'metal'};
+const CHILDE={city:'fire',rural:'earth',big_family:'wood',only_child:'water',moved:'metal'};
+const CRISISE={think:'water',act:'fire',seek_help:'wood',avoid:'earth',fight:'metal'};
 
 // ============================================================
 // 运算引擎
 // ============================================================
 function calcResult(a){
-  const ze=ZE[a.zodiac].e, se=SEASON_E[a.season], te=TE[a.birth_time], pe=a.element, sige=SE[a.zodiac_sign];
-  const die=DIET_E[a.diet];
+  const src=[ZE[a.zodiac].e,SE[a.season],TE[a.birth_time],a.element,SIE[a.zodiac_sign],DIE[a.diet],COLE[a.color],HOMELE[a.home],LEIE[a.leisure],CHILDE[a.childhood],CRISISE[a.crisis]];
   const c={metal:0,wood:0,water:0,fire:0,earth:0};
-  [ze,se,te,pe,sige,die].forEach(e=>{if(c[e]!==undefined)c[e]++});
-  const has=(e)=>c[e]>=2, combo=(x,y)=>c[x]>=1&&c[y]>=1;
-
+  src.forEach(e=>{if(c[e]!==undefined)c[e]++});
+  const has=(e)=>c[e]>=2,combo=(x,y)=>c[x]>=1&&c[y]>=1;
   let k;
-  if(has('metal')&&has('earth')) k='golden_toad';
-  else if(has('metal')&&has('water')) k='white_crane';
-  else if(has('fire')&&c.fire>=2) k='phoenix_fire';
-  else if(has('water')&&c.water>=2&&combo('water','metal')) k='silver_carp';
-  else if(has('water')&&c.water>=2) k='dark_turtle';
-  else if(has('wood')&&has('fire')) k='deer_spring';
-  else if(has('wood')&&c.wood>=2) k='jade_rabbit';
-  else if(has('earth')&&c.earth>=2&&combo('earth','water')) k='blue_ox';
-  else if(has('earth')&&c.earth>=2&&combo('earth','fire')) k='unicorn_mountain';
-  else if(has('water')&&has('fire')) k='phoenix_mate';
-  else if(has('metal')&&c.metal>=2) k='golden_dragon';
-  else if(has('earth')&&has('water')) k='turtle_fortune';
+  if(has('metal')&&has('earth'))k='golden_toad';
+  else if(has('metal')&&has('water'))k='white_crane';
+  else if(has('fire')&&c.fire>=2)k='phoenix_fire';
+  else if(has('water')&&c.water>=2&&combo('water','metal'))k='silver_carp';
+  else if(has('water')&&c.water>=2)k='dark_turtle';
+  else if(has('wood')&&has('fire'))k='deer_spring';
+  else if(has('wood')&&c.wood>=2)k='jade_rabbit';
+  else if(has('earth')&&c.earth>=2&&combo('earth','water'))k='blue_ox';
+  else if(has('earth')&&c.earth>=2&&combo('earth','fire'))k='unicorn_mountain';
+  else if(has('water')&&has('fire'))k='phoenix_mate';
+  else if(has('metal')&&c.metal>=2)k='golden_dragon';
+  else if(has('earth')&&has('water'))k='turtle_fortune';
   else k='purple_star';
-
-  // 微调
-  if(a.focus==='health'&&k==='blue_ox') k='jade_rabbit';
-  if(a.focus==='wealth'&&(k==='jade_rabbit'||k==='unicorn_mountain')) k='golden_toad';
-  if(a.focus==='marriage'&&k==='blue_ox') k='phoenix_mate';
-
+  if(a.focus==='health'&&k==='blue_ox')k='jade_rabbit';
+  if(a.focus==='wealth'&&(k==='jade_rabbit'||k==='unicorn_mountain'))k='golden_toad';
+  if(a.focus==='marriage'&&k==='blue_ox')k='phoenix_mate';
   const r=JSON.parse(JSON.stringify(R[k]||FALLBACK));
-
-  // 根据个人答案丰富结果细节
-  // 饮食 × 健康建议
-  if(a.diet==='spicy'&&r.health.length<100) r.health+=' 特别提醒：你爱吃辣，需适度控制——过辣耗阴伤胃，建议每周至少两天清淡饮食给肠胃放个假。';
-  else if(a.diet==='meat'&&r.health.length<100) r.health+=' 特别提醒：肉食为主需多搭配蔬菜水果，红肉摄入建议每周不超过3次，多选鱼禽类。';
-  else if(a.diet==='veg'&&r.health.length<100) r.health+=' 特别提醒：素食者需注意补充优质蛋白和B12，豆类、菌菇、蛋奶都是好选择。';
-  else if(a.diet==='seafood'&&r.health.length<100) r.health+=' 特别提醒：海鲜虽好但偏寒湿，建议搭配姜蒜同食，脾胃虚寒者不宜过量。';
-
-  // 消费 × 财运建议
-  if(a.spending==='casual') r.wealth+=' ⚠️ 你的随性消费习惯需要重点关注——建议设置每月预算上限并坚持记账。';
-  else if(a.spending==='frugal') r.wealth+=' ✅ 你的精打细算是好习惯，但记得偶尔也要奖励自己——财富是用来服务生活的。';
-  else if(a.spending==='enjoy') r.wealth+=' 💡 你懂得享受生活是好事，建议在每月收入到账时先存后花，控制冲动消费比例。';
-
-  // 感情 × 婚姻建议
-  if(a.relationship==='single_wait') r.marriage+=' 你在等待一个对的人——今年可以试着扩大社交圈，缘分往往在你走出舒适区时出现。';
-  else if(a.relationship==='single_happy') r.marriage+=' 享受单身本身就是一种福气。你不需要为了结婚而结婚，对的人出现之前先做好自己。';
-  else if(a.relationship==='complex') r.marriage+=' 经历感情波动期时，最重要的不是立刻做决定，而是给自己足够的冷静时间。';
-
-  // 社交 × 人缘
-  if(a.social==='social_butterfly') r.portrait+=' 你的社交天赋非常突出，朋友遍天下——但要注意筛选真正值得深交的人。';
-  else if(a.social==='solo') r.portrait+=' 你喜欢独处不是孤僻，而是你的能量来源方式。保留高质量的独处时间对你的成长很重要。';
-  else if(a.social==='close_few') r.portrait+=' 你深谙「少即是多」的社交智慧——几个真朋友胜过一群点赞之交。';
-
-  // 运势 × 流年建议
-  if(a.current_fortune==='low') r.advice+=' 低谷期正是积累能量的最佳时机——把重心放在学习、运动和健康上，好运正在路上。';
-  else if(a.current_fortune==='low_rising') r.advice+=' 触底回升的势头已经出现，保持住这个节奏。下半年会比上半年明显好转。';
-  else if(a.current_fortune==='turning') r.advice+=' 转折期最忌讳的是「急于求成」——顺势而为比逆流而上聪明得多。';
-
-  // 信条 × 事业建议
-  if(a.philosophy==='strive'||a.philosophy==='daring') r.advice+=' 你命里有「造命」的勇气，这是很好的品质。但建议大决策前多征求身边稳重型朋友的意见。';
-  else if(a.philosophy==='steady') r.advice+=' 你的稳重是你的核心竞争力。今年可以适当尝试一些「有把握的冒险」——太保守也会错过机会。';
-  else if(a.philosophy==='go_with') r.advice+=' 你的随缘心态让你少了很多焦虑。但今年值得在某些重要领域「主动争取」一次——你值得更好的。';
-
+  // 饮食微调
+  if(a.diet==='spicy')r.health+=' ⚠️ 你爱吃辣，建议适度控制——过辣耗阴伤胃，每周至少两天清淡饮食。';
+  else if(a.diet==='meat')r.health+=' 💡 肉食为主多搭蔬菜，红肉每周不超3次，多选鱼禽类。';
+  else if(a.diet==='sweet')r.health+=' 🍬 爱吃甜食需注意控糖，过量甜食加重湿气、影响肤质。';
+  else if(a.diet==='veggie')r.health+=' 🌿 素食者注意补充优质蛋白和B12，菌菇豆蛋奶是好选择。';
+  // 消费微调
+  if(a.spending==='casual')r.wealth+=' ⚠️ 随性消费是你的风格，建议设月度预算上限并试试记账。';
+  else if(a.spending==='frugal')r.wealth+=' ✅ 精打细算的好习惯，但偶尔也要奖励自己——钱服务生活。';
+  else if(a.spending==='enjoy')r.wealth+=' 💡 懂得享受生活是好事，建议到账先存后花，控制冲动消费。';
+  // 感情微调
+  if(a.relationship==='single_wait')r.marriage+=' 你一直在等待——今年可以试着扩大社交圈，缘分往往在走出舒适区时出现。';
+  else if(a.relationship==='single_happy')r.marriage+=' 享受单身本身就是福气。不必为结婚而结婚，对的人出现前先做好自己。';
+  else if(a.relationship==='complex')r.marriage+=' 感情波动期最需要的是「给自己时间」——不用急着做决定。';
+  else if(a.relationship==='separated')r.marriage+=' 经历过感情的转折之后，你是带着更清醒的认知在等待下一段——这样更好。';
+  // 社交微调
+  if(a.social==='social_butterfly')r.portrait+=' 你的社交天赋很强，朋友遍天下——但注意筛选真正值得深交的人。';
+  else if(a.social==='solo')r.portrait+=' 喜欢独处是你的能量来源方式，高质量的独处时间对你很重要。';
+  else if(a.social==='close_few')r.portrait+=' 「少即是多」的社交智慧——几个真朋友胜过一群点赞之交。';
+  // 睡眠微调
+  if(a.sleep==='very_late'||a.sleep==='late')r.health+=' 💤 你属于熬夜体质，长期熬夜耗阴伤肝。建议逐步提前作息，23点前入睡是关键。';
+  else if(a.sleep==='early')r.health+=' 🌙 早睡早起的好习惯是你健康长寿的重要保障，继续保持！';
+  // 工作微调
+  if(a.career==='entrepreneur'||a.career==='slasher')r.wealth+=' 你的创业/跨界精神很好，但创业初期建议保持现金流稳定，不要全押。';
+  else if(a.career==='expert')r.wealth+=' 专精在一个领域深耕是最好的财富积累方式，你的专业度会随时间增值。';
+  // 睡眠微调
+  if(a.sleep==='very_late')r.advice+=' ⏰ 健康提示：长期凌晨后入睡严重耗损阴血，建议以每周提前15分钟的方式逐步调整。';
+  // 困境应对微调
+  if(a.crisis==='fight')r.advice+=' 🔥 你遇事硬刚到底，勇气可嘉。但有时候「不硬扛」也是种智慧——学会借力。';
+  else if(a.crisis==='seek_help')r.advice+=' 🤝 你懂得借力，这是高情商的表现。今年你的贵人运依然不错。';
+  else if(a.crisis==='think')r.advice+=' 🧠 你习惯先想再做，这是优点。但有时过度分析会错失时机——适当相信直觉。';
+  // 童年微调
+  if(a.childhood==='moved')r.portrait+=' 你小时候经历过多次环境变化，这造就了你强大的适应力和不恋旧的性格。';
+  else if(a.childhood==='big_family')r.portrait+=' 大家庭长大的你天生懂得人情世故和分享，这是你一生的财富。';
+  // 运势微调
+  if(a.current_fortune==='low')r.advice+=' 💪 低谷期正是积累能量的最佳时机——重心放在学习、运动和健康上，好运在路上。';
+  else if(a.current_fortune==='low_rising')r.advice+=' 📈 触底回升的势头已经出现，保持住这个节奏，下半年会比上半年明显好转。';
+  else if(a.current_fortune==='turning')r.advice+=' ⚖️ 转折期最忌讳急功近利——顺势而为比逆流而上聪明得多。';
+  // 星座配饰
+  if(a.color==='red')r.zodiac+=' 你偏爱红色说明内心渴望热情与活力，这与火象星座的能量同频共振。';
+  else if(a.color==='blue')r.zodiac+=' 偏爱蓝色代表你内在冷静理性的一面，水象和风象星座最能理解你的世界。';
+  else if(a.color==='green')r.zodiac+=' 喜欢绿色说明你渴望自然与生长，木性充沛的人往往与植物有天然亲近感。';
+  // 居住微调
+  if(a.home==='water_mountain')r.wealth+=' 你理想中依山傍水的环境说明你的气场合水木，适合在近水或绿化好的地方置产。';
+  else if(a.home==='city_center')r.wealth+=' 你喜欢繁华地段，这和你命中的财气有关——人流量大的地方就是你的财位。';
   return r;
 }
 
 // ============================================================
-// UI交互
+// UI
 // ============================================================
-let cur=0;
-const ans={};
-
-function startQuiz(){
-  g('screenCover').classList.remove('active');
-  g('screenQuiz').classList.add('active');
-  cur=0;renderQ();
-}
+let cur=0;const ans={};
 function g(id){return document.getElementById(id);}
-
+function startQuiz(){g('screenCover').classList.remove('active');g('screenQuiz').classList.add('active');cur=0;renderQ();}
 function renderQ(){
   const q=Q[cur],card=g('quizCard'),total=Q.length;
   let h=`<div class="quiz-qnum">第 ${cur+1}/${total} 题</div><div class="quiz-q">${q.q}</div><div class="quiz-desc">${q.desc}</div><div class="quiz-options">`;
@@ -557,7 +634,6 @@ function sel(k,v){ans[k]=v;renderQ();}
 function next(){const q=Q[cur];if(!ans[q.key])return;if(cur<Q.length-1){cur++;renderQ();}else showResult();}
 function prev(){if(cur>0){cur--;renderQ();}}
 function updP(){const p=((cur+1)/Q.length)*100;g('progressBar').style.width=p+'%';g('progressText').textContent=cur+1+' / '+Q.length;}
-
 function showResult(){
   const ov=g('loadingOverlay');ov.classList.add('show');
   setTimeout(()=>{
@@ -571,55 +647,51 @@ function showResult(){
 <div class="r-section"><div class="r-label"><span class="emoji">⭐</span> 星座印证</div><p>${r.zodiac}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">🔮</span> 流年锦囊</div><p>${r.advice}</p></div>
 <div class="share-row"><button class="btn-share btn-share-link" onclick="shareLink()">📋 复制链接</button><button class="btn-share btn-share-img" onclick="shareImage()">🖼️ 生成分享图</button></div>
-<div class="result-footer"><div class="brand">✦ 照德堂 · 以自然之道养自然之身 ✦</div><div class="slogan">长沙雨花区 · 药食同源 · 手作护肤</div><div class="disclaimer">📌 仅供趣味参考 · 真正的命在自己手中</div><button class="btn-restart" onclick="restart()">🔄 重新测算</button></div>`;
+<div class="result-footer"><div class="brand">✦ 照德堂 · 以自然之道养自然之身 ✦</div><div class="slogan">长沙雨花区 · 药食同源 · 手作护肤</div><div class="disclaimer">📌 仅供趣味参考 · 真正的命在自己手中</div><button class="btn-restart" onclick="restart()">🔄 重新测算（18题）</button></div>`;
     window.scrollTo({top:0,behavior:'smooth'});
   },1200);
 }
-
 function shareLink(){
   const url=window.location.href;
-  if(navigator.share){navigator.share({title:'生辰八字·综合精算',text:'我测了我的八字财运婚姻寿命，你也试试！共12道精算题',url}).catch(()=>{});}
-  else{const ta=document.createElement('textarea');ta.value='🔮 我测了我的八字命盘！\n生辰八字·财运婚姻寿命·综合精算（12道精算题）\n'+url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ 链接已复制！');}
+  if(navigator.share){navigator.share({title:'生辰八字·综合精算',text:'🔮 我测了我的八字命盘！18道精算题全方位解析\n你也来试试👇',url}).catch(()=>{});}
+  else{const ta=document.createElement('textarea');ta.value='🔮 我测了我的八字命盘！18道精算题全面解析财运婚姻寿命星座\n'+url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ 链接已复制！');}
 }
-
 function shareImage(){
   const ov=g('loadingOverlay');g('loadingText').textContent='🖼️ 生成分享图中...';ov.classList.add('show');
   setTimeout(()=>{
     const r=calcResult(ans),cv=g('shareCanvas'),ctx=cv.getContext('2d');
-    const W=400,H=620;cv.width=W;cv.height=H;
+    const W=400,H=600;cv.width=W;cv.height=H;
     const gd=ctx.createLinearGradient(0,0,0,H);
     gd.addColorStop(0,'#0a0015');gd.addColorStop(.5,'#1a0a2e');gd.addColorStop(1,'#0d0221');
     ctx.fillStyle=gd;ctx.fillRect(0,0,W,H);
-    for(let i=0;i=28;i++){const x=Math.random()*W,y=Math.random()*H,rr=Math.random()*1.5+.5;ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.6+.2)+')';ctx.fill();}
-    ctx.fillStyle='#c8a96e';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字综合精算 ✦',W/2,35);
-    ctx.strokeStyle='rgba(200,169,110,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(30,48);ctx.lineTo(W-30,48);ctx.stroke();
-    ctx.font='44px sans-serif';ctx.fillText(r.icon,W/2,100);
-    ctx.fillStyle='#f0e6c5';ctx.font='bold 20px sans-serif';ctx.fillText(r.title,W/2,135);
-    ctx.font='10px sans-serif';ctx.fillStyle='#c8a96e';ctx.fillText(r.tags.join(' · '),W/2,155);
-    ctx.beginPath();ctx.moveTo(50,168);ctx.lineTo(W-50,168);ctx.stroke();
+    for(let i=0;i<30;i++){const x=Math.random()*W,y=Math.random()*H,rr=Math.random()*1.5+.5;ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.6+.2)+')';ctx.fill();}
+    ctx.fillStyle='#c8a96e';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字精算 ✦',W/2,35);
+    ctx.strokeStyle='rgba(200,169,110,.3)';ctx.beginPath();ctx.moveTo(30,48);ctx.lineTo(W-30,48);ctx.stroke();
+    ctx.font='42px sans-serif';ctx.fillText(r.icon,W/2,98);
+    ctx.fillStyle='#f0e6c5';ctx.font='bold 19px sans-serif';ctx.fillText(r.title,W/2,132);
+    ctx.font='10px sans-serif';ctx.fillStyle='#c8a96e';ctx.fillText(r.tags.join(' · '),W/2,152);
+    ctx.beginPath();ctx.moveTo(50,165);ctx.lineTo(W-50,165);ctx.stroke();
     ctx.fillStyle='#c8bca0';ctx.font='11px sans-serif';
-    const pt=r.portrait.substring(0,80)+(r.portrait.length>80?'……':'');
-    wt(ctx,pt,30,188,340,16);
+    const pt=r.portrait.substring(0,75)+(r.portrait.length>75?'……':'');
+    wt(ctx,pt,30,183,340,15);
     ctx.fillStyle='#b22222';ctx.font='bold 11px sans-serif';ctx.textAlign='left';
-    ctx.fillText('💰 财运',30,255);ctx.fillStyle='#b8a88a';ctx.font='10px sans-serif';const ws=r.wealth.substring(0,45);ctx.fillText(ws+(r.wealth.length>45?'……':''),30,272);
-    ctx.fillStyle='#b22222';ctx.font='bold 11px sans-serif';ctx.fillText('💕 姻缘',30,302);ctx.fillStyle='#b8a88a';ctx.font='10px sans-serif';const ms=r.marriage.substring(0,45);ctx.fillText(ms+(r.marriage.length>45?'……':''),30,319);
-    ctx.fillStyle='#b22222';ctx.font='bold 11px sans-serif';ctx.fillText('🌿 寿元',30,349);ctx.fillStyle='#b8a88a';ctx.font='10px sans-serif';const hs=r.health.substring(0,45);ctx.fillText(hs+(r.health.length>45?'……':''),30,366);
-    ctx.fillStyle='#b22222';ctx.font='bold 11px sans-serif';ctx.fillText('⭐ 星座',30,396);ctx.fillStyle='#b8a88a';ctx.font='10px sans-serif';const zs=r.zodiac.substring(0,45);ctx.fillText(zs+(r.zodiac.length>45?'……':''),30,413);
-    ctx.textAlign='center';ctx.fillStyle='#c8a96e';ctx.font='bold 11px sans-serif';ctx.fillText('🔮 流年锦囊',W/2,450);
-    ctx.fillStyle='#c8bca0';ctx.font='10px sans-serif';const as=r.advice.substring(0,50);ctx.fillText(as+(r.advice.length>50?'……':''),W/2,468);
-    ctx.fillStyle='rgba(200,169,110,.25)';ctx.font='13px sans-serif';ctx.fillText('↑ 扫码自测 ↑',W/2,508);
-    ctx.fillStyle='rgba(255,255,255,.12)';ctx.font='10px sans-serif';ctx.fillText('长按分享 · 仅供趣味参考',W/2,535);
-    ctx.fillStyle='#555';ctx.font='9px sans-serif';ctx.fillText('照德堂 · 长沙雨花区',W/2,558);
+    ctx.fillText('💰 财运',30,248);ctx.fillStyle='#b8a88a';ctx.font='10px sans-serif';ctx.fillText((r.wealth.substring(0,42)+(r.wealth.length>42?'……':'')),30,265);
+    ctx.fillText('💕 姻缘',30,293);ctx.fillText((r.marriage.substring(0,42)+(r.marriage.length>42?'……':'')),30,310);
+    ctx.fillText('🌿 寿元',30,338);ctx.fillText((r.health.substring(0,42)+(r.health.length>42?'……':'')),30,355);
+    ctx.fillText('⭐ 星座',30,383);ctx.fillText((r.zodiac.substring(0,42)+(r.zodiac.length>42?'……':'')),30,400);
+    ctx.textAlign='center';ctx.fillStyle='#c8a96e';ctx.font='bold 11px sans-serif';ctx.fillText('🔮 流年锦囊',W/2,435);
+    ctx.fillStyle='#c8bca0';ctx.font='10px sans-serif';ctx.fillText((r.advice.substring(0,48)+(r.advice.length>48?'……':'')),W/2,453);
+    ctx.fillStyle='rgba(200,169,110,.2)';ctx.font='13px sans-serif';ctx.fillText('↑ 扫码自测（18题精算）↑',W/2,492);
+    ctx.fillStyle='rgba(255,255,255,.1)';ctx.font='9px sans-serif';ctx.fillText('仅供趣味参考',W/2,518);
+    ctx.fillStyle='#555';ctx.font='9px sans-serif';ctx.fillText('照德堂 · 长沙雨花区',W/2,540);
     const du=cv.toDataURL('image/png');
     ov.classList.remove('show');g('loadingText').textContent='🔮 命盘推算中...';
-    const wrap=g('resultWrap'),ih='<div style="text-align:center;margin-bottom:14px"><img src="'+du+'" style="width:100%;max-width:340px;border-radius:14px;border:2px solid rgba(200,169,110,.2)" alt="分享图"><p style="color:#c8a96e;font-size:12px;margin-top:8px">👆 长按图片保存 · 发朋友圈</p></div>';
+    const wrap=g('resultWrap'),ih='<div style="text-align:center;margin-bottom:12px"><img src="'+du+'" style="width:100%;max-width:330px;border-radius:14px;border:2px solid rgba(200,169,110,.2)" alt="分享图"><p style="color:#c8a96e;font-size:11px;margin-top:6px">👆 长按图片保存 · 发朋友圈</p></div>';
     const sr=wrap.querySelector('.share-row');if(sr)sr.insertAdjacentHTML('beforebegin',ih);
     toast('🖼️ 分享图已生成！');
   },800);
 }
-
 function wt(ctx,t,x,y,mw,lh){let l=[],cl='';for(let i=0;i<t.length;i++){cl+=t[i];if(ctx.measureText(cl).width>mw){l.push(cl.slice(0,-1));cl=t[i];}}if(cl)l.push(cl);l.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lh));}
-
 function restart(){
   g('screenResult').classList.remove('active');
   const ei=document.querySelector('.result-wrap img');
@@ -628,8 +700,6 @@ function restart(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function toast(m){const t=g('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-
-// Stars
 (function(){const c=g('starsContainer');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=s.style.height=Math.random()*2+1+'px';s.style.setProperty('--dur',(Math.random()*3+2).toFixed(1)+'s');s.style.animationDelay=Math.random()*5+'s';c.appendChild(s);}})();
 </script>
 </body>
