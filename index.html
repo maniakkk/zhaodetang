@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>命理体质自测 | 照德堂</title>
+<title>命理体质深度自测 | 照德堂</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -22,7 +22,7 @@ body{
   width:160px;height:160px;border-radius:50%;
   background:radial-gradient(circle,rgba(200,169,110,.15) 0%,transparent 70%);
 }
-.hero-icon{font-size:48px;margin-bottom:12px}
+.hero-icon{font-size:56px;margin-bottom:12px}
 .hero h1{font-size:26px;font-weight:700;letter-spacing:2px;margin-bottom:8px}
 .hero p{font-size:14px;color:#C8A96E;line-height:1.6}
 .hero .sub{font-size:13px;color:#A08060;margin-top:8px}
@@ -45,7 +45,7 @@ body{
 .options{display:flex;flex-direction:column;gap:10px}
 .option{
   background:#F5F0E8;border:2px solid #E8E0D0;border-radius:12px;
-  padding:14px 16px;cursor:pointer;transition:all .2s;
+  padding:12px 16px;cursor:pointer;transition:all .2s;
   font-size:15px;color:#2C1810;line-height:1.5;
   display:flex;align-items:center;gap:12px;
 }
@@ -115,14 +115,14 @@ body{
 <div class="hero" id="heroPage">
   <div class="hero-icon">🔮</div>
   <h1>你的命里「缺」什么？</h1>
-  <p>十二种命理体质 · 一份中式玄学 × 中医养生自测</p>
-  <div class="sub">结合八字五行 · 生肖 · 星座 · 传统命理智慧</div>
-  <button class="btn btn-primary" style="margin-top:24px;background:#C8A96E;color:#2C1810" onclick="startQuiz()">开始测算 →</button>
+  <p>12 道题 · 深度解析你的先天能量与后天补益</p>
+  <div class="sub">结合八字五行 · 生肖 · 中医体质 · 传统命理智慧</div>
+  <button class="btn btn-primary" style="margin-top:24px;background:#C8A96E;color:#2C1810" onclick="startQuiz()">开始深度测算 →</button>
 </div>
 
 <div id="quizArea" style="display:none">
-  <div class="progress-text" id="progressText">1 / 8</div>
-  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:12.5%"></div></div>
+  <div class="progress-text" id="progressText">1 / 12</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:8.3%"></div></div>
 </div>
 
 <div id="quizCards"></div>
@@ -134,29 +134,50 @@ body{
 <script>
 (function(){
 var Q = [
-  {q:"你的出生年份属于哪个生肖？",desc:"十二生肖决定你的先天根基气场",key:"zodiac",options:[
+  // ────────── 基础命盘 ──────────
+  {q:"你的出生年份属什么生肖？",desc:"十二生肖决定你的先天根基气场",key:"zodiac",options:[
     {v:"rat",l:"鼠",e:"🐭",b:"机智灵动"},{v:"ox",l:"牛",e:"🐮",b:"稳重踏实"},{v:"tiger",l:"虎",e:"🐯",b:"自信果敢"},{v:"rabbit",l:"兔",e:"🐰",b:"温和细腻"},{v:"dragon",l:"龙",e:"🐲",b:"大气不凡"},{v:"snake",l:"蛇",e:"🐍",b:"智慧深沉"},{v:"horse",l:"马",e:"🐴",b:"洒脱奔放"},{v:"goat",l:"羊",e:"🐑",b:"温厚包容"},{v:"monkey",l:"猴",e:"🐵",b:"机敏灵活"},{v:"rooster",l:"鸡",e:"🐔",b:"精细干练"},{v:"dog",l:"狗",e:"🐶",b:"忠诚可靠"},{v:"pig",l:"猪",e:"🐷",b:"豁达通透"}
   ]},
-  {q:"你的出生月份在哪个范围？",desc:"结合星座能量，决定你的五行气质偏向",key:"month_season",options:[
-    {v:"spring",l:"春季",e:"🌸",b:"木气生发"},{v:"summer",l:"夏季",e:"☀️",b:"火气旺盛"},{v:"autumn",l:"秋季",e:"🍂",b:"金气收敛"},{v:"winter",l:"冬季",e:"❄️",b:"水气收藏"}
+  {q:"你的出生月份在哪个范围？",desc:"月份决定先天五行气的旺衰",key:"month_season",options:[
+    {v:"spring",l:"3月-5月（春季）",e:"🌸",b:"木气当令"},{v:"summer",l:"6月-8月（夏季）",e:"☀️",b:"火气当令"},{v:"autumn",l:"9月-11月（秋季）",e:"🍂",b:"金气当令"},{v:"winter",l:"12月-2月（冬季）",e:"❄️",b:"水气当令"}
   ]},
-  {q:"你觉得自己最像哪种性格？",desc:"五行人格 — 金木水火土，看看你的主导能量",key:"element_personality",options:[
+  {q:"你的性别？",desc:"男女命理大运排法不同，影响结果",key:"gender",options:[
+    {v:"male",l:"男",e:"🧑",b:"阳刚"},{v:"female",l:"女",e:"👩",b:"阴柔"}
+  ]},
+  {q:"你属于哪个年龄段？",desc:"不同年龄段的补益重点完全不同",key:"age_group",options:[
+    {v:"teen",l:"18岁以下",e:"🌱",b:"生长"},{v:"young",l:"18-30岁",e:"🌿",b:"旺盛"},{v:"mid",l:"30-45岁",e:"🌳",b:"鼎盛"},{v:"midold",l:"45-60岁",e:"🍂",b:"收敛"},{v:"old",l:"60岁以上",e:"🌾",b:"收藏"}
+  ]},
+
+  // ────────── 五行性格 ──────────
+  {q:"你觉得自己最接近哪种性格？",desc:"五行人格决定你的能量运作方式",key:"element_personality",options:[
     {v:"wood",l:"木型 — 向上生长、爱折腾、有主见",e:"🌿",b:"木"},{v:"fire",l:"火型 — 热情外向、行动力强、爱社交",e:"🔥",b:"火"},{v:"earth",l:"土型 — 稳重包容、踏实可靠、顾家",e:"🏔️",b:"土"},{v:"metal",l:"金型 — 果断干练、追求完美、讲原则",e:"⚔️",b:"金"},{v:"water",l:"水型 — 聪明随和、善变通、重感受",e:"🌊",b:"水"}
   ]},
-  {q:"你的皮肤状态更接近？",desc:"与五行体质密切相关，照德堂从上千名客户中总结的规律",key:"skin_type",options:[
-    {v:"dry",l:"干性 — 易起皮、细纹多、换季敏感",e:"🧴",b:"缺水"},{v:"oily",l:"油性 — T区出油、毛孔粗、易长痘",e:"💧",b:"火旺"},{v:"mix",l:"混合 — T油颊干、局部暗沉",e:"🌀",b:"失衡"},{v:"sensitive",l:"敏感 — 泛红刺痛、薄皮红血丝",e:"🌸",b:"卫弱"},{v:"normal",l:"中性 — 水油平衡、状态稳定",e:"✨",b:"平和"}
+  {q:"你平时和人的相处模式更接近？",desc:"社交模式暴露你的五行能量流动方式",key:"social_style",options:[
+    {v:"leader",l:"主导型 — 喜欢带节奏、做决定",e:"👑",b:"火"},{v:"helper",l:"付出型 — 照顾别人、操心多",e:"🤝",b:"土"},{v:"observer",l:"观察型 — 先看再说、不爱出头",e:"👁️",b:"水"},{v:"connector",l:"活跃型 — 社交达人、人脉广",e:"🦋",b:"火"},{v:"solo",l:"独处型 — 享受独处、社交消耗大",e:"🌙",b:"金"}
   ]},
-  {q:"你平时的生活习惯更偏向？",desc:"生活习惯暴露你的能量消耗方向",key:"lifestyle",options:[
-    {v:"night",l:"夜猫子 — 熬夜冠军、越夜越精神",e:"🌙",b:"耗阴"},{v:"busy",l:"忙碌族 — 节奏快、压力大、久坐",e:"🏃",b:"气郁"},{v:"foodie",l:"吃货 — 爱美食、零食不离手",e:"🍜",b:"湿重"},{v:"fitness",l:"健身党 — 规律运动、自律养生",e:"💪",b:"平衡"},{v:"home",l:"宅家型 — 喜静、社恐、空调续命",e:"🏠",b:"寒凝"}
+
+  // ────────── 身体状态 ──────────
+  {q:"你的睡眠质量怎么样？",desc:"睡眠是人体最直接的「充电」方式，与五脏能量密切相关",key:"sleep",options:[
+    {v:"good",l:"倒头就睡，一觉到天亮",e:"😴",b:"充足"},{v:"fair",l:"能睡着但多梦、易醒",e:"😪",b:"欠佳"},{v:"poor",l:"入睡困难、翻来覆去",e:"🫨",b:"心火旺"},{v:"late",l:"睡得晚但睡得沉（熬夜体质）",e:"🦉",b:"耗阴"},{v:"light",l:"睡得很浅、一点动静就醒",e:"😰",b:"血虚"}
   ]},
-  {q:"最近你最困扰的问题是？",desc:"当下的焦虑往往指向命理的「补益方向」",key:"current_worry",options:[
-    {v:"money",l:"财运不好 — 赚钱累、存不住、投资亏损",e:"💰",b:"求财"},{v:"career",l:"事业迷茫 — 晋升难、方向模糊、内卷心累",e:"💼",b:"求官"},{v:"love",l:"感情不顺 — 单身焦虑、关系疲惫",e:"💕",b:"求缘"},{v:"health",l:"身体亚健康 — 失眠疲乏、易病、精力差",e:"🏥",b:"求康"},{v:"mood",l:"情绪内耗 — 焦虑烦躁、emo、没动力",e:"😮‍💨",b:"求静"}
+  {q:"你的皮肤状态更接近哪种？",desc:"皮肤是五脏的镜子，不同肤质反映不同的内在偏颇",key:"skin_type",options:[
+    {v:"dry",l:"干性 — 易起皮、细纹多、换季敏感",e:"🧴",b:"缺水"},{v:"oily",l:"油性 — T区出油、毛孔粗、易长痘",e:"💧",b:"火旺"},{v:"mix",l:"混合 — T油颊干、局部暗沉",e:"🌀",b:"失衡"},{v:"sensitive",l:"敏感 — 泛红刺痛、薄皮红血丝",e:"🌸",b:"卫弱"},{v:"dull",l:"暗沉 — 脸色发黄发暗、无光泽",e:"🌫️",b:"气虚"},{v:"acne",l:"痘痘肌 — 反复长痘、闭口粉刺",e:"🔥",b:"湿热"},{v:"normal",l:"中性 — 水油平衡、状态稳定",e:"✨",b:"平和"}
   ]},
-  {q:"你最喜欢的季节？",desc:"偏爱往往是你身体「本能需要的补益」",key:"fav_season",options:[
-    {v:"spring",l:"春天 — 万物复苏、生机勃勃",e:"🌱",b:"生发"},{v:"summer",l:"夏天 — 阳光灿烂、热烈奔放",e:"🏖️",b:"释放"},{v:"autumn",l:"秋天 — 天高气爽、丰收静谧",e:"🍁",b:"收敛"},{v:"winter",l:"冬天 — 白雪皑皑、沉静内敛",e:"⛄",b:"收藏"}
+  {q:"你平时怕冷还是怕热？",desc:"体温偏好直接对应中医的寒热体质",key:"temp_pref",options:[
+    {v:"very_cold",l:"非常怕冷 — 手脚常年冰凉",e:"🥶",b:"阳虚"},{v:"slightly_cold",l:"偏怕冷 — 冬天不好过",e:"❄️",b:"偏寒"},{v:"neutral",l:"不冷也不热 — 感觉刚好",e:"☁️",b:"平和"},{v:"slightly_hot",l:"偏怕热 — 爱出汗、怕夏天",e:"🌡️",b:"偏热"},{v:"very_hot",l:"非常怕热 — 手心脚心发热",e:"🥵",b:"阴虚"}
   ]},
-  {q:"你觉得自己的「人生短板」是什么？",desc:"自知的空缺，正是命理给你留的「补益空间」",key:"weakness",options:[
-    {v:"courage",l:"勇气不足 — 想做不敢做、容易退缩",e:"🦁",b:"缺火"},{v:"patience",l:"耐心不够 — 三分钟热度、急功近利",e:"🧘",b:"缺土"},{v:"boundary",l:"不懂拒绝 — 总被消耗、不会设限",e:"🛡️",b:"缺水"},{v:"focus",l:"专注力差 — 杂念多、什么都想要",e:"🎯",b:"缺金"},{v:"flexibility",l:"太固执 — 认死理、不转弯、内耗",e:"🌿",b:"缺木"}
+
+  // ────────── 生活习惯 ──────────
+  {q:"你的饮食习惯更偏向？",desc:"饮食偏好直接塑造你的体质",key:"diet",options:[
+    {v:"spicy",l:"无辣不欢 — 爱火锅烧烤、重口味",e:"🌶️",b:"火"},{v:"cold",l:"冷饮爱好者 — 奶茶冰咖啡不离手",e:"🧊",b:"寒"},{v:"sweet",l:"甜品控 — 奶茶蛋糕巧克力续命",e:"🍰",b:"湿"},{v:"light",l:"清淡养生 — 爱蔬菜水果、少油少盐",e:"🥗",b:"清"},{v:"meat",l:"肉食主义 — 无肉不欢、爱大鱼大肉",e:"🥩",b:"浊"},{v:"irregular",l:"不规律 — 饥一顿饱一顿、外卖为主",e:"⏰",b:"伤"}
+  ]},
+  {q:"你最近的生活压力主要来自哪里？",desc:"压力来源暴露你当前的能量缺口",key:"current_worry",options:[
+    {v:"money",l:"💰 财运压力 — 赚钱累、存不住、投资亏损",e:"💰",b:"求财"},{v:"career",l:"💼 事业迷茫 — 晋升难、方向模糊、内卷心累",e:"💼",b:"求官"},{v:"love",l:"💕 感情不顺 — 单身焦虑、关系疲惫、找不到对的人",e:"💕",b:"求缘"},{v:"family",l:"🏠 家庭负担 — 父母健康、子女教育、家庭矛盾",e:"🏠",b:"求稳"},{v:"health",l:"🏥 身体亚健康 — 失眠疲乏、易病、精力差",e:"🏥",b:"求康"},{v:"mood",l:"😮‍💨 情绪内耗 — 焦虑烦躁、emo、没动力",e:"😮‍💨",b:"求静"}
+  ]},
+
+  // ────────── 人生缺口 ──────────
+  {q:"你觉得自己最缺的是什么？",desc:"自知的空缺，就是命理给你留的「补益空间」",key:"weakness",options:[
+    {v:"courage",l:"勇气不足 — 想做不敢做、容易退缩",e:"🦁",b:"缺火"},{v:"patience",l:"耐心不够 — 三分钟热度、急功近利",e:"🧘",b:"缺土"},{v:"boundary",l:"不懂拒绝 — 老好人、总被消耗",e:"🛡️",b:"缺水"},{v:"focus",l:"专注力差 — 杂念多、什么都想要",e:"🎯",b:"缺金"},{v:"flexibility",l:"太固执 — 认死理、不转弯、内耗",e:"🌿",b:"缺木"},{v:"confidence",l:"不够自信 — 总觉得自己不行",e:"🌟",b:"缺火"},{v:"discipline",l:"自律不够 — 拖延、执行力差",e:"⏳",b:"缺金"}
   ]}
 ];
 
@@ -167,7 +188,7 @@ var RESULTS = {
   "rabbit-water-wood":{icon:"🌙",title:"柔水生木 · 灵秀型",tag:"兔·冬·水 · 细腻灵秀",summary:"温婉细腻，善解人意，是朋友圈里的「知心姐姐/哥哥」。你对美和品质有天生的感知力，但太在意别人的眼光，容易委屈自己。",destiny:"先天水木相生，灵气充沛。但你命里「缺火」——需要更多的自我表达和主动性，别总做配角。",advice:["「缺火」对应心，多吃红色食物（红枣、枸杞、红豆、番茄）","每天留30分钟「只做自己想做的事」，不迎合任何人","练习表达自己的真实感受，哪怕会让人不舒服——你的感受也很重要"],product:"✨ 推荐关注：照德堂红枣枸杞茶（暖心养颜，帮你「暖起来」）"},
   "dragon-earth-fire":{icon:"🐉",title:"龙腾火生 · 辉煌型",tag:"龙·夏·火 · 天选之人",summary:"大气磅礴，天生焦点。你有种「舍我其谁」的气场，做事有格局、有魄力。但高处不胜寒，你内心的孤独只有自己知道。",destiny:"先天火土旺盛，气势如虹。但火过旺则易焦躁，你命里「缺水」——需要柔性的力量来调和刚猛。",advice:["「缺水」对应肾，多吃黑色食物（黑芝麻、黑豆、黑米、桑葚）","学会示弱和求助，真正的强者懂得借力","保持充足的睡眠——你太容易为「大事」熬夜了，睡眠是最好的补肾方式"],product:"✨ 推荐关注：照德堂黑芝麻丸（补肾固本，帮你「柔下来」）"},
   "snake-fire-metal":{icon:"🧠",title:"火炼真金 · 智慧型",tag:"蛇·夏·火 · 智谋深沉",summary:"你天生有一种「看穿一切」的洞察力，别人还在迷茫，你已经看到了三步以后。但你太聪明了，有时候反而因为想太多而裹足不前。",destiny:"火金相克又相成，你的内心常常在「热情」和「理性」之间打架。命里「缺木」——需要增加柔韧和弹性，别把世界看得太透。",advice:["「缺木」对应肝胆，多吃绿色蔬菜（菠菜、芹菜、西兰花、茼蒿）","允许自己「做点傻事」——不是所有决定都要最优解","多一些户外活动，接触自然绿色，疏解过度思虑"],product:"✨ 推荐关注：照德堂草本洗面奶（植物清透配方，帮你「疏导」多余思虑）"},
-  "horse-fire-earth":{icon:"❤️",title:"火舞大地 · 热情型",tag:"马·夏·火 · 追风少年",summary:"你像一阵自由的风，永远在路上、永远有下一个目标。你的热情感染力极强，但稳定性和耐心是永远的课题。",destiny:"先天火旺，动能十足，但持续力不够。你命里「缺金水」——需要规则和韧性来收束你的奔放。",advice:["「缺金」对应肺和大肠，多吃白色润肺食物","建立规律作息——你太容易被「临时起意」打乱节奏","练习「一件事做透」：一个月只专注一个目标，做完再做下一个"],product:"✨ 推荐关注：照德堂润肺雪梨膏（金性润养，帮你「稳下来」）"},
+  "horse-fire-earth":{icon:"❤️",title:"火舞大地 · 热情型",tag:"马·夏·火 · 追风少年",summary:"你像一阵自由的风，永远在路上、永远有下一个目标。你的热情感染力极强，但稳定性和耐心是永远的课题。",destiny:"先天火旺，动能十足，但持续力不够。你命里「缺金水」——需要规则和韧性来收束你的奔放。",advice:["缺金多吃白色润肺食物，缺水多吃黑色入肾食物","建立规律作息——你太容易被「临时起意」打乱节奏","练习「一件事做透」：一个月只专注一个目标，做完再做下一个"],product:"✨ 推荐关注：照德堂润肺雪梨膏（金性润养，帮你「稳下来」）"},
   "goat-earth-water":{icon:"☁️",title:"厚土蓄水 · 温厚型",tag:"羊·冬·土 · 大地之母",summary:"你是团队里最可靠的后盾，朋友眼中最温暖的港湾。不争不抢、默默付出，但你太擅长照顾别人，反而忘了照顾自己。",destiny:"先天土旺水藏，厚德载物。但你命里「缺木」——需要更多向上的生长力和「为自己而活」的勇气。",advice:["「缺木」对应肝胆，多吃芽苗类食物（豆芽、香椿、韭菜）","每周做一件「纯粹为自己开心」的事，不要有负罪感","学一个新东西（乐器、语言、手工艺）——你太需要「向上生长」的突破了"],product:"✨ 推荐关注：照德堂手工皂系列（植物精华萃取，帮你「破土新生」）"},
   "monkey-metal-water":{icon:"🎭",title:"金生丽水 · 巧思型",tag:"猴·秋·金 · 百变智多星",summary:"你聪明灵活，点子多、人缘好，是那种「什么都能聊两句」的万事通。但你最大的敌人是——三分钟热度，兴趣太广泛反而没有深耕。",destiny:"金水相生，聪明外显。但你命里「缺火土」——需要热情来驱动、需要土壤来扎根。",advice:["缺火多吃红枣枸杞，缺土多吃小米南瓜——先补这两样","选一个你最擅长的领域，深耕半年，不要碰其他新东西","建立「输出倒逼输入」的习惯——写日记、做笔记、发内容"],product:"✨ 推荐关注：照德堂草本茶饮系列（调和五行，帮你「定下来」）"},
   "rooster-metal-earth":{icon:"👑",title:"金玉其质 · 精致型",tag:"鸡·秋·金 · 完美主义者",summary:"精致、干练、追求极致——你是那种连喝水的杯子都要讲究的人。高标准是优点也是枷锁，你对自己太苛刻了。",destiny:"金气过盛，刚硬有余而柔韧不足。你命里「缺火水」——需要热情来软化刚硬，需要智慧来放下执念。",advice:["缺火多吃红色食物，缺水多吃黑色食物","学会「及格就好」——不是所有事情都要100分","泡澡/泡脚+听音乐=水火既济的养生之道"],product:"✨ 推荐关注：照德堂草本面膜（自然柔和配方，帮你「松一松」）"},
@@ -207,7 +228,7 @@ function renderQuestion(idx){
   var selKey = answers[q.key] || "";
   var container = document.getElementById("quizCards");
   var html = '<div class="card active">';
-  html += '<div class="step-num">第 '+(idx+1)+' 题</div>';
+  html += '<div class="step-num">第 '+(idx+1)+' 题 / 共 '+totalSteps+' 题</div>';
   html += '<h2>'+q.q+'</h2>';
   html += '<div class="desc">'+q.desc+'</div>';
   html += '<div class="options">';
@@ -216,7 +237,7 @@ function renderQuestion(idx){
     var o = q.options[i];
     var selected = (selKey === o.v) ? "selected" : "";
     html += '<div class="option '+selected+'" data-val="'+o.v+'" data-qkey="'+q.key+'" onclick="pickOption(this)">';
-    html += '<span>'+o.e+'</span>';
+    html += '<span style="font-size:20px">'+o.e+'</span>';
     html += '<span class="label">'+o.l+'</span>';
     html += '<span class="badge">'+o.b+'</span>';
     html += '</div>';
@@ -268,6 +289,33 @@ function showResult(){
   var key = z+"-"+ze.element+"-"+p;
   var result = RESULTS[key] || FALLBACK_RESULT;
 
+  // 根据额外答案定制补充建议
+  var extraTips = [];
+  if(answers.sleep === "poor" || answers.sleep === "light"){
+    extraTips.push("你的睡眠质量需要重点关注——睡前1小时远离手机，试试温水泡脚+按揉神门穴");
+  }
+  if(answers.sleep === "late"){
+    extraTips.push("长期熬夜损耗阴血，建议23:00前入睡，实在做不到也要保证7小时睡眠周期");
+  }
+  if(answers.temp_pref === "very_cold" || answers.temp_pref === "slightly_cold"){
+    extraTips.push("你属于偏寒体质，少吃生冷瓜果，晨起一杯姜枣茶，睡前热水泡脚到微出汗");
+  }
+  if(answers.temp_pref === "very_hot" || answers.temp_pref === "slightly_hot"){
+    extraTips.push("你属于偏热体质，少吃辛辣煎炸，多吃绿豆、冬瓜、苦瓜等清热食材");
+  }
+  if(answers.diet === "cold"){
+    extraTips.push("冷饮伤脾阳，建议逐步用常温饮品替代，实在想喝凉的放在两餐之间而非饭后立刻");
+  }
+  if(answers.diet === "irregular"){
+    extraTips.push("不规律的饮食最伤脾胃，建议定好三餐闹钟，哪怕吃不多也要按时吃");
+  }
+  if(answers.age_group === "mid" || answers.age_group === "midold"){
+    extraTips.push("30岁后身体从「生长」转向「保养」，建议每年做一次中医体质辨识");
+  }
+  if(answers.gender === "female" && answers.age_group === "mid"){
+    extraTips.push("女性35岁后阳明脉衰，重点养护脾胃和气血，少吃寒凉，适当补充阿胶、当归等养血食材（需辨证）");
+  }
+
   var area = document.getElementById("resultArea");
   var html = '<div class="card active">';
   html += '<div class="result-header"><div class="big-icon">'+result.icon+'</div>';
@@ -282,6 +330,14 @@ function showResult(){
     html += '<li>'+result.advice[i]+'</li>';
   }
   html += '</ul></div>';
+
+  if(extraTips.length > 0){
+    html += '<div class="result-section"><h3>💡 根据你的情况 · 额外叮嘱</h3><ul>';
+    for(var i=0; i<extraTips.length; i++){
+      html += '<li>'+extraTips[i]+'</li>';
+    }
+    html += '</ul></div>';
+  }
 
   html += '<div class="result-section"><h3>🏪 照德堂 · 给你的专属建议</h3><p>'+result.product+'</p></div>';
 
@@ -298,7 +354,7 @@ function showResult(){
 }
 
 function shareResult(){
-  var txt = "我刚测了命理体质，挺准的！你也来试试 → 照德堂命理体质自测 🔮";
+  var txt = "我刚测了命理体质，12道题出结果，挺准的！你也来试试 → 照德堂命理体质深度自测 🔮";
   if(navigator.share){
     navigator.share({title:"我的命理体质",text:txt});
   } else {
@@ -322,7 +378,6 @@ function restartQuiz(){
   window.scrollTo(0,0);
 }
 
-// Expose to global scope
 window.startQuiz = startQuiz;
 window.pickOption = pickOption;
 window.nextQuestion = nextQuestion;
