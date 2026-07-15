@@ -212,8 +212,8 @@ const Q = [
   },
   {
     q:'你的消费习惯更偏向？',
-    desc:'花钱方式暴露命中财星状态和理财天赋',
-    key:'spending',
+    desc:'花钱方式暴露命中财星状态和理财天赋（可多选）',
+    key:'spending',multi:true,
     options:[
       {v:'frugal',l:'🪙 精打细算 · 每一分都要花在刀刃上',badge:'财库型'},
       {v:'enjoy',l:'🛍️ 活在当下 · 该花就花不委屈自己',badge:'财通型'},
@@ -224,8 +224,8 @@ const Q = [
   },
   {
     q:'你的饮食口味偏向？',
-    desc:'饮食偏好暴露五行的「本命需求」和身体短板信号',
-    key:'diet',
+    desc:'饮食偏好暴露五行的「本命需求」和身体短板信号（可多选）',
+    key:'diet',multi:true,
     options:[
       {v:'meat',l:'🥩 无肉不欢 · 红肉海鲜来者不拒',badge:'金·辛'},
       {v:'veg',l:'🥗 蔬菜水果 · 清淡素食养生党',badge:'木·酸'},
@@ -261,8 +261,8 @@ const Q = [
   },
   {
     q:'你最喜欢的颜色偏向？',
-    desc:'色彩偏好泄露你五行之中的「能量渴求」',
-    key:'color',
+    desc:'色彩偏好泄露你五行之中的「能量渴求」（可多选）',
+    key:'color',multi:true,
     options:[
       {v:'red',l:'🔴 红/橙/紫 · 热烈鲜明充满活力',badge:'火'},
       {v:'yellow',l:'🟡 黄/金/棕 · 温暖踏实稳重可靠',badge:'土'},
@@ -309,8 +309,8 @@ const Q = [
   },
   {
     q:'你最喜欢的休闲方式？',
-    desc:'休闲偏好补充的是五行之中的「能量缺口」',
-    key:'leisure',
+    desc:'休闲偏好补充的是五行之中的「能量缺口」（可多选）',
+    key:'leisure',multi:true,
     options:[
       {v:'sports',l:'🏃 运动健身 · 流汗释放压力',badge:'火·动'},
       {v:'reading',l:'📚 读书学习 · 安静中汲取养分',badge:'木·长'},
@@ -601,7 +601,13 @@ const ZW_PALACE_DESC={
 // 运算引擎
 // ============================================================
 function calcResult(a){
-  const src=[ZE[a.zodiac].e,SE[a.season],TE[a.birth_time],a.element,SIE[a.zodiac_sign],DIE[a.diet],COLE[a.color],HOMELE[a.home],LEIE[a.leisure],CHILDE[a.childhood],CRISISE[a.crisis],ZW_E[a.ziwei_star]];
+  // 多选展开辅助
+  function resolve(v,m){return Array.isArray(v)?v.map(x=>m[x]).filter(Boolean):[m[v]].filter(Boolean);}
+  const src=[
+    ZE[a.zodiac].e,SE[a.season],TE[a.birth_time],a.element,SIE[a.zodiac_sign],
+    ...resolve(a.diet,DIE),...resolve(a.color,COLE),HOMELE[a.home],
+    ...resolve(a.leisure,LEIE),CHILDE[a.childhood],CRISISE[a.crisis],ZW_E[a.ziwei_star]
+  ];
   const c={metal:0,wood:0,water:0,fire:0,earth:0};
   src.forEach(e=>{if(c[e]!==undefined)c[e]++});
   const has=(e)=>c[e]>=2,combo=(x,y)=>c[x]>=1&&c[y]>=1;
@@ -623,15 +629,21 @@ function calcResult(a){
   if(a.focus==='wealth'&&(k==='jade_rabbit'||k==='unicorn_mountain'))k='golden_toad';
   if(a.focus==='marriage'&&k==='blue_ox')k='phoenix_mate';
   const r=JSON.parse(JSON.stringify(R[k]||FALLBACK));
-  // 饮食微调
-  if(a.diet==='spicy')r.health+=' ⚠️ 你爱吃辣，建议适度控制——过辣耗阴伤胃，每周至少两天清淡饮食。';
-  else if(a.diet==='meat')r.health+=' 💡 肉食为主多搭蔬菜，红肉每周不超3次，多选鱼禽类。';
-  else if(a.diet==='sweet')r.health+=' 🍬 爱吃甜食需注意控糖，过量甜食加重湿气、影响肤质。';
-  else if(a.diet==='veggie')r.health+=' 🌿 素食者注意补充优质蛋白和B12，菌菇豆蛋奶是好选择。';
-  // 消费微调
-  if(a.spending==='casual')r.wealth+=' ⚠️ 随性消费是你的风格，建议设月度预算上限并试试记账。';
-  else if(a.spending==='frugal')r.wealth+=' ✅ 精打细算的好习惯，但偶尔也要奖励自己——钱服务生活。';
-  else if(a.spending==='enjoy')r.wealth+=' 💡 懂得享受生活是好事，建议到账先存后花，控制冲动消费。';
+  // 多选微调辅助
+  function has(v,a){return Array.isArray(a)?a.indexOf(v)>=0:a===v;}
+  // 饮食微调（支持多选）
+  if(has('spicy',a.diet))r.health+=' ⚠️ 爱吃辣需适度——过辣耗阴伤胃，每周至少两天清淡。';
+  if(has('meat',a.diet))r.health+=' 💡 肉食为主多搭蔬菜，红肉每周不超3次。';
+  if(has('sweet',a.diet))r.health+=' 🍬 甜食控需注意控糖，过量加重湿气影响肤质。';
+  if(has('veggie',a.diet)||has('veg',a.diet))r.health+=' 🌿 素食注意补充优质蛋白和B12，菌菇豆蛋奶是好选择。';
+  if(has('seafood',a.diet))r.health+=' 🦐 海鲜虽好偏寒湿，建议搭配姜蒜同食。';
+  if(has('grain',a.diet))r.health+=' 🌾 五谷杂粮养胃好习惯，继续保持！';
+  // 消费微调（支持多选）
+  if(has('casual',a.spending))r.wealth+=' ⚠️ 随性消费是你的风格，建议设月度预算上限。';
+  if(has('frugal',a.spending))r.wealth+=' ✅ 精打细算的好习惯，偶尔也要奖励自己。';
+  if(has('enjoy',a.spending))r.wealth+=' 💡 懂得享受生活是好事，建议到账先存后花。';
+  if(has('invest',a.spending))r.wealth+=' 📈 投资眼光不错，建议分散风险、长期持有。';
+  if(has('save',a.spending))r.wealth+=' 🏦 强制储蓄是好习惯，可适当配置一些稳健理财。';
   // 感情微调
   if(a.relationship==='single_wait')r.marriage+=' 你一直在等待——今年可以试着扩大社交圈，缘分往往在走出舒适区时出现。';
   else if(a.relationship==='single_happy')r.marriage+=' 享受单身本身就是福气。不必为结婚而结婚，对的人出现前先做好自己。';
@@ -660,10 +672,12 @@ function calcResult(a){
   if(a.current_fortune==='low')r.advice+=' 💪 低谷期正是积累能量的最佳时机——重心放在学习、运动和健康上，好运在路上。';
   else if(a.current_fortune==='low_rising')r.advice+=' 📈 触底回升的势头已经出现，保持住这个节奏，下半年会比上半年明显好转。';
   else if(a.current_fortune==='turning')r.advice+=' ⚖️ 转折期最忌讳急功近利——顺势而为比逆流而上聪明得多。';
-  // 星座配饰
-  if(a.color==='red')r.zodiac+=' 你偏爱红色说明内心渴望热情与活力，这与火象星座的能量同频共振。';
-  else if(a.color==='blue')r.zodiac+=' 偏爱蓝色代表你内在冷静理性的一面，水象和风象星座最能理解你的世界。';
-  else if(a.color==='green')r.zodiac+=' 喜欢绿色说明你渴望自然与生长，木性充沛的人往往与植物有天然亲近感。';
+  // 星座配饰（支持多选颜色）
+  if(has('red',a.color))r.zodiac+=' 你偏爱红色，内心渴望热情与活力，与火象星座同频。';
+  if(has('blue',a.color))r.zodiac+=' 偏爱蓝色代表你冷静理性的一面，水象和风象最能理解你。';
+  if(has('green',a.color))r.zodiac+=' 喜欢绿色说明你渴望自然生长，木性充沛的人与植物有天然亲近感。';
+  if(has('yellow',a.color))r.zodiac+=' 偏爱黄色/金色说明你内心稳重务实，土象星座最能契合你。';
+  if(has('white',a.color))r.zodiac+=' 喜欢白色说明你追求简洁纯粹，与金性/风象星座的气质相符。';
   // 居住微调
   if(a.home==='water_mountain')r.wealth+=' 你理想中依山傍水的环境说明你的气场合水木，适合在近水或绿化好的地方置产。';
   else if(a.home==='city_center')r.wealth+=' 你喜欢繁华地段，这和你命中的财气有关——人流量大的地方就是你的财位。';
@@ -672,8 +686,8 @@ function calcResult(a){
   if(a.ziwei_star){
     var zwMainDesc=ZW_DESC[a.ziwei_star]||'你的紫微命盘主星组合独特，建议结合具体八字详细分析。';
     r.ziwei='【命宫主星】'+zwMainDesc;
-    // 四化隐含
-    if(a.ziwei_palace==='wealth'||a.spending==='frugal'||a.spending==='invest')r.ziwei+=' 你的财帛宫有「化禄」的倾向——财运方面有天然的优势，赚钱相对轻松。';
+    // 四化隐含（支持多选消费）
+    if(a.ziwei_palace==='wealth'||has('frugal',a.spending)||has('invest',a.spending))r.ziwei+=' 你的财帛宫有「化禄」的倾向——财运方面有天然的优势，赚钱相对轻松。';
     else if(a.ziwei_palace==='love')r.ziwei+=' 你的夫妻宫有「化科」的倾向——你容易因良好的人际关系和口碑获得姻缘。';
     else if(a.ziwei_palace==='career'||a.philosophy==='strive'||a.career==='entrepreneur')r.ziwei+=' 你的官禄宫有「化权」的倾向——你会在事业上掌握实权，有领导潜质。';
     else if(a.ziwei_palace==='self'||a.crisis==='think')r.ziwei+=' 你的命宫有「化忌」回冲后的觉醒——你经历的挫折最终会变成你的铠甲。';
@@ -697,13 +711,32 @@ function g(id){return document.getElementById(id);}
 function startQuiz(){g('screenCover').classList.remove('active');g('screenQuiz').classList.add('active');cur=0;renderQ();}
 function renderQ(){
   const q=Q[cur],card=g('quizCard'),total=Q.length;
-  let h=`<div class="quiz-qnum">第 ${cur+1}/${total} 题</div><div class="quiz-q">${q.q}</div><div class="quiz-desc">${q.desc}</div><div class="quiz-options">`;
-  q.options.forEach(o=>{const sel=ans[q.key]===o.v?' selected':'';h+=`<div class="quiz-opt${sel}" onclick="sel('${q.key}','${o.v}')"><span>${o.l}</span><span class="badge">${o.badge}</span></div>`;});
-  h+=`</div><div class="btn-row">${cur>0?'<button class="btn-prev" onclick="prev()">← 上一题</button>':''}<button class="btn-next${ans[q.key]?' active':''}" id="btnNext" onclick="next()">${cur===total-1?'🔮 查看命盘 →':'下一步 →'}</button></div>`;
+  let h=`<div class="quiz-qnum">第 ${cur+1}/${total} 题${q.multi?' · ✅ 可多选':''}</div><div class="quiz-q">${q.q}</div><div class="quiz-desc">${q.desc}</div><div class="quiz-options">`;
+  q.options.forEach(o=>{
+    const isSel=q.multi?(ans[q.key]||[]).indexOf(o.v)>=0:ans[q.key]===o.v;
+    h+=`<div class="quiz-opt${isSel?' selected':''}" onclick="sel('${q.key}','${o.v}')"><span>${isSel?'✓ ':''}${o.l}</span><span class="badge">${o.badge}</span></div>`;
+  });
+  const hasAns=q.multi?(ans[q.key]||[]).length>0:ans[q.key];
+  h+=`</div><div class="btn-row">${cur>0?'<button class="btn-prev" onclick="prev()">← 上一题</button>':''}<button class="btn-next${hasAns?' active':''}" id="btnNext" onclick="next()">${cur===total-1?'🔮 查看命盘 →':'下一步 →'}</button></div>`;
   card.innerHTML=h;updP();
 }
-function sel(k,v){ans[k]=v;renderQ();}
-function next(){const q=Q[cur];if(!ans[q.key])return;if(cur<Q.length-1){cur++;renderQ();}else showResult();}
+function sel(k,v){
+  const q=Q[cur];
+  if(q.multi){
+    if(!ans[k]) ans[k]=[];
+    const idx=ans[k].indexOf(v);
+    if(idx>=0) ans[k].splice(idx,1); else ans[k].push(v);
+  } else {
+    ans[k]=v;
+  }
+  renderQ();
+}
+function next(){
+  const q=Q[cur];
+  const hasAns=q.multi?(ans[q.key]||[]).length>0:ans[q.key];
+  if(!hasAns)return;
+  if(cur<Q.length-1){cur++;renderQ();}else showResult();
+}
 function prev(){if(cur>0){cur--;renderQ();}}
 function updP(){const p=((cur+1)/Q.length)*100;g('progressBar').style.width=p+'%';g('progressText').textContent=cur+1+' / '+Q.length;}
 function showResult(){
