@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>生辰八字·综合精算 | 照德堂</title>
+<meta property="og:title" content="🔮 测测你的生辰八字·财运婚姻寿命">
+<meta property="og:description" content="输入八字信息，精算你命里的财运走势、婚姻缘分、寿命养生——仅供趣味参考">
+<meta property="og:image" content="https://zhaodetang.vercel.app/og-bazi.png">
+<meta property="og:type" content="website">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif}
+body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0d0221 60%,#000 100%);overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0a0015}
+::-webkit-scrollbar-thumb{background:linear-gradient(#c8a96e,#b22222);border-radius:2px}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:.2}100%{opacity:.9}}
+.container{position:relative;z-index:1;max-width:420px;margin:0 auto;padding:20px 16px 60px}
+.screen{display:none}
+.screen.active{display:block;animation:fadeIn .5s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* Cover */
+.cover{text-align:center;padding-top:50px}
+.cover-badge{display:inline-block;background:linear-gradient(135deg,#c8a96e,#b8860b);color:#1a0a2e;font-size:11px;padding:4px 14px;border-radius:20px;font-weight:600;letter-spacing:2px;margin-bottom:28px}
+.cover-icon{font-size:72px;margin-bottom:16px;display:block}
+.cover h1{font-size:28px;font-weight:800;color:#f0e6c5;line-height:1.3;letter-spacing:3px;margin-bottom:14px;text-shadow:0 0 40px rgba(200,169,110,.3)}
+.cover h1 span{color:#b22222}
+.cover .sub{font-size:14px;color:#a08870;line-height:1.8;margin-bottom:32px;padding:0 10px}
+.cover .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.cover .tags span{font-size:12px;padding:6px 14px;border-radius:20px;border:1px solid rgba(200,169,110,.3);color:#c8a96e}
+.cover .disclaimer{font-size:11px;color:#666;margin-top:20px;padding:0 20px}
+.btn-start{background:linear-gradient(135deg,#c8a96e,#b8860b);border:none;color:#1a0a2e;font-size:18px;font-weight:700;padding:16px 56px;border-radius:50px;cursor:pointer;letter-spacing:4px;transition:all .3s;box-shadow:0 8px 32px rgba(200,169,110,.3)}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,169,110,.5)}
+
+/* Progress */
+.progress-wrap{display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-top:10px}
+.progress-bar-wrap{flex:1;height:4px;background:rgba(200,169,110,.15);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#c8a96e,#b22222);border-radius:2px;transition:width .4s ease}
+.progress-text{color:#a08870;font-size:12px;white-space:nowrap;font-weight:500}
+
+/* Quiz Card */
+.quiz-card{background:rgba(255,255,255,.04);border:1px solid rgba(200,169,110,.15);border-radius:20px;padding:28px 20px 24px;backdrop-filter:blur(10px)}
+.quiz-qnum{font-size:12px;color:#c8a96e;font-weight:600;letter-spacing:2px;margin-bottom:6px}
+.quiz-q{font-size:18px;font-weight:700;color:#f0e6c5;margin-bottom:6px;line-height:1.4}
+.quiz-desc{font-size:13px;color:#7a6a55;margin-bottom:22px;line-height:1.6}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:center;gap:10px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.12);border-radius:14px;cursor:pointer;transition:all .25s;color:#d0c4ae;font-size:14px;line-height:1.4}
+.quiz-opt:hover{border-color:rgba(200,169,110,.4);background:rgba(200,169,110,.06)}
+.quiz-opt.selected{border-color:#c8a96e;background:rgba(200,169,110,.12);color:#f0e6c5}
+.quiz-opt .badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(200,169,110,.15);color:#c8a96e;white-space:nowrap;margin-left:auto}
+.quiz-opt.selected .badge{background:rgba(200,169,110,.3)}
+
+/* Nav */
+.btn-row{display:flex;gap:12px;margin-top:20px}
+.btn-prev,.btn-next{flex:1;padding:13px 0;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;text-align:center}
+.btn-prev{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.2);color:#a08870}
+.btn-prev:hover{background:rgba(255,255,255,.08)}
+.btn-next{background:linear-gradient(135deg,#c8a96e,#b8860b);border:none;color:#1a0a2e;opacity:.4;pointer-events:none}
+.btn-next.active{opacity:1;pointer-events:auto}
+.btn-next.active:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(200,169,110,.3)}
+
+/* Result */
+.result-wrap{padding-top:10px}
+.result-header{text-align:center;margin-bottom:24px}
+.result-icon{font-size:64px;display:block;margin-bottom:10px}
+.result-title{font-size:28px;font-weight:800;color:#f0e6c5;letter-spacing:2px;margin-bottom:6px}
+.result-subtitle{color:#c8a96e;font-size:13px;letter-spacing:2px;margin-bottom:10px}
+.result-tags{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.result-tags span{font-size:11px;padding:4px 12px;border-radius:12px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.2);color:#c8a96e}
+.r-section{background:rgba(255,255,255,.04);border:1px solid rgba(200,169,110,.1);border-radius:16px;padding:18px 18px 20px;margin-bottom:14px}
+.r-section .r-label{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#c8a96e;margin-bottom:8px;letter-spacing:1px}
+.r-section .r-label .emoji{font-size:18px}
+.r-section p{font-size:14px;color:#c8bca0;line-height:1.8}
+.r-section ul{margin-top:6px;padding-left:6px;list-style:none}
+.r-section ul li{position:relative;padding:4px 0 4px 18px;font-size:14px;color:#b8a88a;line-height:1.6}
+.r-section ul li::before{content:'✦';position:absolute;left:0;color:#c8a96e;font-size:10px}
+.result-footer{text-align:center;margin-top:24px;padding:20px;border-top:1px solid rgba(200,169,110,.1)}
+.result-footer .brand{font-size:14px;color:#c8a96e;font-weight:600;letter-spacing:1px;margin-bottom:4px}
+.result-footer .slogan{font-size:12px;color:#7a6a55;margin-bottom:12px}
+.result-footer .disclaimer{font-size:10px;color:#555;margin-top:10px}
+
+/* Share */
+.share-row{display:flex;gap:10px;margin-bottom:16px}
+.btn-share{flex:1;padding:12px 0;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;border:none;text-align:center;transition:all .25s}
+.btn-share-link{background:rgba(200,169,110,.12);color:#c8a96e;border:1px solid rgba(200,169,110,.25)}
+.btn-share-link:hover{background:rgba(200,169,110,.2)}
+.btn-share-img{background:linear-gradient(135deg,#c8a96e,#b8860b);color:#1a0a2e}
+.btn-share-img:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(200,169,110,.3)}
+.btn-restart{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.15);color:#a08870;padding:12px 0;width:100%;border-radius:14px;font-size:14px;cursor:pointer;transition:all .25s;margin-top:8px}
+.btn-restart:hover{background:rgba(255,255,255,.08)}
+
+/* Toast */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#2c1810;color:#f0e6c5;padding:12px 24px;border-radius:12px;font-size:13px;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap;border:1px solid rgba(200,169,110,.2)}
+.toast.show{opacity:1;pointer-events:auto}
+
+#shareCanvas{display:none}
+
+/* Loading */
+.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,0,21,.85);display:none;justify-content:center;align-items:center;z-index:100;flex-direction:column;gap:16px}
+.loading-overlay.show{display:flex}
+.loading-spinner{width:40px;height:40px;border:3px solid rgba(200,169,110,.15);border-top-color:#c8a96e;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{color:#c8a96e;font-size:14px;letter-spacing:2px}
+
+@media(max-width:380px){
+  .cover h1{font-size:24px}
+  .quiz-q{font-size:16px}
+  .quiz-opt{font-size:13px;padding:12px 14px}
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="starsContainer"></div>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">🔮 命盘推算中...</div>
+</div>
+<div class="toast" id="toast"></div>
+<canvas id="shareCanvas"></canvas>
+
+<div class="container">
+
+  <!-- Cover -->
+  <div class="screen active" id="screenCover">
+    <div class="cover">
+      <span class="cover-badge">✦ 照德堂 · 玄学精算 ✦</span>
+      <span class="cover-icon">🔮</span>
+      <h1>生辰八字<br><span>· 财运婚姻寿命</span></h1>
+      <div class="sub">
+        输入你的命理信息，精算财运走势、<br>
+        婚姻缘分、寿命养生——<br>
+        揭示你生命中最重要的三个面向
+      </div>
+      <div class="tags">
+        <span>💰 财运</span>
+        <span>💕 姻缘</span>
+        <span>🌿 寿元</span>
+        <span>⭐ 星座</span>
+      </div>
+      <button class="btn-start" onclick="startQuiz()">开 始 测 算</button>
+      <div class="disclaimer">📌 仅供趣味参考 · 命运在自己手中</div>
+    </div>
+  </div>
+
+  <!-- Quiz -->
+  <div class="screen" id="screenQuiz">
+    <div class="progress-wrap">
+      <span class="progress-text" id="progressText">1 / 8</span>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+    <div class="quiz-card" id="quizCard"></div>
+  </div>
+
+  <!-- Result -->
+  <div class="screen" id="screenResult">
+    <div class="result-wrap" id="resultWrap"></div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// 8道问题
+// ============================================================
+const Q = [
+  {
+    q:'你的生肖是？',
+    desc:'十二生肖八字根基 · 决定先天命盘的气场底色',
+    key:'zodiac',
+    options:[
+      {v:'rat',l:'🐭 鼠',badge:'子·机智'},
+      {v:'ox',l:'🐮 牛',badge:'丑·稳重'},
+      {v:'tiger',l:'🐯 虎',badge:'寅·威猛'},
+      {v:'rabbit',l:'🐰 兔',badge:'卯·温和'},
+      {v:'dragon',l:'🐲 龙',badge:'辰·尊贵'},
+      {v:'snake',l:'🐍 蛇',badge:'巳·睿智'},
+      {v:'horse',l:'🐴 马',badge:'午·奔放'},
+      {v:'goat',l:'🐏 羊',badge:'未·温顺'},
+      {v:'monkey',l:'🐵 猴',badge:'申·机敏'},
+      {v:'rooster',l:'🐔 鸡',badge:'酉·精明'},
+      {v:'dog',l:'🐶 狗',badge:'戌·忠诚'},
+      {v:'pig',l:'🐷 猪',badge:'亥·福气'},
+    ]
+  },
+  {
+    q:'你出生在什么时间段？',
+    desc:'出生时辰定日主旺衰 · 决定财运格局',
+    key:'birth_time',
+    options:[
+      {v:'dawn',l:'🌅 卯辰时 5-9点',badge:'日出·木'},
+      {v:'morning',l:'☀️ 巳午时 9-13点',badge:'日升·火'},
+      {v:'afternoon',l:'🌤 未申时 13-17点',badge:'日昳·土'},
+      {v:'evening',l:'🌅 酉戌时 17-21点',badge:'日落·金'},
+      {v:'night',l:'🌙 亥子时 21-1点',badge:'夜半·水'},
+      {v:'late',l:'🌑 丑寅时 1-5点',badge:'黎明·土'},
+    ]
+  },
+  {
+    q:'你的五行人格偏向？',
+    desc:'你的心性气场属于哪一行？',
+    key:'element',
+    options:[
+      {v:'metal',l:'⚔️ 金 · 果断干练',badge:'决断'},
+      {v:'wood',l:'🌿 木 · 随和包容',badge:'生长'},
+      {v:'water',l:'🌊 水 · 深邃灵动',badge:'智慧'},
+      {v:'fire',l:'🔥 火 · 热情张扬',badge:'行动'},
+      {v:'earth',l:'🏔️ 土 · 笃定务实',badge:'承载'},
+    ]
+  },
+  {
+    q:'你当前最关心哪方面运势？',
+    desc:'你的关注点就是命理能量的「投射方向」',
+    key:'focus',
+    options:[
+      {v:'wealth',l:'💰 财运 · 赚钱存钱投资',badge:'正财'},
+      {v:'marriage',l:'💕 婚姻 · 感情缘分家庭',badge:'夫妻'},
+      {v:'health',l:'🌿 健康 · 养生延寿精力',badge:'寿元'},
+      {v:'career',l:'💼 事业 · 晋升发展竞争',badge:'官运'},
+      {v:'social',l:'🤝 人际 · 贵人小人社交',badge:'人缘'},
+    ]
+  },
+  {
+    q:'你的太阳星座是？',
+    desc:'星座与八字互参 · 两种命理体系相互印证',
+    key:'zodiac_sign',
+    options:[
+      {v:'aries',l:'♈ 白羊 3/21-4/19',badge:'火·开创'},
+      {v:'taurus',l:'♉ 金牛 4/20-5/20',badge:'土·稳定'},
+      {v:'gemini',l:'♊ 双子 5/21-6/21',badge:'风·善变'},
+      {v:'cancer',l:'♋ 巨蟹 6/22-7/22',badge:'水·敏感'},
+      {v:'leo',l:'♌ 狮子 7/23-8/22',badge:'火·自信'},
+      {v:'virgo',l:'♍ 处女 8/23-9/22',badge:'土·细致'},
+      {v:'libra',l:'♎ 天秤 9/23-10/23',badge:'风·平衡'},
+      {v:'scorpio',l:'♏ 天蝎 10/24-11/22',badge:'水·深刻'},
+      {v:'sagittarius',l:'♐ 射手 11/23-12/21',badge:'火·自由'},
+      {v:'capricorn',l:'♑ 摩羯 12/22-1/19',badge:'土·务实'},
+      {v:'aquarius',l:'♒ 水瓶 1/20-2/18',badge:'风·创新'},
+      {v:'pisces',l:'♓ 双鱼 2/19-3/20',badge:'水·感性'},
+    ]
+  },
+  {
+    q:'你的人生信条更偏向？',
+    desc:'心性选择决定大运走向',
+    key:'philosophy',
+    options:[
+      {v:'steady',l:'🛡️ 稳中求进 · 不做没把握的事',badge:'保守'},
+      {v:'daring',l:'🚀 敢想敢拼 · 富贵险中求',badge:'冒险'},
+      {v:'go_with',l:'🌊 随遇而安 · 相信命里有时终须有',badge:'随缘'},
+      {v:'strive',l:'💪 人定胜天 · 命运靠自己打拼',badge:'拼搏'},
+    ]
+  },
+  {
+    q:'你目前的感情/婚姻状态？',
+    desc:'姻缘信息在命盘中的能量投射',
+    key:'relationship',
+    options:[
+      {v:'single',l:'💔 单身 · 还在等对的人',badge:'待缘'},
+      {v:'dating',l:'💑 恋爱中 · 有稳定伴侣',badge:'有情'},
+      {v:'married',l:'💍 已婚 · 已有婚姻家庭',badge:'成家'},
+      {v:'complex',l:'🌪️ 感情波动 · 正在经历变化',badge:'变动'},
+    ]
+  },
+  {
+    q:'你觉得自己的当前运势如何？',
+    desc:'自我感知是命理验证的重要信号',
+    key:'current_fortune',
+    options:[
+      {v:'peak',l:'🌟 顺风顺水 · 各方面都不错',badge:'行运'},
+      {v:'flat',l:'⚖️ 不温不火 · 无大喜大悲',badge:'平运'},
+      {v:'turning',l:'🔄 处于转折 · 好坏参半在变化',badge:'转机'},
+      {v:'low',l:'🌧️ 不太顺 · 感觉处处碰壁',badge:'低谷'},
+    ]
+  }
+];
+
+// ============================================================
+// 12种命格结果
+// ============================================================
+const R = {
+  golden_dragon:{
+    icon:'🐉',title:'金龙腾云 · 富贵命',
+    subtitle:'金气充沛 · 财运亨通之命',
+    tags:['💰正财旺','🏆事业有成','👑领导力'],
+    portrait:'你命带「金」气，是天生的聚财之人。八字日主旺相，财星得地，一生财运呈现「先积累后爆发」的走势。就像真龙腾云，早期隐忍蓄势，中年后一飞冲天。你的魄力和执行力让机遇总是青睐你。',
+    wealth:'正财稳健，偏财也有机遇。35岁前行稳致远，35-45岁是财富爆发黄金期。适合不动产、贵金属、金融等五行属金的行业。注意：财旺易惹小人，守住底线方能长久。',
+    marriage:'你的感情走势和财运呈正相关——财运佳时桃花自旺。婚姻中的问题是主导欲较强，需学会柔软。你理想的伴侣是温润型，水火属性与你互补。',
+    health:'金气过旺需防肺与呼吸系统。养生关键词：润肺、降燥。推荐银耳、百合、梨子。坚持深呼吸练习，寿命走势稳健，注意45岁后的健康转折。',
+    zodiac:'狮子座、摩羯座与你的八字气场最为契合。火象星座能激发你的行动力，土象星座能成全你的稳定性。',
+    advice:'今年是积累之年，适合低调深耕。下半年偏财有惊喜，但要警惕冲动投资。感情上多主动表达。'
+  },
+  jade_rabbit:{
+    icon:'🐇',title:'玉兔衔芝 · 福禄命',
+    subtitle:'木德含春 · 福寿双全之命',
+    tags:['👨‍👩‍👧‍👦家庭美满','🌿长寿','🏡福气深厚'],
+    portrait:'你的八字带有祥瑞之气，如月宫玉兔般温润灵秀。木主仁、主寿，你天生福泽深厚，一生多遇贵人。看似不争不抢，实则福气自来。你的命运特点是「正缘正财」——来得不一定快，但来了就很稳。',
+    wealth:'财星藏在印星之中，你的财富靠「专业+口碑」慢慢累积。适合教育、医疗、文化创意行业。45岁后子女星旺，财运反超前半生。',
+    marriage:'你是典型的「晚婚但幸福」类型。婚姻质量很高，伴侣忠诚顾家。你是关系中的调和者，注意不要过度付出——留点精力爱自己。',
+    health:'木气充足，肝肾功能强健。天生长寿体质，需防思虑过度伤脾。养生建议：少纠结、多运动。八段锦、散步是最佳选择。',
+    zodiac:'巨蟹座、双鱼座与你的气质最接近。水象星座能理解你的细腻，土象星座给你安全感。',
+    advice:'今年桃花运在秋冬季节转旺。财运稳中有升，适合学习新技能。夏秋之交注意肠胃调理。'
+  },
+  phoenix_fire:{
+    icon:'🦅',title:'火凤朝阳 · 桃花命',
+    subtitle:'火气通明 · 魅力四射之命',
+    tags:['💕桃花旺','🔥热情似火','🎭多才多艺'],
+    portrait:'你的八字火气通明，如浴火凤凰般耀眼。天生魅力四射，走到哪里都是人群焦点。火主礼、主热情，你的生命能量充沛，但也容易因冲动而走弯路。你的命运特点是「大起大落」，但每次落地都能重新起飞。',
+    wealth:'偏财运强于正财运。适合创意、娱乐、互联网等五行属火的行业。赚钱靠「眼光和嗅觉」。注意：赚快钱也容易花得快，需建立强制储蓄习惯。',
+    marriage:'桃花极旺，一生不缺追求者。但正缘需到28岁后才能稳定。你的婚姻需要激情和新鲜感。最配木属性或水属性的人——木生火、水制火。',
+    health:'火旺需防心脑血管问题。养生建议：静心、少怒、降火。推荐绿茶、菊花、莲子心泡水。练瑜伽或冥想平衡心火。',
+    zodiac:'最配射手座、白羊座。同为火象时你们会是最耀眼的一对。狮子座能理解你的骄傲。',
+    advice:'今年注意控制开支，下半年有不错的合作机会。感情上不要急于确定关系。健康上注意防晒和心火。'
+  },
+  dark_turtle:{
+    icon:'🐢',title:'玄武镇海 · 智慧命',
+    subtitle:'水德润下 · 深藏不露之命',
+    tags:['🌊智慧深沉','💰暗财','🤫大智若愚'],
+    portrait:'你的八字水气深邃，如玄武镇守北海——表面平静无波，底下暗流涌动。你智慧深藏，不轻易表露实力。水主智、主谋略，你天生擅长策划和布局。一生不走寻常路，但往往笑到最后。',
+    wealth:'你的财是「暗财」——赚的钱别人不一定看得见。适合投资、贸易、咨询、专业技术等不需要频繁社交的领域。理财能力极强，善于在低谷买入。',
+    marriage:'感情上你属于「慢热但深情」型。不轻易动心，但一旦认定就非常专一。最配金属性或土属性的人。',
+    health:'肾水充足，天生精力好。需防泌尿系统和骨骼关节。养生建议：黑豆、黑芝麻补肾，坚持泡脚。',
+    zodiac:'天蝎座、水瓶座与你精神共鸣最强。风象星座能陪伴你的思想，水象星座能理解你的深度。',
+    advice:'今年有利投资和技术突破，适合深挖一个领域。感情上不要把自己封闭得太紧。下半年有贵人运。'
+  },
+  unicorn_mountain:{
+    icon:'🦌',title:'麒麟踏山 · 安泰命',
+    subtitle:'土德敦厚 · 福禄绵长之命',
+    tags:['🏔️稳重如山','👨‍👩‍👧‍👦家庭福','🌾福禄绵长'],
+    portrait:'你的八字土气丰厚，如麒麟踏山，每一步都踏实有力。土主信、主承载——朋友信赖你、家人依靠你。你的命运特点是「厚积薄发、福泽连绵」。让人安心的存在。',
+    wealth:'正财运极稳，赚踏实钱。适合房地产、农业、教育、公务员等五行属土的行业。不追求暴富，积累下来反而比多数人富有。注意不要过于保守。',
+    marriage:'最稳定的人生伴侣。在婚姻中以「撑起一片天」的角色存在。包容力强，需要对方表达感激。最配火属性或金属性的人。',
+    health:'脾土健旺，消化系统天生好。需防饮食过量。养生关键词：七分饱、多运动。推荐散步、太极。长寿指数较高。',
+    zodiac:'最配金牛座、处女座、摩羯座。土象星座之间的默契无需言语。',
+    advice:'今年事业上有贵人提携，适合争取晋升。财运以守为主。感情中多制造小惊喜。'
+  },
+  white_crane:{
+    icon:'🕊️',title:'白鹤凌霄 · 清贵命',
+    subtitle:'金水相生 · 高洁远志之命',
+    tags:['🎯清高志远','📖才学出众','🌙气质不凡'],
+    portrait:'金水相生的八字格局，为「白鹤凌霄」之象。天生气质清贵，不喜世俗纷扰。金主义、水主智，才情与原则并重。适合在专业领域深耕，做一个不被替代的人。',
+    wealth:'你的财富靠「才」不靠「财」——专业能力就是你最大的资产。适合法律、会计、设计、科技研发等。一生不愁吃穿，大富大贵需等到中年后。',
+    marriage:'对伴侣要求很高——不仅是条件，更是精神层面的契合。宁缺毋滥。最配木属性或火属性的人。',
+    health:'整体健康较好，但因思虑过重易失眠、偏头痛。养生：减少熬夜、增加有氧运动。精油香薰安神。',
+    zodiac:'水瓶座、天秤座、双子座与你最有精神共鸣。',
+    advice:'今年是厚积薄发之年，适合深造或考取资格证书。感情上不要过于理性。秋季财运最佳。'
+  },
+  deer_spring:{
+    icon:'🦌',title:'瑞鹿鸣春 · 才艺命',
+    subtitle:'木火通明 · 才华横溢之命',
+    tags:['🎨才华满溢','🌸人际好','🌟青年得志'],
+    portrait:'木火通明如春鹿在林间欢鸣——生命力旺盛、创造力和表现力兼具。你天生多才多艺，学什么都比别人快。青年时期就能崭露头角。',
+    wealth:'你的财运和「名气」强相关。适合新媒体、设计、演艺、教育等行业。才华可以变现，但理财能力需要找专业的人帮忙。',
+    marriage:'你是让人如沐春风的情人。在长期关系中容易因新鲜感减弱而倦怠。最配水属性或土属性的人。',
+    health:'木火过旺需防肝胆和眼睛。养生：少熬夜、多绿色蔬菜、菊花枸杞茶。春天多去户外。',
+    zodiac:'射手座、狮子座、双子座与你磁场相近。',
+    advice:'今年是展示才华的好时机，适合争取曝光机会。感情上今年有正缘出现。春夏之交财运最佳。'
+  },
+  turtle_fortune:{
+    icon:'🐢',title:'灵龟负图 · 晚成命',
+    subtitle:'水土相济 · 大器晚成之命',
+    tags:['⏳大器晚成','🧠厚积薄发','🎯耐力惊人'],
+    portrait:'水土相济如灵龟背负河图——表面不动声色，内藏天地玄机。你的人生关键词是「慢」。别人在跑时你在走，但走到最后反而是你笑得最稳。40岁后起飞。',
+    wealth:'前期财运平平，但40岁后财富以惊人速度追赶。适合深耕一个领域十年以上。积累阶段的每分努力都不会白费。',
+    marriage:'缘分来得比较晚，但来了就是一辈子。中年后婚姻非常稳固。对的人会在你最成熟的时候出现。',
+    health:'水土平衡，身体素质不错。需防湿气重导致的关节问题。养生：薏米红豆汤祛湿健脾。',
+    zodiac:'摩羯座、金牛座与你最契合。你们的共同点是都能等。',
+    advice:'今年适合做长期规划。考个证、学个新技能都是好选择。感情上不要放弃——缘分正在赶来。'
+  },
+  golden_toad:{
+    icon:'🐸',title:'金蟾吐宝 · 聚财命',
+    subtitle:'土金相生 · 守财有道之命',
+    tags:['💰聚财有道','🛡️守成稳健','🏠家业兴旺'],
+    portrait:'土金相生如金蟾张口吐宝——你天生对钱有特殊的感觉。不是赚得最多的人，但一定是攒得最多的人之一。守财有道，是你的天赋。',
+    wealth:'财商是天赋。从小对钱有概念，知道怎么花、怎么省、怎么让它生钱。适合债券、定存、指数基金。注意：别太节俭，适当享受才是福气。',
+    marriage:'在婚姻中是「安全感的提供者」。伴侣会感到很安心。不要把钱看得比感情重要。最配水属性或木属性的人。',
+    health:'肠胃是最需要关注的部位。养生：规律饮食、少生冷。推荐山药、小米。运动以温和为主。',
+    zodiac:'处女座、金牛座与你的金钱观非常一致。摩羯座能和你一起规划未来。',
+    advice:'今年财运稳中向好，适合做资产配置。感情上多花时间陪伴。秋冬之际注意肠胃。'
+  },
+  phoenix_mate:{
+    icon:'🦚',title:'彩凤双飞 · 姻缘命',
+    subtitle:'水火既济 · 天作之合之命',
+    tags:['💍姻缘美满','💞天生一对','👰婚姻和谐'],
+    portrait:'水火既济如彩凤双飞——你的命格最大的亮点就是姻缘。婚姻是你一生中最重要的福气来源。要么晚婚但非常幸福，要么青梅竹马终成眷属。',
+    wealth:'财运和婚姻运势高度绑定——婚后财富明显增长。夫妻合力比独自一人强很多。适合夫妻共同创业或家庭式理财。',
+    marriage:'姻缘是你命中的王牌。和伴侣天然互补。如果是单身，2026-2027是你的正缘窗口。珍惜眼前人。',
+    health:'水火既济，身体处于比较平衡的状态。夏养心、冬养肾，顺应四时。',
+    zodiac:'天秤座、双鱼座、巨蟹座与你缘分很深。',
+    advice:'单身的今年一定要多社交。已婚的今年适合一起旅行、一起做重要决定。'
+  },
+  blue_ox:{
+    icon:'🐂',title:'青牛望月 · 逆袭命',
+    subtitle:'土水相制 · 先苦后甜之命',
+    tags:['💪先苦后甜','🌙逆袭典范','🎯耐力之王'],
+    portrait:'土水相制如青牛望月——人生的前半场被压制，后半场反转。早期努力常被环境限制，但这是一场马拉松。转折点在35-40岁。',
+    wealth:'前期财运坎坷，40岁后人脉、经验和判断力一起爆发。典型「厚积薄发、逆风翻盘」。',
+    marriage:'早年感情不顺是常态，典型的「晚婚幸福」命格。之前的挫折都在帮你筛选。',
+    health:'早期易有慢性疲劳和亚健康。养生：养肾减压——早睡、泡脚、减少内耗。',
+    zodiac:'摩羯座、天蝎座与你的逆袭气质最像。你们都是在沉默中爆发的类型。',
+    advice:'今年是重要转折期。不顺说明在触底——触底之后就是反弹。感情上今年可能遇到对的人。'
+  },
+  purple_star:{
+    icon:'⭐',title:'紫薇照命 · 全能命',
+    subtitle:'五行均衡 · 福运齐备之命',
+    tags:['🌟全能型','🌀一帆风顺','🎯多福多运'],
+    portrait:'五行均衡如紫微星高照——不是某一样特别突出，而是方方面面都不差。命运的「全科选手」：财运不错、婚姻幸福、身体健康、社交广泛。日常幸福感很高。',
+    wealth:'来路多元化。正职工资不错，副业也有收入，投资眼光也不错。赚钱渠道多，总体财富积累比大多数人都好。',
+    marriage:'让伴侣很省心的类型——性格随和、情绪稳定、不折腾。细水长流的陪伴是难得的福气。',
+    health:'五行均衡，很少生大病。长寿指数较高。保持规律作息和适度运动。',
+    zodiac:'十二星座和你都不违和。天秤座和你最像，射手座能带来更多乐趣。',
+    advice:'今年的关键词是「拓展」。不要安于现状，主动寻求变化会带来更多惊喜。适合学习新领域。'
+  },
+  silver_carp:{
+    icon:'🐟',title:'银鲤跃浪 · 变通命',
+    subtitle:'水木相生 · 灵活应变之命',
+    tags:['🌀灵活变通','🌊适应力强','🌈处处逢源'],
+    portrait:'水木相生如银鲤在浪中跳跃——你天生具有极强的适应力。在变化中成长是你的天赋。不设限——任何环境都能活出自己的节奏。',
+    wealth:'赚钱方式多元，经常跨界。适合互联网、贸易、咨询、自由职业。注意：灵活是你的优势，也要培养专注力。',
+    marriage:'在感情中需要足够的自由空间。最适合你的类型是独立自信型——各有各的精彩。',
+    health:'整体健康不错，需防季节性过敏。养生：规律作息是最好的药。推荐游泳、瑜伽。',
+    zodiac:'双子座、射手座、水瓶座与你最合。你们都是不喜欢被束缚的灵魂。',
+    advice:'今年是「动中求财」之年——出差、跳槽、换城市都可能带来好机会。'
+  }
+};
+
+const FALLBACK = {
+  icon:'🔮',title:'玄机待解 · 特别命',
+  subtitle:'综合命格分析',
+  tags:['🌟独特','🌀复杂','🎯需要自身验证'],
+  portrait:'你的八字组合非常独特，常规命格无法完全涵盖。这正是罕见的命格特征——你无法被简单定义。人生有更多可能性。',
+  wealth:'财运具有横发横破的特点。建议建立稳定储蓄机制。',
+  marriage:'感情世界比较复杂，建议不要因外界压力而仓促决定。',
+  health:'整体中等，需防情绪影响身体。调节心情是最好的养生。',
+  zodiac:'你的多维气质让单一星座分析显得单薄。建议关注上升星座和月亮星座。',
+  advice:'适合静下来听听内心的声音。你的人生节奏和别人不一样，不必焦虑。'
+};
+
+const ZE = {rat:{e:'water',s:'冬'},ox:{e:'earth',s:'冬'},
+  tiger:{e:'wood',s:'春'},rabbit:{e:'wood',s:'春'},
+  dragon:{e:'earth',s:'春'},snake:{e:'fire',s:'夏'},
+  horse:{e:'fire',s:'夏'},goat:{e:'earth',s:'夏'},
+  monkey:{e:'metal',s:'秋'},rooster:{e:'metal',s:'秋'},
+  dog:{e:'earth',s:'秋'},pig:{e:'water',s:'冬'}};
+
+const SE = {aries:'fire',taurus:'earth',gemini:'air',cancer:'water',
+  leo:'fire',virgo:'earth',libra:'air',scorpio:'water',
+  sagittarius:'fire',capricorn:'earth',aquarius:'air',pisces:'water'};
+
+const TE = {dawn:'wood',morning:'fire',afternoon:'earth',evening:'metal',night:'water',late:'earth'};
+
+// ============================================================
+// 结果计算（确定性规则引擎）
+// ============================================================
+function calcResult(a){
+  const ze = ZE[a.zodiac].e, te = TE[a.birth_time], pe = a.element, se = SE[a.zodiac_sign];
+  const c = {metal:0,wood:0,water:0,fire:0,earth:0};
+  [ze,te,pe,se].forEach(e=>{if(c[e]!==undefined)c[e]++});
+  const mx = Math.max(...Object.values(c));
+  const dom = Object.keys(c).filter(k=>c[k]===mx);
+  const has=(e)=>c[e]>=2;
+  const combo=(a,b)=>c[a]>=1&&c[b]>=1;
+
+  let k;
+  if(has('metal')&&has('earth')) k='golden_toad';
+  else if(has('metal')&&has('water')) k='white_crane';
+  else if(has('fire')&&c.fire>=2) k='phoenix_fire';
+  else if(has('water')&&c.water>=2&&combo('water','metal')) k='silver_carp';
+  else if(has('water')&&c.water>=2) k='dark_turtle';
+  else if(has('wood')&&has('fire')) k='deer_spring';
+  else if(has('wood')&&c.wood>=2) k='jade_rabbit';
+  else if(has('earth')&&c.earth>=2&&combo('earth','water')) k='blue_ox';
+  else if(has('earth')&&c.earth>=2&&combo('earth','fire')) k='unicorn_mountain';
+  else if(has('water')&&has('fire')) k='phoenix_mate';
+  else if(has('metal')&&c.metal>=2) k='golden_dragon';
+  else if(has('earth')&&has('water')) k='turtle_fortune';
+  else k='purple_star';
+
+  if(a.focus==='health'&&k==='blue_ox') k='jade_rabbit';
+  if(a.focus==='wealth'&&(k==='jade_rabbit'||k==='unicorn_mountain')) k='golden_toad';
+
+  return R[k]||FALLBACK;
+}
+
+// ============================================================
+// 交互
+// ============================================================
+let cur = 0;
+const ans = {};
+
+function startQuiz(){
+  document.getElementById('screenCover').classList.remove('active');
+  document.getElementById('screenQuiz').classList.add('active');
+  cur=0; renderQ();
+}
+
+function renderQ(){
+  const q=Q[cur], card=document.getElementById('quizCard');
+  const total=Q.length;
+  let html=`<div class="quiz-qnum">第 ${cur+1}/${total} 题</div><div class="quiz-q">${q.q}</div><div class="quiz-desc">${q.desc}</div><div class="quiz-options">`;
+  q.options.forEach(o=>{
+    const sel=ans[q.key]===o.v?' selected':'';
+    html+=`<div class="quiz-opt${sel}" onclick="sel('${q.key}','${o.v}')"><span>${o.l}</span><span class="badge">${o.badge}</span></div>`;
+  });
+  html+=`</div><div class="btn-row">${cur>0?'<button class="btn-prev" onclick="prev()">← 上一题</button>':''}<button class="btn-next${ans[q.key]?' active':''}" id="btnNext" onclick="next()">${cur===total-1?'🔮 查看命盘 →':'下一步 →'}</button></div>`;
+  card.innerHTML=html;
+  updateProgress();
+}
+
+function sel(k,v){ans[k]=v;renderQ();}
+
+function next(){
+  const q=Q[cur];
+  if(!ans[q.key])return;
+  if(cur<Q.length-1){cur++;renderQ();}
+  else showResult();
+}
+
+function prev(){if(cur>0){cur--;renderQ();}}
+
+function updateProgress(){
+  const p=((cur+1)/Q.length)*100;
+  document.getElementById('progressBar').style.width=p+'%';
+  document.getElementById('progressText').textContent=cur+1+' / '+Q.length;
+}
+
+// ============================================================
+// 结果页
+// ============================================================
+function showResult(){
+  const ov=document.getElementById('loadingOverlay');
+  ov.classList.add('show');
+  setTimeout(()=>{
+    ov.classList.remove('show');
+    document.getElementById('screenQuiz').classList.remove('active');
+    document.getElementById('screenResult').classList.add('active');
+
+    const r=calcResult(ans);
+    const w=document.getElementById('resultWrap');
+    w.innerHTML=`
+      <div class="result-header">
+        <span class="result-icon">${r.icon}</span>
+        <div class="result-title">${r.title}</div>
+        <div class="result-subtitle">${r.subtitle}</div>
+        <div class="result-tags">${r.tags.map(t=>'<span>'+t+'</span>').join('')}</div>
+      </div>
+      <div class="r-section"><div class="r-label"><span class="emoji">📜</span> 八字命理画像</div><p>${r.portrait}</p></div>
+      <div class="r-section"><div class="r-label"><span class="emoji">💰</span> 财运精批</div><p>${r.wealth}</p></div>
+      <div class="r-section"><div class="r-label"><span class="emoji">💕</span> 婚姻之缘</div><p>${r.marriage}</p></div>
+      <div class="r-section"><div class="r-label"><span class="emoji">🌿</span> 寿元养生</div><p>${r.health}</p></div>
+      <div class="r-section"><div class="r-label"><span class="emoji">⭐</span> 星座印证</div><p>${r.zodiac}</p></div>
+      <div class="r-section"><div class="r-label"><span class="emoji">🔮</span> 流年锦囊</div><p>${r.advice}</p></div>
+      <div class="share-row">
+        <button class="btn-share btn-share-link" onclick="shareLink()">📋 复制链接</button>
+        <button class="btn-share btn-share-img" onclick="shareImage()">🖼️ 生成分享图</button>
+      </div>
+      <div class="result-footer">
+        <div class="brand">✦ 照德堂 · 以自然之道养自然之身 ✦</div>
+        <div class="slogan">长沙雨花区 · 药食同源 · 手作护肤</div>
+        <div class="disclaimer">📌 仅供趣味参考 · 真正的命在自己手中</div>
+        <button class="btn-restart" onclick="restart()">🔄 重新测算</button>
+      </div>`;
+    window.scrollTo({top:0,behavior:'smooth'});
+  },1200);
+}
+
+function shareLink(){
+  const url=window.location.href;
+  if(navigator.share){navigator.share({title:'生辰八字·综合精算',text:'我测了我的八字财运婚姻寿命，你也试试！',url}).catch(()=>{});}
+  else{
+    const ta=document.createElement('textarea');
+    ta.value='🔮 我测了我的八字命盘！\n生辰八字·财运婚姻寿命·综合精算\n'+url;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    toast('✅ 链接已复制，快去分享给朋友吧！');
+  }
+}
+
+function shareImage(){
+  const ov=document.getElementById('loadingOverlay');
+  ov.querySelector('.loading-text').textContent='🖼️ 生成分享图中...';
+  ov.classList.add('show');
+  setTimeout(()=>{
+    const r=calcResult(ans);
+    const cv=document.getElementById('shareCanvas'),ctx=cv.getContext('2d');
+    const W=400,H=600;cv.width=W;cv.height=H;
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#0a0015');g.addColorStop(.5,'#1a0a2e');g.addColorStop(1,'#0d0221');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    for(let i=0;i<30;i++){const x=Math.random()*W,y=Math.random()*H,rr=Math.random()*1.5+.5;ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.6+.2)+')';ctx.fill();}
+    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 生辰八字综合精算 ✦',W/2,40);
+    ctx.strokeStyle='rgba(200,169,110,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,55);ctx.lineTo(W-40,55);ctx.stroke();
+    ctx.font='48px sans-serif';ctx.fillText(r.icon,W/2,110);
+    ctx.fillStyle='#f0e6c5';ctx.font='bold 22px sans-serif';ctx.fillText(r.title,W/2,150);
+    ctx.font='11px sans-serif';ctx.fillStyle='#c8a96e';ctx.fillText(r.tags.join('  ·  '),W/2,175);
+    ctx.beginPath();ctx.moveTo(60,190);ctx.lineTo(W-60,190);ctx.stroke();
+    ctx.fillStyle='#c8bca0';ctx.font='12px sans-serif';
+    wt(ctx,r.portrait.substring(0,90)+(r.portrait.length>90?'……':''),40,215,320,18);
+    ctx.fillStyle='#b22222';ctx.font='bold 12px sans-serif';ctx.textAlign='left';
+    ctx.fillText('💰 财运',40,290);ctx.fillStyle='#b8a88a';ctx.font='11px sans-serif';
+    const ws=r.wealth.substring(0,50);ctx.fillText(ws+(r.wealth.length>50?'……':''),40,310);
+    ctx.fillStyle='#b22222';ctx.font='bold 12px sans-serif';ctx.fillText('💕 姻缘',40,345);ctx.fillStyle='#b8a88a';ctx.font='11px sans-serif';
+    const ms=r.marriage.substring(0,50);ctx.fillText(ms+(r.marriage.length>50?'……':''),40,365);
+    ctx.fillStyle='#b22222';ctx.font='bold 12px sans-serif';ctx.fillText('🌿 寿元',40,400);ctx.fillStyle='#b8a88a';ctx.font='11px sans-serif';
+    const hs=r.health.substring(0,50);ctx.fillText(hs+(r.health.length>50?'……':''),40,420);
+    ctx.textAlign='center';ctx.fillStyle='#c8a96e';ctx.font='12px sans-serif';
+    const as=r.advice.substring(0,36);ctx.fillText('🔮 流年锦囊: '+as+(r.advice.length>36?'……':''),W/2,470);
+    ctx.fillStyle='rgba(200,169,110,.3)';ctx.font='14px sans-serif';ctx.fillText('↑ 扫码也可自测 ↑',W/2,510);
+    ctx.fillStyle='rgba(255,255,255,.15)';ctx.font='10px sans-serif';ctx.fillText('长按分享 · 仅供趣味参考 · 命运在自己手中',W/2,535);
+    ctx.fillStyle='#666';ctx.font='10px sans-serif';ctx.fillText('照德堂 · 长沙雨花区',W/2,558);
+
+    const dataUrl=cv.toDataURL('image/png');
+    ov.classList.remove('show');
+    ov.querySelector('.loading-text').textContent='🔮 命盘推算中...';
+    const wrap=document.getElementById('resultWrap');
+    const ih='<div style="text-align:center;margin-bottom:16px"><img src="'+dataUrl+'" style="width:100%;max-width:360px;border-radius:16px;border:2px solid rgba(200,169,110,.2)" alt="分享图"><p style="color:#c8a96e;font-size:13px;margin-top:10px">👆 长按图片保存 · 发朋友圈</p></div>';
+    const sr=wrap.querySelector('.share-row');
+    if(sr)sr.insertAdjacentHTML('beforebegin',ih);
+    toast('🖼️ 分享图已生成！长按保存发朋友圈');
+  },800);
+}
+
+function wt(ctx,t,x,y,mw,lh){
+  let l=[],cl='';
+  for(let i=0;i<t.length;i++){cl+=t[i];if(ctx.measureText(cl).width>mw){l.push(cl.slice(0,-1));cl=t[i];}}
+  if(cl)l.push(cl);
+  l.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lh));
+}
+
+function restart(){
+  document.getElementById('screenResult').classList.remove('active');
+  const ei=document.querySelector('.result-wrap img');
+  if(ei&&ei.parentElement&&ei.parentElement.tagName==='DIV'&&ei.parentElement.style.textAlign==='center')ei.parentElement.remove();
+  Object.keys(ans).forEach(k=>delete ans[k]);cur=0;
+  document.getElementById('screenCover').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toast(m){
+  const t=document.getElementById('toast');
+  t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// Stars
+(function(){
+  const c=document.getElementById('starsContainer');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');s.className='star';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.width=s.style.height=Math.random()*2+1+'px';
+    s.style.setProperty('--dur',(Math.random()*3+2).toFixed(1)+'s');
+    s.style.animationDelay=Math.random()*5+'s';
+    c.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>
