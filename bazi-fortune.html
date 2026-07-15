@@ -658,10 +658,18 @@ function shareLink(){
 }
 function shareImage(){
   const ov=g('loadingOverlay');g('loadingText').textContent='🖼️ 生成分享图中...';ov.classList.add('show');
-  setTimeout(()=>{
+  // 预加载二维码
+  var qrLoaded=false,qrImg=new Image();
+  qrImg.onload=function(){qrLoaded=true;drawFull(this);};
+  qrImg.onerror=function(){drawFull(null);};
+  qrImg.src='https://zhaodetang.us.ci/qrcode-bazi.png';
+  var fbTimer=setTimeout(function(){if(!qrLoaded)drawFull(null);},2000);
+  function drawFull(qr){
+    clearTimeout(fbTimer);
+    if(qrLoaded&&!qr)return; // already drawn
     const dpr=window.devicePixelRatio||1;
     const r=calcResult(ans),cv=g('shareCanvas'),ctx=cv.getContext('2d');
-    const BW=520,BH=720;
+    const BW=520,BH=830;
     cv.width=BW*dpr;cv.height=BH*dpr;
     cv.style.width=BW+'px';cv.style.height=BH+'px';
     ctx.scale(dpr,dpr);
@@ -670,24 +678,23 @@ function shareImage(){
     gd.addColorStop(0,'#0a0015');gd.addColorStop(.5,'#1a0a2e');gd.addColorStop(1,'#0d0221');
     ctx.fillStyle=gd;ctx.fillRect(0,0,BW,BH);
     // 星星
-    for(let i=0;i<40;i++){const x=Math.random()*BW,y=Math.random()*BH,r2=Math.random()*2+1;ctx.beginPath();ctx.arc(x,y,r2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.7+.15)+')';ctx.fill();}
+    for(var i=0;i<45;i++){var x=Math.random()*BW,y=Math.random()*BH,r2=Math.random()*2+1;ctx.beginPath();ctx.arc(x,y,r2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.7+.15)+')';ctx.fill();}
     // 标题
-    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
-    ctx.fillText('✦ 照德堂 · 八字精算 ✦',BW/2,38);
+    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字精算 ✦',BW/2,38);
     ctx.strokeStyle='rgba(200,169,110,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,52);ctx.lineTo(BW-40,52);ctx.stroke();
     // 命格
     ctx.font='50px sans-serif';ctx.fillText(r.icon,BW/2,118);
     ctx.fillStyle='#f0e6c5';ctx.font='bold 20px sans-serif';ctx.fillText(r.title,BW/2,154);
     ctx.font='11px sans-serif';ctx.fillStyle='#c8a96e';ctx.fillText(r.tags.join(' · '),BW/2,176);
     ctx.strokeStyle='rgba(200,169,110,.2)';ctx.beginPath();ctx.moveTo(50,192);ctx.lineTo(BW-50,192);ctx.stroke();
-    // 命理画像（简短）
+    // 命理画像
     ctx.textAlign='left';ctx.fillStyle='#c8bca0';ctx.font='11px sans-serif';
-    var yy=215; // current y position tracker
+    var yy=215;
     var ptext=r.portrait.replace(/[【】\*\*]/g,'').substring(0,80);
-    drawWrapped(ctx,ptext,35,yy,450,16);yy+=Math.max(calcLines(ctx,ptext,450)*16,18);
-    // 四个维度：用色块+纯文本
-    ctx.strokeStyle='rgba(200,169,110,.15)';ctx.lineWidth=0.5;
-    function drawBlock(label,text,by,bh){
+    drawWrapped(ctx,ptext,35,yy,450,16);yy+=Math.max(calcWL(ctx,ptext,450)*16,18);
+    // 四个维度块
+    var bh=95;
+    function db(label,text,by){
       ctx.fillStyle='rgba(255,255,255,.04)';ctx.beginPath();ctx.rect(30,by,BW-60,bh);ctx.fill();
       ctx.strokeStyle='rgba(200,169,110,.12)';ctx.strokeRect(30,by,BW-60,bh);
       ctx.fillStyle='#c8a96e';ctx.font='bold 12px sans-serif';ctx.textAlign='left';ctx.fillText(label,42,by+20);
@@ -695,33 +702,32 @@ function shareImage(){
       var t=text.replace(/[【】\*\*⚠️✅💡⏰🔥🤝🧠💪📈⚖️]/g,'').substring(0,80);
       drawWrapped(ctx,t,42,by+40,BW-84,15);
     }
-    // 计算行数辅助
-    function calcWrappedLines(ctx,t,mw){
-      var l=0,cl='';
-      for(var i=0;i<t.length;i++){cl+=t[i];if(ctx.measureText(cl).width>mw){l++;cl=t[i];}}
-      if(cl)l++;
-      return Math.max(l,1);
-    }
-    // 上两行
-    var bh=95;
-    drawBlock('💰 财运',r.wealth,yy,bh);yy+=bh+8;
-    drawBlock('💕 姻缘',r.marriage,yy,bh);yy+=bh+8;
-    drawBlock('🌿 寿元',r.health,yy,bh);yy+=bh+8;
-    drawBlock('⭐ 星座',r.zodiac,yy,bh);yy+=bh+8;
-    // 流年锦囊（居中）
-    yy+=6;
-    ctx.textAlign='center';ctx.fillStyle='#c8a96e';ctx.font='bold 13px sans-serif';ctx.fillText('🔮 流年锦囊',BW/2,yy);yy+=24;
+    db('💰 财运',r.wealth,yy);yy+=bh+8;
+    db('💕 姻缘',r.marriage,yy);yy+=bh+8;
+    db('🌿 寿元',r.health,yy);yy+=bh+8;
+    db('⭐ 星座',r.zodiac,yy);yy+=bh+8;
+    // 流年锦囊
+    yy+=6;ctx.textAlign='center';ctx.fillStyle='#c8a96e';ctx.font='bold 13px sans-serif';ctx.fillText('🔮 流年锦囊',BW/2,yy);yy+=24;
     ctx.fillStyle='#c8bca0';ctx.font='11px sans-serif';
     var atext=r.advice.replace(/[【】\*\*⚠️✅💡⏰🔥🤝🧠💪📈⚖️]/g,'').substring(0,72);
-    // 居中自动换行
     var cl='',ln=0;ctx.textAlign='center';
     for(var i=0;i<atext.length;i++){cl+=atext[i];if(ctx.measureText(cl).width>BW-80){ctx.fillText(cl.slice(0,-1),BW/2,yy+ln*15);cl=atext[i];ln++;}}
-    if(cl)ctx.fillText(cl,BW/2,yy+ln*15);
-    yy+=ln*15+10;
-    // 底部
-    ctx.fillStyle='rgba(200,169,110,.15)';ctx.font='13px sans-serif';ctx.fillText('↑ 扫码自测（18题精算）↑',BW/2,yy);yy+=22;
-    ctx.fillStyle='rgba(255,255,255,.08)';ctx.font='9px sans-serif';ctx.fillText('仅供趣味参考 · 命运在自己手中',BW/2,yy);yy+=16;
-    ctx.fillStyle='#444';ctx.font='9px sans-serif';ctx.fillText('照德堂 · 长沙雨花区',BW/2,yy);
+    if(cl)ctx.fillText(cl,BW/2,yy+ln*15);yy+=ln*15+14;
+    // 二维码
+    if(qr&&qrLoaded){
+      var qs=110,qx=(BW-qs)/2;
+      // 白色底
+      ctx.fillStyle='#fff';ctx.beginPath();ctx.rect(qx-6,yy-6,qs+12,qs+12);ctx.fill();
+      ctx.drawImage(qr,qx,yy,qs,qs);
+      yy+=qs+10;
+    }else{
+      // 无二维码时留文字空间
+      yy+=20;
+    }
+    ctx.textAlign='center';
+    ctx.fillStyle='#c8a96e';ctx.font='bold 12px sans-serif';ctx.fillText('长按或扫描二维码 → 开始测算',BW/2,yy);yy+=22;
+    ctx.fillStyle='rgba(255,255,255,.08)';ctx.font='9px sans-serif';ctx.fillText('仅供趣味参考 · 命运在自己手中',BW/2,yy);yy+=14;
+    ctx.fillStyle='#555';ctx.font='9px sans-serif';ctx.fillText('照德堂 · 长沙雨花区',BW/2,yy);
     // 输出
     const du=cv.toDataURL('image/jpeg',0.92);
     ov.classList.remove('show');g('loadingText').textContent='🔮 命盘推算中...';
@@ -730,24 +736,10 @@ function shareImage(){
     const ih='<div class="bazi-share-wrap" style="text-align:center;margin-bottom:14px"><img src="'+du+'" style="display:block;width:100%;border-radius:12px;border:2px solid rgba(200,169,110,.2)" alt="分享图"><p style="color:#c8a96e;font-size:11px;margin-top:8px">👆 长按图片保存 · 发朋友圈</p></div>';
     const sr=wrap.querySelector('.share-row');if(sr)sr.insertAdjacentHTML('beforebegin',ih);
     toast('🖼️ 分享图已生成！');
-  },800);
-  // 辅助：自动换行绘制
-  function drawWrapped(c,t,x,y,mw,lh){
-    var cl='',ln=0;
-    for(var i=0;i<t.length;i++){
-      cl+=t[i];
-      if(c.measureText(cl).width>mw){
-        c.fillText(cl.slice(0,-1),x,y+ln*lh);
-        cl=t[i];ln++;
-      }
-    }
-    if(cl)c.fillText(cl,x,y+ln*lh);
   }
-  function calcLines(c,t,mw){
-    var cl='',ln=0;
-    for(var i=0;i<t.length;i++){cl+=t[i];if(c.measureText(cl).width>mw){cl=t[i];ln++;}}
-    return ln+1;
-  }
+  // 辅助函数
+  function drawWrapped(c,t,x,y,mw,lh){var cl='',ln=0;for(var i=0;i<t.length;i++){cl+=t[i];if(c.measureText(cl).width>mw){c.fillText(cl.slice(0,-1),x,y+ln*lh);cl=t[i];ln++;}}if(cl)c.fillText(cl,x,y+ln*lh);}
+  function calcWL(c,t,mw){var cl='',ln=0;for(var i=0;i<t.length;i++){cl+=t[i];if(c.measureText(cl).width>mw){cl=t[i];ln++;}}return ln+1;}
 }
 function wt(ctx,t,x,y,mw,lh){let l=[],cl='';for(let i=0;i<t.length;i++){cl+=t[i];if(ctx.measureText(cl).width>mw){l.push(cl.slice(0,-1));cl=t[i];}}if(cl)l.push(cl);l.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lh));}
 function restart(){
