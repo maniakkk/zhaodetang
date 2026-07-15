@@ -629,21 +629,21 @@ function calcResult(a){
   if(a.focus==='wealth'&&(k==='jade_rabbit'||k==='unicorn_mountain'))k='golden_toad';
   if(a.focus==='marriage'&&k==='blue_ox')k='phoenix_mate';
   const r=JSON.parse(JSON.stringify(R[k]||FALLBACK));
-  // 多选微调辅助
-  function has(v,a){return Array.isArray(a)?a.indexOf(v)>=0:a===v;}
+  // 多选检测辅助（兼容单值+数组, 不冲突has变量名）
+  function hasVal(v,a){return Array.isArray(a)?a.indexOf(v)>=0:a===v;}
   // 饮食微调（支持多选）
-  if(has('spicy',a.diet))r.health+=' ⚠️ 爱吃辣需适度——过辣耗阴伤胃，每周至少两天清淡。';
-  if(has('meat',a.diet))r.health+=' 💡 肉食为主多搭蔬菜，红肉每周不超3次。';
-  if(has('sweet',a.diet))r.health+=' 🍬 甜食控需注意控糖，过量加重湿气影响肤质。';
-  if(has('veggie',a.diet)||has('veg',a.diet))r.health+=' 🌿 素食注意补充优质蛋白和B12，菌菇豆蛋奶是好选择。';
-  if(has('seafood',a.diet))r.health+=' 🦐 海鲜虽好偏寒湿，建议搭配姜蒜同食。';
-  if(has('grain',a.diet))r.health+=' 🌾 五谷杂粮养胃好习惯，继续保持！';
+  if(hasVal('spicy',a.diet))r.health+=' ⚠️ 爱吃辣需适度——过辣耗阴伤胃，每周至少两天清淡。';
+  if(hasVal('meat',a.diet))r.health+=' 💡 肉食为主多搭蔬菜，红肉每周不超3次。';
+  if(hasVal('sweet',a.diet))r.health+=' 🍬 甜食控需注意控糖，过量加重湿气影响肤质。';
+  if(hasVal('veggie',a.diet)||hasVal('veg',a.diet))r.health+=' 🌿 素食注意补充优质蛋白和B12，菌菇豆蛋奶是好选择。';
+  if(hasVal('seafood',a.diet))r.health+=' 🦐 海鲜虽好偏寒湿，建议搭配姜蒜同食。';
+  if(hasVal('grain',a.diet))r.health+=' 🌾 五谷杂粮养胃好习惯，继续保持！';
   // 消费微调（支持多选）
-  if(has('casual',a.spending))r.wealth+=' ⚠️ 随性消费是你的风格，建议设月度预算上限。';
-  if(has('frugal',a.spending))r.wealth+=' ✅ 精打细算的好习惯，偶尔也要奖励自己。';
-  if(has('enjoy',a.spending))r.wealth+=' 💡 懂得享受生活是好事，建议到账先存后花。';
-  if(has('invest',a.spending))r.wealth+=' 📈 投资眼光不错，建议分散风险、长期持有。';
-  if(has('save',a.spending))r.wealth+=' 🏦 强制储蓄是好习惯，可适当配置一些稳健理财。';
+  if(hasVal('casual',a.spending))r.wealth+=' ⚠️ 随性消费是你的风格，建议设月度预算上限。';
+  if(hasVal('frugal',a.spending))r.wealth+=' ✅ 精打细算的好习惯，偶尔也要奖励自己。';
+  if(hasVal('enjoy',a.spending))r.wealth+=' 💡 懂得享受生活是好事，建议到账先存后花。';
+  if(hasVal('invest',a.spending))r.wealth+=' 📈 投资眼光不错，建议分散风险、长期持有。';
+  if(hasVal('save',a.spending))r.wealth+=' 🏦 强制储蓄是好习惯，可适当配置一些稳健理财。';
   // 感情微调
   if(a.relationship==='single_wait')r.marriage+=' 你一直在等待——今年可以试着扩大社交圈，缘分往往在走出舒适区时出现。';
   else if(a.relationship==='single_happy')r.marriage+=' 享受单身本身就是福气。不必为结婚而结婚，对的人出现前先做好自己。';
@@ -673,11 +673,11 @@ function calcResult(a){
   else if(a.current_fortune==='low_rising')r.advice+=' 📈 触底回升的势头已经出现，保持住这个节奏，下半年会比上半年明显好转。';
   else if(a.current_fortune==='turning')r.advice+=' ⚖️ 转折期最忌讳急功近利——顺势而为比逆流而上聪明得多。';
   // 星座配饰（支持多选颜色）
-  if(has('red',a.color))r.zodiac+=' 你偏爱红色，内心渴望热情与活力，与火象星座同频。';
-  if(has('blue',a.color))r.zodiac+=' 偏爱蓝色代表你冷静理性的一面，水象和风象最能理解你。';
-  if(has('green',a.color))r.zodiac+=' 喜欢绿色说明你渴望自然生长，木性充沛的人与植物有天然亲近感。';
-  if(has('yellow',a.color))r.zodiac+=' 偏爱黄色/金色说明你内心稳重务实，土象星座最能契合你。';
-  if(has('white',a.color))r.zodiac+=' 喜欢白色说明你追求简洁纯粹，与金性/风象星座的气质相符。';
+  if(hasVal('red',a.color))r.zodiac+=' 你偏爱红色，内心渴望热情与活力，与火象星座同频。';
+  if(hasVal('blue',a.color))r.zodiac+=' 偏爱蓝色代表你冷静理性的一面，水象和风象最能理解你。';
+  if(hasVal('green',a.color))r.zodiac+=' 喜欢绿色说明你渴望自然生长，木性充沛的人与植物有天然亲近感。';
+  if(hasVal('yellow',a.color))r.zodiac+=' 偏爱黄色/金色说明你内心稳重务实，土象星座最能契合你。';
+  if(hasVal('white',a.color))r.zodiac+=' 喜欢白色说明你追求简洁纯粹，与金性/风象星座的气质相符。';
   // 居住微调
   if(a.home==='water_mountain')r.wealth+=' 你理想中依山傍水的环境说明你的气场合水木，适合在近水或绿化好的地方置产。';
   else if(a.home==='city_center')r.wealth+=' 你喜欢繁华地段，这和你命中的财气有关——人流量大的地方就是你的财位。';
@@ -687,7 +687,7 @@ function calcResult(a){
     var zwMainDesc=ZW_DESC[a.ziwei_star]||'你的紫微命盘主星组合独特，建议结合具体八字详细分析。';
     r.ziwei='【命宫主星】'+zwMainDesc;
     // 四化隐含（支持多选消费）
-    if(a.ziwei_palace==='wealth'||has('frugal',a.spending)||has('invest',a.spending))r.ziwei+=' 你的财帛宫有「化禄」的倾向——财运方面有天然的优势，赚钱相对轻松。';
+    if(a.ziwei_palace==='wealth'||hasVal('frugal',a.spending)||hasVal('invest',a.spending))r.ziwei+=' 你的财帛宫有「化禄」的倾向——财运方面有天然的优势，赚钱相对轻松。';
     else if(a.ziwei_palace==='love')r.ziwei+=' 你的夫妻宫有「化科」的倾向——你容易因良好的人际关系和口碑获得姻缘。';
     else if(a.ziwei_palace==='career'||a.philosophy==='strive'||a.career==='entrepreneur')r.ziwei+=' 你的官禄宫有「化权」的倾向——你会在事业上掌握实权，有领导潜质。';
     else if(a.ziwei_palace==='self'||a.crisis==='think')r.ziwei+=' 你的命宫有「化忌」回冲后的觉醒——你经历的挫折最终会变成你的铠甲。';
