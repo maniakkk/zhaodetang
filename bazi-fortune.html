@@ -99,17 +99,17 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 
 <div class="screen active" id="screenCover">
 <div class="cover">
-<span class="cover-badge">✦ 照德堂 · 八字精算 ✦</span>
+<span class="cover-badge">✦ 照德堂 · 八字紫微精算 ✦</span>
 <span class="cover-icon">🔮</span>
-<h1>生辰八字<br><span>· 财运婚姻寿命 · 十八道精算</span></h1>
+<h1>生辰八字+紫微斗数<br><span>· 财运婚姻寿命 · 综合精算</span></h1>
 <div class="sub">
-18道精算题 · 全面覆盖年柱·月令·时辰·五行·星座·风水·色彩<br>
-深度解析财运走势、婚姻缘分、寿命养生、社交人缘、事业方向
+20道精算题 · 八字+紫微双体系交叉印证<br>
+全方位解析你的财运走势、婚姻缘分、寿命养生、紫微命盘
 </div>
 <div class="tags">
 <span>💰 财运</span><span>💕 姻缘</span><span>🌿 寿元</span>
-<span>⭐ 星座</span><span>🤝 人缘</span><span>🏠 风水</span>
-<span>🎨 色彩</span><span>💼 事业</span><span>🔮 流年</span>
+<span>⭐ 星座</span><span>🌟 紫微</span><span>🤝 人缘</span>
+<span>🏠 风水</span><span>🎨 色彩</span><span>🔮 流年</span>
 </div>
 <button class="btn-start" onclick="startQuiz()">开 始 精 算</button>
 <div class="disclaimer">📌 仅供趣味参考 · 命运在自己手中</div>
@@ -118,7 +118,7 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 
 <div class="screen" id="screenQuiz">
 <div class="progress-wrap">
-<span class="progress-text" id="progressText">1 / 18</span>
+<span class="progress-text" id="progressText">1 / 20</span>
 <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 </div>
 <div class="quiz-card" id="quizCard"></div>
@@ -132,7 +132,7 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 
 <script>
 // ============================================================
-// 18道精算题
+// 20道精算题
 // ============================================================
 const Q = [
   {
@@ -370,6 +370,39 @@ const Q = [
 ];
 
 // ============================================================
+// 紫微斗数题目
+// ============================================================
+// Q19: 紫微主星气质
+Q.push({
+  q:'你的内在气质更接近哪组紫微主星？',
+  desc:'紫微斗数十四主星 · 命宫主星决定你的先天人格底色',
+  key:'ziwei_star',
+  options:[
+    {v:'zw_tf',l:'👑 紫微天府 · 帝王之气 · 天生领袖',badge:'土·尊贵'},
+    {v:'tj_th',l:'🌙 天机太阴 · 聪慧灵秀 · 心思细腻',badge:'木·智慧'},
+    {v:'ty_tl',l:'☀️ 太阳天梁 · 光明磊落 · 热心助人',badge:'火·光明'},
+    {v:'wq_qs',l:'⚔️ 武曲七杀 · 刚毅果决 · 行动力强',badge:'金·刚毅'},
+    {v:'tt_tx',l:'🤝 天同天相 · 温和友善 · 善于协调',badge:'水·温和'},
+    {v:'lt_tl',l:'🎭 廉贞贪狼 · 才艺非凡 · 魅力四射',badge:'木·才艺'},
+    {v:'po_jm',l:'🗣️ 破军巨门 · 开创直言 · 不惧变革',badge:'水·开创'},
+  ]
+});
+// Q20: 紫微十二宫关注
+Q.push({
+  q:'在紫微十二宫中，你觉得自己最需要提升的是？',
+  desc:'每一宫代表人生一个维度 · 关注点就是命理的能量缺口',
+  key:'ziwei_palace',
+  options:[
+    {v:'self',l:'👤 命宫 · 自信心与自我认识',badge:'自我'},
+    {v:'love',l:'💕 夫妻宫 · 感情婚姻与伴侣关系',badge:'姻缘'},
+    {v:'wealth',l:'💰 财帛宫 · 财运收入与理财能力',badge:'财运'},
+    {v:'career',l:'💼 官禄宫 · 事业发展与社会地位',badge:'事业'},
+    {v:'health',l:'🌿 疾厄宫 · 身体健康与养生',badge:'健康'},
+    {v:'spirit',l:'🧘 福德宫 · 精神世界与内心平静',badge:'福气'},
+  ]
+});
+
+// ============================================================
 // 13种命格
 // ============================================================
 const R = {
@@ -544,11 +577,31 @@ const LEIE={sports:'fire',reading:'wood',music:'water',nature:'earth',craft:'met
 const CHILDE={city:'fire',rural:'earth',big_family:'wood',only_child:'water',moved:'metal'};
 const CRISISE={think:'water',act:'fire',seek_help:'wood',avoid:'earth',fight:'metal'};
 
+// 紫微斗数映射
+const ZW_E={zw_tf:'earth',tj_th:'wood',ty_tl:'fire',wq_qs:'metal',tt_tx:'water',lt_tl:'wood',po_jm:'water'};
+const ZW_DESC={
+  zw_tf:'你命带紫微帝星之气，天生有领袖风范和统御能力。紫微坐命的人格局较大，不喜在小事上计较，有「王者之风」。天府同宫更添稳重与包容，你是那种「自己不慌、别人就不慌」的人。',
+  tj_th:'天机化气为「善」，太阴化气为「富」——你心思缜密、善于策划，是天生的谋略家。你往往想得比别人深、看得比别人远，但也容易因为想太多而内耗。适合发挥你的智慧型天赋。',
+  ty_tl:'太阳主「贵」，天梁主「寿」——你天生热心肠，喜欢帮助别人，走到哪里都像一束光。天梁更添一份稳重和慈悲，你是一个「有温度的正直之人」。注意不要过度牺牲自己照亮别人。',
+  wq_qs:'武曲为「财星」，七杀为「将星」——你是天生的实干家和开拓者。行动力超强，想到就去做，很少犹豫纠结。武曲正财、七杀魄力，结合起来就是「能打能拼、能赚能守」。',
+  tt_tx:'天同化气为「福」，天相化气为「印」——你天性温和善良，不喜欢冲突，是天生的「和事佬」和团队粘合剂。福德深厚，一生少有大风大浪。适合做协调型、服务型工作。',
+  lt_tl:'廉贞化气为「囚」亦是「杀」，贪狼化气为「桃花」——你是一个复杂而有魅力的人。才艺多端、桃花旺盛，有「艺术家的气质和冒险家的胆量」。你的人生精彩但不平淡。',
+  po_jm:'破军化气为「耗」，巨门化气为「暗」——你天生不安于现状，喜欢推倒重来。破军的开创力加上巨门的洞察力，让你成为「变革者」和「真相揭露者」。敢说敢做、不畏人言。'
+};
+const ZW_PALACE_DESC={
+  self:'命宫是你整个紫微命盘的核心。你觉得自己在「自我认知」上需要提升——说明你是一个对自我要求很高的人。建议：多给自己一些肯定，你远比你想象中更优秀。',
+  love:'夫妻宫主导你的感情模式和婚姻质量。你关注感情，说明你是一个重情重义的人。紫微斗数中夫妻宫看「正缘特质」——你会被成熟稳重型的人吸引。',
+  wealth:'财帛宫看的是你的赚钱能力和理财态度。你关注财运，说明你有强烈的进取心和改善生活的动力。紫微中「武曲」是正财星、「太阴」是富库——你的财路适合走稳健路线。',
+  career:'官禄宫主事业成就和社会地位。你关注事业，说明你有抱负、不甘平庸。紫微斗数中官禄宫好的人往往能「实至名归」——你的付出会被看见。',
+  health:'疾厄宫看身体健康和潜在病痛。你关注健康是明智的——紫微斗数认为「预防大于治疗」。你的体质强弱与命宫主星的五行属性密切相关。',
+  spirit:'福德宫代表精神享受、内心世界和晚年福气。你关注精神层面，说明你不是一个只追求物质的人。紫微中福德宫好的人「有福可享」——你懂得生活。'
+};
+
 // ============================================================
 // 运算引擎
 // ============================================================
 function calcResult(a){
-  const src=[ZE[a.zodiac].e,SE[a.season],TE[a.birth_time],a.element,SIE[a.zodiac_sign],DIE[a.diet],COLE[a.color],HOMELE[a.home],LEIE[a.leisure],CHILDE[a.childhood],CRISISE[a.crisis]];
+  const src=[ZE[a.zodiac].e,SE[a.season],TE[a.birth_time],a.element,SIE[a.zodiac_sign],DIE[a.diet],COLE[a.color],HOMELE[a.home],LEIE[a.leisure],CHILDE[a.childhood],CRISISE[a.crisis],ZW_E[a.ziwei_star]];
   const c={metal:0,wood:0,water:0,fire:0,earth:0};
   src.forEach(e=>{if(c[e]!==undefined)c[e]++});
   const has=(e)=>c[e]>=2,combo=(x,y)=>c[x]>=1&&c[y]>=1;
@@ -614,6 +667,25 @@ function calcResult(a){
   // 居住微调
   if(a.home==='water_mountain')r.wealth+=' 你理想中依山傍水的环境说明你的气场合水木，适合在近水或绿化好的地方置产。';
   else if(a.home==='city_center')r.wealth+=' 你喜欢繁华地段，这和你命中的财气有关——人流量大的地方就是你的财位。';
+  // 紫微斗数分析
+  r.ziwei='';
+  if(a.ziwei_star){
+    var zwMainDesc=ZW_DESC[a.ziwei_star]||'你的紫微命盘主星组合独特，建议结合具体八字详细分析。';
+    r.ziwei='【命宫主星】'+zwMainDesc;
+    // 四化隐含
+    if(a.ziwei_palace==='wealth'||a.spending==='frugal'||a.spending==='invest')r.ziwei+=' 你的财帛宫有「化禄」的倾向——财运方面有天然的优势，赚钱相对轻松。';
+    else if(a.ziwei_palace==='love')r.ziwei+=' 你的夫妻宫有「化科」的倾向——你容易因良好的人际关系和口碑获得姻缘。';
+    else if(a.ziwei_palace==='career'||a.philosophy==='strive'||a.career==='entrepreneur')r.ziwei+=' 你的官禄宫有「化权」的倾向——你会在事业上掌握实权，有领导潜质。';
+    else if(a.ziwei_palace==='self'||a.crisis==='think')r.ziwei+=' 你的命宫有「化忌」回冲后的觉醒——你经历的挫折最终会变成你的铠甲。';
+  }
+  if(a.ziwei_palace&&ZW_PALACE_DESC[a.ziwei_palace]){
+    r.ziwei+=' 【十二宫指引】'+ZW_PALACE_DESC[a.ziwei_palace];
+  }
+  // 紫微+星座联动
+  var starZodiacMap={zw_tf:'♌ 狮子',tj_th:'♍ 处女',ty_tl:'♐ 射手',wq_qs:'♑ 摩羯',tt_tx:'♎ 天秤',lt_tl:'♏ 天蝎',po_jm:'♒ 水瓶'};
+  if(a.ziwei_star&&starZodiacMap[a.ziwei_star]){
+    r.ziwei+=' 【星宫互参】你的紫微主星气质与'+starZodiacMap[a.ziwei_star]+'座的能量最为接近——两种体系互相印证，说明你的人生主旋律非常清晰。';
+  }
   return r;
 }
 
@@ -645,16 +717,17 @@ function showResult(){
 <div class="r-section"><div class="r-label"><span class="emoji">💕</span> 婚姻之缘</div><p>${r.marriage}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">🌿</span> 寿元养生</div><p>${r.health}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">⭐</span> 星座印证</div><p>${r.zodiac}</p></div>
+<div class="r-section"><div class="r-label"><span class="emoji">🌟</span> 紫微斗数印证</div><p>${r.ziwei||'你的紫微命盘需要结合具体的出生年月日时详细排盘。以上信息已为你的紫微分析提供了重要参考——你的主星气质和宫位关注点都在指向一个清晰的命理方向。'}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">🔮</span> 流年锦囊</div><p>${r.advice}</p></div>
 <div class="share-row"><button class="btn-share btn-share-link" onclick="shareLink()">📋 复制链接</button><button class="btn-share btn-share-img" onclick="shareImage()">🖼️ 生成分享图</button></div>
-<div class="result-footer"><div class="brand">✦ 照德堂 · 以自然之道养自然之身 ✦</div><div class="slogan">长沙雨花区 · 药食同源 · 手作护肤</div><div class="disclaimer">📌 仅供趣味参考 · 真正的命在自己手中</div><button class="btn-restart" onclick="restart()">🔄 重新测算（18题）</button></div>`;
+<div class="result-footer"><div class="brand">✦ 照德堂 · 以自然之道养自然之身 ✦</div><div class="slogan">长沙雨花区 · 药食同源 · 手作护肤</div><div class="disclaimer">📌 仅供趣味参考 · 真正的命在自己手中</div><button class="btn-restart" onclick="restart()">🔄 重新测算（20题）</button></div>`;
     window.scrollTo({top:0,behavior:'smooth'});
   },1200);
 }
 function shareLink(){
   const url=window.location.href;
-  if(navigator.share){navigator.share({title:'生辰八字·综合精算',text:'🔮 我测了我的八字命盘！18道精算题全方位解析\n你也来试试👇',url}).catch(()=>{});}
-  else{const ta=document.createElement('textarea');ta.value='🔮 我测了我的八字命盘！18道精算题全面解析财运婚姻寿命星座\n'+url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ 链接已复制！');}
+  if(navigator.share){navigator.share({title:'生辰八字+紫微斗数·综合精算',text:'🔮 我测了我的八字紫微命盘！20道精算题双体系交叉印证\n你也来试试👇',url}).catch(()=>{});}
+  else{const ta=document.createElement('textarea');ta.value='🔮 我测了我的八字紫微命盘！20道精算题｜八字+紫微双体系\n'+url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ 链接已复制！');}
 }
 function shareImage(){
   const ov=g('loadingOverlay');g('loadingText').textContent='🖼️ 生成分享图中...';ov.classList.add('show');
@@ -680,7 +753,7 @@ function shareImage(){
     // 星星
     for(var i=0;i<45;i++){var x=Math.random()*BW,y=Math.random()*BH,r2=Math.random()*2+1;ctx.beginPath();ctx.arc(x,y,r2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.7+.15)+')';ctx.fill();}
     // 标题
-    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字精算 ✦',BW/2,38);
+    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字紫微精算 ✦',BW/2,38);
     ctx.strokeStyle='rgba(200,169,110,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,52);ctx.lineTo(BW-40,52);ctx.stroke();
     // 命格
     ctx.font='50px sans-serif';ctx.fillText(r.icon,BW/2,118);
