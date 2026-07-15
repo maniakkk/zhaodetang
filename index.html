@@ -189,9 +189,9 @@ body{
 <div class="overlay" id="shareOverlay" onclick="if(event.target===this)closeOverlay()">
   <div class="overlay-card">
     <button class="close-overlay" onclick="closeOverlay()">✕</button>
-    <canvas id="shareCanvas" width="400" height="600"></canvas>
+    <img id="shareImg" style="width:100%;border-radius:12px;display:block" alt="命理体质报告">
+    <canvas id="shareCanvas" width="400" height="600" style="display:none"></canvas>
     <div class="overlay-tip">💡 长按图片保存到相册 → 发朋友圈或微信群</div>
-    <div class="save-tip">👆 长按上方图片即可保存</div>
   </div>
 </div>
 
@@ -526,7 +526,9 @@ function saveCard(){
     ctx.fillRect(W-70+i*14, dy+55, 10, 10);
   }
 
-  // 显示
+  // 显示 — canvas 转 img
+  var dataUrl = canvas.toDataURL("image/png");
+  document.getElementById("shareImg").src = dataUrl;
   document.getElementById("shareOverlay").classList.add("show");
 }
 
