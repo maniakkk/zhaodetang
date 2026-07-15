@@ -708,12 +708,16 @@ function shareImage(){
     drawBlock('💕 姻缘',r.marriage,yy,bh);yy+=bh+8;
     drawBlock('🌿 寿元',r.health,yy,bh);yy+=bh+8;
     drawBlock('⭐ 星座',r.zodiac,yy,bh);yy+=bh+8;
-    // 流年锦囊
+    // 流年锦囊（居中）
     yy+=6;
     ctx.textAlign='center';ctx.fillStyle='#c8a96e';ctx.font='bold 13px sans-serif';ctx.fillText('🔮 流年锦囊',BW/2,yy);yy+=24;
     ctx.fillStyle='#c8bca0';ctx.font='11px sans-serif';
     var atext=r.advice.replace(/[【】\*\*⚠️✅💡⏰🔥🤝🧠💪📈⚖️]/g,'').substring(0,72);
-    drawWrapped(ctx,atext,35,yy,BW-70,15);yy+=calcWrappedLines(ctx,atext,BW-70)*15+10;
+    // 居中自动换行
+    var cl='',ln=0;ctx.textAlign='center';
+    for(var i=0;i<atext.length;i++){cl+=atext[i];if(ctx.measureText(cl).width>BW-80){ctx.fillText(cl.slice(0,-1),BW/2,yy+ln*15);cl=atext[i];ln++;}}
+    if(cl)ctx.fillText(cl,BW/2,yy+ln*15);
+    yy+=ln*15+10;
     // 底部
     ctx.fillStyle='rgba(200,169,110,.15)';ctx.font='13px sans-serif';ctx.fillText('↑ 扫码自测（18题精算）↑',BW/2,yy);yy+=22;
     ctx.fillStyle='rgba(255,255,255,.08)';ctx.font='9px sans-serif';ctx.fillText('仅供趣味参考 · 命运在自己手中',BW/2,yy);yy+=16;
