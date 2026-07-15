@@ -855,7 +855,8 @@ function restart(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function toast(m){const t=g('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-(function(){const c=g('starsContainer');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=s.style.height=Math.random()*2+1+'px';s.style.setProperty('--dur',(Math.random()*3+2).toFixed(1)+'s');s.style.animationDelay=Math.random()*5+'s';c.appendChild(s);}})();
+// 背景星星——出错时不影响主功能
+try{(function(){const c=g('starsContainer');if(!c)return;for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.width=s.style.height=Math.random()*2+1+'px';s.style.setProperty('--dur',(Math.random()*3+2).toFixed(1)+'s');s.style.animationDelay=Math.random()*5+'s';c.appendChild(s);}})();}catch(e){}
 </script>
 </body>
 </html>
