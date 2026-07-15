@@ -190,7 +190,8 @@ body{
   <div class="overlay-card">
     <button class="close-overlay" onclick="closeOverlay()">✕</button>
     <img id="shareImg" style="width:100%;border-radius:12px;display:block" alt="命理体质报告">
-    <canvas id="shareCanvas" width="400" height="600" style="display:none"></canvas>
+    <img id="qrCacheImg" src="https://zhaodetang.vercel.app/qrcode.png" style="display:none" alt="">
+    <canvas id="shareCanvas" width="600" height="1050" style="display:none"></canvas>
     <div class="overlay-tip">💡 长按图片保存到相册 → 发朋友圈或微信群</div>
   </div>
 </div>
@@ -509,37 +510,27 @@ function saveCard(){
   ctx.fillStyle = "#8B7355";
   ctx.fillText("🌿 照德堂 · 以传统智慧照见生活", W/2, dy+40);
 
-  // 二维码（真实可扫描）
+  // 二维码
   var qrX = (W - 140) / 2, qrY = dy + 60, qrS = 140;
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(qrX, qrY, qrS, qrS);
   ctx.strokeStyle = "#2C1810";
   ctx.lineWidth = 2;
   ctx.strokeRect(qrX, qrY, qrS, qrS);
-  var qrB64 = "iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAIAAAAgbqG5AAADKklEQVR4nO3dwbGrNgBAUb9MGsgyRdB/ihhiB/w1mWQ2byefd4oYjuP4/T0f3/P9/V6v1+fzeb/f3+/3+/1+v9/v9/t9Pp/P+/3+fr/z/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7fr/f7/f7/X6/3+/3+/3+zvf7/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7fr/f7/f7/X6/3+/3+/3+zvf7/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9fr/f7/f7/X6/3+/3+/1+v7/z/X6/3+/3+/1+v9/v9/v9vt/v9/v9fr/f7/f7/X6/3+/3+/1+v9/v9/v9/gUAAP//ed0sMLhjj/xAAAAASUVORK5CYII=";
-  var qrImg = new Image();
-  qrImg.onload = function(){
+  var qrImg = document.getElementById("qrCacheImg");
+  if(qrImg && qrImg.complete){
     ctx.drawImage(qrImg, qrX+4, qrY+4, qrS-8, qrS-8);
-    finishCard();
-  };
-  qrImg.onerror = function(){
-    // base64加载失败时用纯色块替代
-    ctx.fillStyle = "#2C1810";
-    ctx.fillRect(qrX+4, qrY+4, qrS-8, qrS-8);
-    finishCard();
-  };
-  qrImg.src = "data:image/png;base64," + qrB64;
-
-  function finishCard(){
-    // 二维码下文字
-    ctx.font = "15px sans-serif";
-    ctx.fillStyle = "#A08060";
-    ctx.fillText("命理体质深度自测 | 照德堂", W/2, qrY + qrS + 30);
-    // canvas → img
-    var dataUrl = canvas.toDataURL("image/png");
-    document.getElementById("shareImg").src = dataUrl;
-    document.getElementById("shareOverlay").classList.add("show");
   }
+
+  // 二维码下文字
+  ctx.font = "15px sans-serif";
+  ctx.fillStyle = "#A08060";
+  ctx.fillText("命理体质深度自测 | 照德堂", W/2, qrY + qrS + 30);
+
+  // 显示
+  var dataUrl = canvas.toDataURL("image/png");
+  document.getElementById("shareImg").src = dataUrl;
+  document.getElementById("shareOverlay").classList.add("show");
 }
 
 function wrapText(ctx, text, x, y, maxW, lineH, maxLines){
