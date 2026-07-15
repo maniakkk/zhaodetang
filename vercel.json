@@ -1,8 +1,8 @@
 {
-  "name": "zhaodetang",
   "version": 2,
   "builds": [
-    { "src": "*.html", "use": "@vercel/static" }
+    { "src": "*.{html,jpg,png,svg,ico}", "use": "@vercel/static" },
+    { "src": "og-share.png", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/$1" }
