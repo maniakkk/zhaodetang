@@ -99,16 +99,16 @@ body{min-height:100vh;background:linear-gradient(135deg,#0a0015 0,#1a0a2e 30%,#0
 
 <div class="screen active" id="screenCover">
 <div class="cover">
-<span class="cover-badge">✦ 照德堂 · 八字紫微精算 ✦</span>
+<span class="cover-badge">✦ 照德堂 · 八字紫微·四季养生 ✦</span>
 <span class="cover-icon">🔮</span>
-<h1>生辰八字+紫微斗数<br><span>· 财运婚姻寿命 · 综合精算</span></h1>
+<h1>生辰八字+紫微斗数<br><span>· 财运婚姻寿命 · 先天体质四季养生</span></h1>
 <div class="sub">
-20道精算题 · 八字+紫微双体系交叉印证<br>
-全方位解析你的财运走势、婚姻缘分、寿命养生、紫微命盘
+20道精算题 · 八字+紫微+中医四季养生三重体系<br>
+全方位解析财运走势、婚姻缘分、紫微命盘、先天体质与四季调养
 </div>
 <div class="tags">
 <span>💰 财运</span><span>💕 姻缘</span><span>🌿 寿元</span>
-<span>⭐ 星座</span><span>🌟 紫微</span><span>🤝 人缘</span>
+<span>⭐ 星座</span><span>🌟 紫微</span><span>🌱 体质</span>
 <span>🏠 风水</span><span>🎨 色彩</span><span>🔮 流年</span>
 </div>
 <button class="btn-start" onclick="startQuiz()">开 始 精 算</button>
@@ -598,6 +598,67 @@ const ZW_PALACE_DESC={
 };
 
 // ============================================================
+// 四季养生 · 五运六气体质调养知识库
+// 五行 × 四时 映射：春木(肝) 夏火(心) 长夏土(脾) 秋金(肺) 冬水(肾)
+// ============================================================
+const SEASONS=['spring','summer','mid','autumn','winter'];
+const SEASON_CN=['春季','夏季','夏秋之交','秋季','冬季'];
+const SEASON_EL={spring:'wood',summer:'fire',mid:'earth',autumn:'metal',winter:'water'};
+// 五行 × 四季 调养方案
+const CONSTITUTION_CARE={
+  wood:{
+    title:'木型人 · 肝木体质',
+    trait:'你五行属木，对应肝胆。木主生发、条达。你的先天体质特点是「肝气偏旺」，容易出现压力大、眼睛疲劳、春季易过敏等问题。',
+    seasons:{
+      spring:{p:'🌱 疏肝理气 · 顺应春生',food:'韭菜、香椿、菠菜、荠菜、芽菜、芹菜',act:'早睡早起、散步踏青、八段锦',acu:'太冲、行间、肝俞',tip:'春属木，与你同气。春季是你的「本命季节」，养生效果事半功倍。多接触绿色植物，保持心情舒畅。忌大怒伤肝。'},
+      summer:{p:'☀️ 清肝养心 · 防火旺克金',food:'苦瓜、芹菜、绿豆、莲子、菊花茶',act:'瑜伽、太极、晨练',acu:'内关、神门、太冲',tip:'夏季火旺，木生火容易消耗肝阴。建议午间小憩养阴，少吃辛辣烧烤，多补水。'},
+      autumn:{p:'🍂 柔肝润肺 · 防木火刑金',food:'百合、银耳、梨子、白萝卜、马蹄',act:'深呼吸、慢跑、拉伸',acu:'太渊、列缺、三阴交',tip:'秋季金旺克木，肝气容易被压制。注意调节情绪，避免悲秋。多吃白色食物润肺。'},
+      winter:{p:'❄️ 养肝补肾 · 滋水涵木',food:'黑豆、黑芝麻、枸杞、桑葚、核桃',act:'太极、八段锦、泡脚',acu:'太溪、涌泉、肝俞',tip:'冬季水旺生木，是你的「休养生息」之季。早睡晚起、节制房事，为来年春生积蓄能量。'}
+    }
+  },
+  fire:{
+    title:'火型人 · 心火体质',
+    trait:'你五行属火，对应心与小肠。火主炎上、热情。你的先天体质特点是「心火偏旺」，容易出现失眠、口腔溃疡、心率偏快等问题。',
+    seasons:{
+      spring:{p:'🌱 疏火养心 · 防火气过旺',food:'芹菜、苦瓜、莲子、绿豆、菊花',act:'瑜伽、冥想、散步',acu:'内关、神门、太冲',tip:'春季木旺生火，你的火气容易过盛。注意控制情绪，少与人争执。多吃苦味降火。'},
+      summer:{p:'☀️ 清心泻火 · 夏养心正当时',food:'苦瓜、莲子心、绿豆汤、西瓜翠衣',act:'游泳、晨练、静坐',acu:'少府、内关、神门',tip:'夏季是你的「本命季节」。心火当令，需防中暑和心火亢盛导致失眠。午睡养心。切忌贪凉过度。'},
+      autumn:{p:'🍂 降火润燥 · 防心火移热于肺',food:'百合、银耳、梨子、荸荠、麦冬',act:'慢跑、太极、深呼吸',acu:'列缺、尺泽、内关',tip:'秋燥加心火容易伤肺。注意补充水分，多吃润肺食物。情绪上学会沉淀。'},
+      winter:{p:'❄️ 水火既济 · 养心固肾',food:'黑豆、桂圆、红枣、核桃、羊肉',act:'八段锦、快走、温灸',acu:'神门、太溪、涌泉',tip:'冬季水旺克火，你的心气相对较弱。注意保暖，少熬夜。适合温补，不宜大寒。'}
+    }
+  },
+  earth:{
+    title:'土型人 · 脾胃体质',
+    trait:'你五行属土，对应脾胃。土主运化、承载。你的先天体质特点是「脾胃为本」，消化系统是你健康的关键。思虑过多容易伤脾。',
+    seasons:{
+      spring:{p:'🌱 健脾疏肝 · 防肝木克脾土',food:'山药、小米、茯苓、南瓜、红枣',act:'散步、太极拳、八段锦',acu:'足三里、三阴交、中脘',tip:'春季木旺克土，脾胃功能容易受影响。注意饮食规律，少吃生冷。保持情绪稳定。'},
+      summer:{p:'☀️ 健脾祛湿 · 夏养脾避湿邪',food:'薏米、赤小豆、冬瓜、白扁豆',act:'快走、太极、瑜伽',acu:'足三里、阴陵泉、丰隆',tip:'夏季湿热交蒸，最容易伤脾。少吃油腻甜食，可以喝薏米红豆汤祛湿。'},
+      autumn:{p:'🍂 健脾润肺 · 培土生金',food:'山药、银耳、南瓜、小米、百合',act:'慢跑、太极、登山',acu:'足三里、太渊、中脘',tip:'秋季适合「培土生金」——养脾胃就是养肺。适合吃黄色和白色食物。'},
+      winter:{p:'❄️ 温脾补肾 · 补火生土',food:'羊肉、山药、板栗、红枣、生姜',act:'八段锦、快走、艾灸足三里',acu:'足三里、关元、命门',tip:'冬季水旺，土需要火（阳气）来温暖。注意腹部保暖，可以艾灸足三里。少吃寒凉水果。'}
+    }
+  },
+  metal:{
+    title:'金型人 · 肺金体质',
+    trait:'你五行属金，对应肺与大肠。金主清肃、收敛。你的先天体质特点是「肺气偏旺」，容易出现皮肤干燥、便秘、呼吸系统敏感等问题。',
+    seasons:{
+      spring:{p:'🌱 宣肺疏肝 · 防金克木',food:'百合、银耳、梨子、白萝卜、荸荠',act:'深呼吸、散步、拉伸',acu:'太渊、列缺、合谷',tip:'春季木旺，金克木容易导致肺气郁滞。注意呼吸新鲜空气，多吃白色润肺食物。'},
+      summer:{p:'☀️ 清肺泻火 · 防火旺克金',food:'百合、绿豆、苦瓜、银耳、莲藕',act:'游泳、晨练、深呼吸',acu:'尺泽、太渊、内关',tip:'夏季火旺克金，呼吸系统最脆弱。少去空调房，多呼吸自然空气。'},
+      autumn:{p:'🍂 润肺养阴 · 秋养金正当时',food:'银耳、百合、梨子、山药、白萝卜',act:'深秋慢跑、太极、静坐',acu:'太渊、列缺、肺俞',tip:'秋季是你的「本命季节」。金气当令，适合养肺润燥。皮肤也要注意保湿。秋分后早卧早起。'},
+      winter:{p:'❄️ 温肺固肾 · 金水相生',food:'白萝卜、银耳、核桃、黑芝麻、羊肉',act:'八段锦、快走、温灸肺俞',acu:'太渊、太溪、涌泉',tip:'冬季水旺，金生水容易耗肺气。注意防寒保暖，尤其护住颈部和背部。'}
+    }
+  },
+  water:{
+    title:'水型人 · 肾水体质',
+    trait:'你五行属水，对应肾与膀胱。水主润下、收藏。你的先天体质特点是「肾气为本」，精力耐力好但怕冷。过度劳累容易伤肾。',
+    seasons:{
+      spring:{p:'🌱 温肾疏肝 · 滋水涵木',food:'枸杞、桑葚、黑豆、韭菜、核桃',act:'八段锦、太极、散步',acu:'太溪、涌泉、肝俞',tip:'春季木旺需水滋养。适当吃些补肾食物，为春季的生发提供能量基础。'},
+      summer:{p:'☀️ 补肾养心 · 防水火未济',food:'黑豆、莲子、绿豆、冬瓜、鸭肉',act:'游泳、慢跑、太极',acu:'太溪、神门、涌泉',tip:'夏季火旺，水被消耗。注意不要过度出汗耗伤肾阴。可以喝黑豆水补肾。'},
+      autumn:{p:'🍂 金水相生 · 养肾润肺',food:'黑芝麻、黑豆、银耳、百合、核桃',act:'太极、八段锦、深呼吸',acu:'太溪、太渊、涌泉',tip:'秋季金旺生水，是你的能量补充季。适合进补，多吃黑色食物。'},
+      winter:{p:'❄️ 温补肾阳 · 冬养肾正当时',food:'羊肉、黑豆、核桃、板栗、桂圆',act:'早睡晚起、艾灸关元',acu:'太溪、涌泉、命门、关元',tip:'冬季是你的「本命季节」。肾气封藏之时，适合温补。忌寒凉、忌过度运动出汗。早卧晚起必待日光。'}
+    }
+  }
+};
+
+// ============================================================
 // 运算引擎
 // ============================================================
 function calcResult(a){
@@ -700,6 +761,36 @@ function calcResult(a){
   if(a.ziwei_star&&starZodiacMap[a.ziwei_star]){
     r.ziwei+=' 【星宫互参】你的紫微主星气质与'+starZodiacMap[a.ziwei_star]+'座的能量最为接近——两种体系互相印证，说明你的人生主旋律非常清晰。';
   }
+  // 四季养生 · 先天体质调养
+  r.seasonal='';
+  // 找到dominant element
+  var maxCnt=Math.max(c.metal,c.wood,c.water,c.fire,c.earth);
+  var domEls=[];
+  if(c.metal===maxCnt)domEls.push('metal');
+  if(c.wood===maxCnt)domEls.push('wood');
+  if(c.water===maxCnt)domEls.push('water');
+  if(c.fire===maxCnt)domEls.push('fire');
+  if(c.earth===maxCnt)domEls.push('earth');
+  var domEl=domEls[0]||'earth';
+  var cc=CONSTITUTION_CARE[domEl];
+  if(cc){
+    r.seasonal='【先天体质】'+cc.trait+' ';
+    // 当前季节（按出生季节或当前）
+    var birthSeasonIdx=SEASONS.indexOf(a.season);
+    if(birthSeasonIdx<0)birthSeasonIdx=0;
+    // 显示4季简表
+    r.seasonal+='【四季调养总纲】你的体质为「'+cc.title+'」。';
+    SEASONS.forEach(function(s,i){
+      var sd=cc.seasons[s];
+      if(sd)r.seasonal+='【'+SEASON_CN[i]+'】'+sd.p+'。饮食：'+sd.food+'。穴位：'+sd.acu+'。'+sd.tip+' ';
+    });
+    // 本命季节特强调
+    var nativeSeason=(({metal:'autumn',wood:'spring',water:'winter',fire:'summer',earth:'mid'})[domEl])||'';
+    if(nativeSeason&&cc.seasons[nativeSeason]){
+      var ns=cc.seasons[nativeSeason];
+      r.seasonal+='✨ **你的「本命季节」是'+SEASON_CN[SEASONS.indexOf(nativeSeason)]+'**。'+ns.tip;
+    }
+  }
   return r;
 }
 
@@ -751,6 +842,7 @@ function showResult(){
 <div class="r-section"><div class="r-label"><span class="emoji">🌿</span> 寿元养生</div><p>${r.health}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">⭐</span> 星座印证</div><p>${r.zodiac}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">🌟</span> 紫微斗数印证</div><p>${r.ziwei||'你的紫微命盘需要结合具体的出生年月日时详细排盘。以上信息已为你的紫微分析提供了重要参考——你的主星气质和宫位关注点都在指向一个清晰的命理方向。'}</p></div>
+<div class="r-section"><div class="r-label"><span class="emoji">🌿</span> 先天体质·四季养生</div><p>${r.seasonal||'你的五行体质较为均衡，适合「平和质」四季调养——春季养肝、夏季养心、秋季养肺、冬季养肾、四季养脾。饮食均衡、作息规律是最好的养生之道。'}</p></div>
 <div class="r-section"><div class="r-label"><span class="emoji">🔮</span> 流年锦囊</div><p>${r.advice}</p></div>
 <div class="share-row"><button class="btn-share btn-share-link" onclick="shareLink()">📋 复制链接</button><button class="btn-share btn-share-img" onclick="shareImage()">🖼️ 生成分享图</button></div>
 <div class="result-footer"><div class="brand">✦ 照德堂 · 以自然之道养自然之身 ✦</div><div class="slogan">长沙雨花区 · 药食同源 · 手作护肤</div><div class="disclaimer">📌 仅供趣味参考 · 真正的命在自己手中</div><button class="btn-restart" onclick="restart()">🔄 重新测算（20题）</button></div>`;
@@ -759,8 +851,8 @@ function showResult(){
 }
 function shareLink(){
   const url=window.location.href;
-  if(navigator.share){navigator.share({title:'生辰八字+紫微斗数·综合精算',text:'🔮 我测了我的八字紫微命盘！20道精算题双体系交叉印证\n你也来试试👇',url}).catch(()=>{});}
-  else{const ta=document.createElement('textarea');ta.value='🔮 我测了我的八字紫微命盘！20道精算题｜八字+紫微双体系\n'+url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ 链接已复制！');}
+  if(navigator.share){navigator.share({title:'生辰八字+紫微+四季养生·综合精算',text:'🔮 测了我的八字紫微命盘+先天体质四季养生！20道精算题三重体系\n👇你也来试试',url}).catch(()=>{});}
+  else{const ta=document.createElement('textarea');ta.value='🔮 八字紫微体质三重精算｜20道题｜先天体质+四季养生\n'+url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ 链接已复制！');}
 }
 function shareImage(){
   const ov=g('loadingOverlay');g('loadingText').textContent='🖼️ 生成分享图中...';ov.classList.add('show');
@@ -786,7 +878,7 @@ function shareImage(){
     // 星星
     for(var i=0;i<45;i++){var x=Math.random()*BW,y=Math.random()*BH,r2=Math.random()*2+1;ctx.beginPath();ctx.arc(x,y,r2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+(Math.random()*.7+.15)+')';ctx.fill();}
     // 标题
-    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字紫微精算 ✦',BW/2,38);
+    ctx.fillStyle='#c8a96e';ctx.font='bold 14px sans-serif';ctx.textAlign='center';ctx.fillText('✦ 照德堂 · 八字紫微·四季养生 ✦',BW/2,38);
     ctx.strokeStyle='rgba(200,169,110,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,52);ctx.lineTo(BW-40,52);ctx.stroke();
     // 命格
     ctx.font='50px sans-serif';ctx.fillText(r.icon,BW/2,118);
